@@ -1,0 +1,189 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+  }
+  
+  header.benefits {
+    display: flex;
+    justify-content: space-around;
+    background-color: #8be90f;
+    padding: 1em;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .reviews-section {
+    text-align: center;
+    padding: 2em;
+  }
+  
+  .carousel {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    margin: 1em 0;
+  }
+  
+  .review {
+    width: 300px;
+    padding: 1em;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .review img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .btn {
+    background-color: #09b623;
+    color: white;
+    padding: 0.7em 1.5em;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .categories {
+    background-color: #fff;
+    padding: 2em;
+    text-align: center;
+  }
+  
+  .category-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1em;
+    margin-top: 1em;
+  }
+  .category-container p  {
+    font-weight: bold;
+  }
+  
+  .category img {
+    background: #18f7ff;
+    padding: 1em 1.5em;
+    border-bottom-right-radius: 20px;
+    height: 80%; 
+    width: 50%;
+  }
+ 
+  
+  .reviews-section {
+    text-align: center;
+    padding: 2em;
+  }
+  
+  .sub {
+    color: #f28c8c;
+    font-weight: bold;
+    margin-bottom: 1em;
+  }
+  
+  .carousel-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+  }
+  
+  .arrow {
+    background: none;
+    font-size: 2em ;
+    border: none;
+    cursor: pointer;
+    color: #0ee90e;
+  }
+ 
+  
+  .review-card {
+    background: white;
+    border: 3px solid #41d3ff; /* borde verde visible */
+    width: 150px;
+    padding: 1em;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* sombra suave */
+    text-align: center;
+  }
+  
+  
+  .review-card img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 0.5em;
+  }
+ 
+  .review-card p {
+    font-size: 0.9em;
+    margin: 0.2em 0;
+  }
+  
+  .review-card .author {
+    font-weight: bold;
+    margin-top: 0.5em;
+  }
+  
+
+  /* From Uiverse.io by alexmaracinaru */ 
+.cta {
+  position: relative;
+  margin: auto;
+  padding: 12px 18px;
+  transition: all 0.2s ease;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.cta:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  border-radius: 50px;
+  background: #b1dae7;
+  width: 45px;
+  height: 45px;
+  transition: all 0.3s ease;
+}
+
+.cta span {
+  position: relative;
+  font-family: "Ubuntu", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #234567;
+}
+
+.cta svg {
+  position: relative;
+  top: 0;
+  margin-left: 10px;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke: #234567;
+  stroke-width: 2;
+  transform: translateX(-5px);
+  transition: all 0.3s ease;
+}
+
+.cta:hover:before {
+  width: 100%;
+  background: #b1dae7;
+}
+
+.cta:hover svg {
+  transform: translateX(0);
+}
+
+.cta:active {
+  transform: scale(0.95);
+}

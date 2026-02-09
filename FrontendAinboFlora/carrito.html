@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito de Compras</title>
+  <link rel="stylesheet" href="/css/carrito.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="carrito">
+    <div class="encabezado">
+      <button onclick="continuarComprando()">← continuar comprando</button>
+      <button class="cerrar" onclick="cerrarCarrito()">✕</button>
+    </div>
+
+    <div class="producto">
+      <img src="imagenes/gettyimages-1067970544-612x612.jpg" alt="Delicia Carnívora">
+      <div class="info">
+        <h4>Delicia Carnívora</h4>
+        <p>S/. 120.00</p>
+        <div class="cantidad">
+          <button onclick="cambiarCantidad('delicia', -1)">-</button>
+          <label id="cant-delicia">2</label>
+          <button onclick="cambiarCantidad('delicia', 1)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="producto">
+      <img src="imagenes/celebracion-dia-arbol-arboles-macetas-mesa_23-2149391931.avif" alt="Bonsái de 15 años">
+      <div class="info">
+        <h4>Bonsái de 15 años</h4>
+        <p>S/. 2250.00</p>
+        <small>70cm - 80cm</small>
+        <div class="cantidad">
+          <button onclick="cambiarCantidad('bonsai', -1)">-</button>
+          <label id="cant-bonsai">1</label>
+          <button onclick="cambiarCantidad('bonsai', 1)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="resumen">
+      <p>Subtotal: <span id="subtotal">S/. 3490.00</span></p>
+      <div class="resumen-items">
+        <p id="resumen-delicia">Delicia carnivora - 2 und</p>
+        <p id="resumen-bonsai">Bonsai de 15 años - 1 und</p>
+      </div>
+
+      <label>
+        <input type="checkbox" id="descuento"> ¿Tienes un cupón?
+      </label>
+
+      <div id="cupon-section" style="display:none; margin-top:10px;">
+        <input type="text" id="codigo-cupon" placeholder="Ingresa tu cupón">
+        <button onclick="aplicarCupon()">Aplicar cupón</button>
+        <p id="cupon-aplicado" style="color: rgb(2, 151, 2); display: none;">Cupón aplicado: -20%</p>
+      </div>
+
+      <p>Envío: <span style="color:red">Gratis</span></p>
+      <p><strong>Total: <span id="total">S/. 3490.00</span></strong></p>
+
+      
+      <a href="pasarela.html" class="tramitar" style="text-decoration: none; display: inline-block;">
+        <button style="border: none; background: none; cursor: pointer; width: 100%; height: 100%;">
+          Tramitar pedido
+        </button>
+      </a>
+      
+    </div>
+  </div>
+
+  <script src="/js/carrito.js"></script>
+</body>
+</html>

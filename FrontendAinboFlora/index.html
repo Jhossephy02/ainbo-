@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AinboFlora - Tu Jardín Perfecto</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/Css/style.css">
+</head>
+
+<body>
+
+    <!-- Encabezado con promoción -->
+    <header class="container-fluid bg-success d-flex justify-content-center">
+        <p class="text-light mb-0 p-2 fs-6">Envíos gratis en compras mayores a S/100 | 15% DESCUENTO EN TU PRIMERA
+            COMPRA</p>
+    </header>
+
+    <!-- Barra de navegación mejorada -->
+    <nav class="navbar navbar-expand-lg navbar-light p-3 shadow-sm" id="menu">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <span class="fs-4 text-success fw-bold">AinboFlora.</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-flower1 me-1"></i> Productos
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="Plantas.html">Plantas</a></li>
+                            <li><a class="dropdown-item" href="Maceteros.html">Maceteros</a></li>
+                            <li><a class="dropdown-item" href="Semillas.html">Semillas</a></li>
+                            <li><a class="dropdown-item" href="Herramientas.html">Herramientas</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="Catálogo.html">Catálogo Completo</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="JardinVirtual.html">
+                            <i class="bi bi-tree me-1"></i> Jardín Virtual
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Blog.html">
+                            <i class="bi bi-journal-text me-1"></i> Blog
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Rastreo.html">
+                            <i class="bi bi-truck me-1"></i> Seguimiento
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="d-flex">
+                    <form class="d-flex me-2">
+                        <input class="form-control me-2" type="search" placeholder="¿Qué estás buscando?"
+                            aria-label="Buscar">
+                        <button class="btn btn-outline-success" type="submit">Buscar</button>
+                    </form>
+                    <div class="d-flex align-items-center">
+                        <a class="nav-link me-2" href="Login.html">
+                            <i class="bi bi-person-circle fs-5"></i>
+                        </a>
+
+                        <button class="btn-carrito nav-link position-relative" onclick="abrirCarrito()" style="background:none; border:none;">
+                            <i class="bi bi-cart3 fs-5"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+                          </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Banner Principal -->
+    <section class="banner-section">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Transforma tu hogar con naturaleza</h1>
+            <p class="lead">Plantas, maceteros y herramientas de la mejor calidad para tu jardín</p>
+            <button class="btn btn-success btn-lg mt-3">Ver Ofertas</button>
+        </div>
+    </section>
+
+    <!-- Categorías principales como cards -->
+    <div class="container mb-5">
+        <h2 class="text-center mb-4 section-title">Nuestras Categorías</h2>
+        <div class="row">
+            <div class="col-6 col-md-3 mb-4">
+                <div class="card h-100 text-center category-buttons">
+                    <img src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/1.0.0/img/300x200.png"
+                        class="card-img-top" alt="Plantas">
+                    <div class="card-body">
+                        <h5 class="card-title">Plantas</h5>
+                        <p class="card-text small">Plantas de interior y exterior</p>
+                        <a href="Plantas.html" class="btn btn-outline-success">Ver Plantas</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3 mb-4">
+                <div class="card h-100 text-center category-buttons">
+                    <img src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/1.0.0/img/300x200.png"
+                        class="card-img-top" alt="Maceteros">
+                    <div class="card-body">
+                        <h5 class="card-title">Maceteros</h5>
+                        <p class="card-text small">Decorativos y funcionales</p>
+                        <a href="Maceteros.html" class="btn btn-outline-success">Ver Maceteros</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3 mb-4">
+                <div class="card h-100 text-center category-buttons">
+                    <img src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/1.0.0/img/300x200.png"
+                        class="card-img-top" alt="Semillas">
+                    <div class="card-body">
+                        <h5 class="card-title">Semillas</h5>
+                        <p class="card-text small">Cultiva tu propio jardín</p>
+                        <a href="Semillas.html" class="btn btn-outline-success">Ver Semillas</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3 mb-4">
+                <div class="card h-100 text-center category-buttons">
+                    <img src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/1.0.0/img/300x200.png"
+                        class="card-img-top" alt="Herramientas">
+                    <div class="card-body">
+                        <h5 class="card-title">Herramientas</h5>
+                        <p class="card-text small">Para el cuidado profesional</p>
+                        <a href="Herramientas.html" class="btn btn-outline-success">Ver Herramientas</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección de Nuevos Productos -->
+    <section class="container-fluid product-section bg-light">
+        <div class="container">
+            <h2 class="text-center section-title">Nuevos Productos</h2>
+            <p class="intro-text">
+                Descubre nuestras últimas adiciones para hacer tu jardín aún más especial.
+            </p>
+
+            <div class="row">
+                <form id="Product-form" >
+                <div class="col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <span class="badge-new">Nuevo</span>
+                        <img src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/1.0.0/img/300x200.png"
+                            class="card-img-top" alt="Producto Nuevo 1">
+                        <div class="card-body">
+                            <h5 class="card-title">Macetero Moderno Blanco</h5>
+                            <div class="rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-half"></i>
+                                <small class="text-muted">(18)</small>
+                            </div>
+                            <p class="card-text">Elegante macetero de cerámica resistente a exteriores. Ideal para
+                                plantas medianas.</p>
+                            <p class="fw-bold">S/35.00</p>
+                            <button type="submit" class="btn btn-primary w-100"><i class="bi bi-cart-plus"></i> Añadir al
+                                carrito</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <span class="badge-new">Nuevo</span>
+                        <img src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/1.0.0/img/300x200.png"
+                            class="card-img-top" alt="Producto Nuevo 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Kit de Suculentas</h5>
+                            <div class="rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star"></i>
+                                <small class="text-muted">(12)</small>
+                            </div>
+                            <p class="card-text">Set de 3 suculentas variadas con macetas decorativas incluidas.
+                                Perfectas para interiores.</p>
+                            <p class="fw-bold">S/45.00</p>
+                            <button type="submit" class="btn btn-primary w-100"><i class="bi bi-cart-plus"></i> Añadir al
+                                carrito</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <span class="badge-new">Nuevo</span>
+                        <img src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/1.0.0/img/300x200.png"
+                            class="card-img-top" alt="Producto Nuevo 3">
+                        <div class="card-body">
+                            <h5 class="card-title">Semillas de Lavanda</h5>
+                            <div class="rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <small class="text-muted">(28)</small>
+                            </div>
+                            <p class="card-text">Semillas de alta germinación para cultivo de lavanda aromática. Incluye
+                                guía de cultivo.</p>
+                            <p class="fw-bold">S/15.00</p>
+                            <button class="btn btn-primary w-100"><i class="bi bi-cart-plus"></i> Añadir al
+                                carrito</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <span class="badge-new">Nuevo</span>
+                        <img src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/1.0.0/img/300x200.png"
+                            class="card-img-top" alt="Producto Nuevo 4">
+                        <div class="card-body">
+                            <h5 class="card-title">Set de Herramientas Mini</h5>
+                            <div class="rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star"></i>
+                                <small class="text-muted">(7)</small>
+                            </div>
+                            <p class="card-text">Kit de 3 herramientas para cuidado de plantas de interior. Incluye
+                                estuche de almacenamiento.</p>
+                            <p class="fw-bold">S/28.00</p>
+                            <button class="btn btn-primary w-100"><i class="bi bi-cart-plus"></i> Añadir al
+                                carrito</button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Maceteros -->
+    <section class="container-fluid product-section">
+        <div class="container">
+            <h2 class="text-center section-title">Maceteros Destacados</h2>
+            <p class="intro-text">
+                El macetero decorativo es como un vestido para tu planta. Coloca tu planta con el macetero regular
+                dentro para darle un look único y mantener el agua adentro después de cada riego.
+            </p>
+
+            <div class="row">
+                <div class="col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <span class="discount-tag">-5%</span>
+                        <img src="img/Ceramica1.jpg"
+                            class="card-img-top" alt="Macetero 1">
+                        <div class="card-body">
+                            <h5 class="card-title">Macetero Rústico</h5>
+                            <div class="rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-half"></i>
+                                <small class="text-muted">(42)</small>
+                            </div>
+                            <p class="card-text">Macetero de terracota natural con acabado artesanal. Excelente para
+                                plantas medianas.</p>
+                            <p class="text-decoration-line-through small">S/31.50</p>
+                            <p class="fw-bold">S/30.00</p>
+                            <button class="btn btn-primary w-100"><i class="bi bi-cart-plus"></i> Añadir al
+                                carrito</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <span class="discount-tag">-5%</span>
+                        <img src="img/Ceramica2.jpg"
+                            class="card-img-top" alt="Macetero 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Macetero Minimalista</h5>
+                            <div class="rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star"></i>
+                                <i class="bi bi-star"></i>
+                                <small class="text-muted">(15)</small>
+                            </div>
+                            <p class="card-text">Diseño contemporáneo en color blanco mate. Ideal para decoración
+                                moderna.</p>
+                            <p class="text-decoration-line-through small">S/26.30</p>
+                            <p class="fw-bold">S/25.00</p>
+                            <button class="btn btn-primary w-100"><i class="bi bi-cart-plus"></i> Añadir al
+                                carrito</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <span class="discount-tag">-5%</span>
+                        <img src="img/Ceramica4.jpg"
+                            class="card-img-top" alt="Macetero 3">
+                        <div class="card-body">
+                            <h5 class="card-title">Macetero Mediaval</h5>
+                            <div class="rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <small class="text-muted">(67)</small>
+                            </div>
+                            <p class="card-text">Macetero con un acabado con mediaval con un diseño de acuerdo a la epoca .</p>
+                            <p class="text-decoration-line-through small">S/42.10</p>
+                            <p class="fw-bold">S/40.00</p>
+                            <button class="btn btn-primary w-100"><i class="bi bi-cart-plus"></i> Añadir al
+                                carrito</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <span class="discount-tag">-5%</span>
+                        <span class="badge-bestseller">Only</span>
+                        <img src="img/Ceramica7.jpg"
+                            class="card-img-top" alt="Macetero 4">
+                        <div class="card-body">
+                            <h5 class="card-title">Macetero Artesanal</h5>
+                            <div class="rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-half"></i>
+                                <small class="text-muted">(89)</small>
+                            </div>
+                            <p class="card-text">Macetero hecho por manos artesanales durante 6 meses con acabados unicos. </p>
+                            <p class="text-decoration-line-through small">S/36.80</p>
+                            <p class="fw-bold">S/35.00</p>
+                            <button class="btn btn-primary w-100"><i class="bi bi-cart-plus"></i> Añadir al
+                                carrito</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="Maceteros.html" class="btn btn-outline-success btn-lg">Ver todos los maceteros</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Semillas -->
+    <section class="container-fluid product-section bg-light">
+        <div class="container">
+            <h2 class="text-center section-title">Semillas Premium</h2>
+            <p class="intro-text">
+                Cultiva tu propio jardín con nuestras semillas de alta calidad. Perfectas para principiantes y expertos
+                en jardinería.
+            </p>
+
+            <div class="row">
+                <div class="col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <span class="discount-tag">-5%</span>
+                        <img src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/1.0.0/img/300x200.png"
+                            class="card-img-top" alt="Semillas 1">
+                        <div class="card-body">
+                            <h5 class="card-title">Semillas de Tomate Cherry</h5>
+                            <div class="rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star"></i>
+                                <small class="text-muted">(34)</small>
+                            </div>
+                            <p class="card-text">Variedad dulce y resistente. Ideal para cultivo en maceta o huerto.</p>
+                            <p class="text-decoration-line-through small">S/15.80</p>
+                            <p class="fw-bold">S/15.00</p>
+                            <button class="btn btn-primary w-100"><i class="bi bi-cart-plus"></i> Añadir al
+                                carrito</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <span class="discount-tag">-5%</span>
+                        <img src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/1.0.0/img/300x200.png"
+                            class="card-img-top" alt="Semillas 3">
+                        <div class="card-body">
+                            <h5 class="card-title">Semillas de Girasol</h5>
+                            <div class="rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-half"></i>
+                                <small class="text-muted">(47)</small>
+                            </div>
+                            <p class="card-text">Semillas de girasol gigante. Perfectas para jardines soleados y atraer
+                                polinizadores.</p>
+                            <p class="text-decoration-line-through small">S/21.00</p>
+                            <p class="fw-bold">S/20.00</p>
+                            <button class="btn btn-primary w-100"><i class="bi bi-cart-plus"></i> Añadir al
+                                carrito</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <span class="discount-tag">-5%</span>
+                        <span class="badge-bestseller">Bestseller</span>
+                        <img src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/1.0.0/img/300x200.png"
+                            class="card-img-top" alt="Semillas 4">
+                        <div class="card-body">
+                            <h5 class="card-title">Mix Hierbas Aromáticas</h5>
+                            <div class="rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <small class="text-muted">(103)</small>
+                            </div>
+                            <p class="card-text">Conjunto de 5 variedades de hierbas culinarias. Incluye guía de cultivo
+                                y cosecha.</p>
+                            <p class="text-decoration-line-through small">S/15.80</p>
+                            <p class="fw-bold">S/15.00</p>
+                            <button class="btn btn-primary w-100"><i class="bi bi-cart-plus"></i> Añadir al
+                                carrito</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="Semillas.html" class="btn btn-outline-success btn-lg">Ver todas las semillas</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Herramientas -->
+    <section class="container-fluid product-section">
+        <div class="container">
+            <h2 class="text-center section-title">Herramientas de Jardinería</h2>
+            <p class="intro-text">
+                Las herramientas adecuadas hacen la diferencia en el cuidado de tus plantas. Descubre nuestra selección
+                de calidad profesional.
+            </p>
+
+            <div class="row">
+                <div class="col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <span class="discount-tag">-5%</span>
+                        <img src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/1.0.0/img/300x200.png"
+                            class="card-img-top" alt="Herramienta 1">
+                        <div class="card-body">
+                            <h5 class="card-title">Set de Jardinería 3 piezas</h5>
+                            <div class="rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star"></i>
+                                <small class="text-muted">(28)</small>
+                            </div>
+                            <p class="card-text">Kit básico con pala, rastrillo y tijeras. Mango ergonómico y funda
+                                incluida.</p>
+                            <p class="text-decoration-line-through small">S/15.80</p>
+                            <p class="fw-bold">S/15.00</p>
+                            <button class="btn btn-primary w-100"><i class="bi bi-cart-plus"></i> Añadir al
+                                carrito</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <span class="discount-tag">-5%</span>
+                        <img src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/1.0.0/img/300x200.png"
+                            class="card-img-top" alt="Herramienta 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Tijeras de Podar Premium</h5>
+                            <div class="rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-half"></i>
+                                <small class="text-muted">(56)</small>
+                            </div>
+                            <p class="card-text">Acero inoxidable de alta resistencia. Corte preciso para todas tus
+                                plantas.</p>
+                            <p class="text-decoration-line-through small">S/15.80</p>
+                            <p class="fw-bold">S/15.00</p>
+                            <button class="btn btn-primary w-100"><i class="bi bi-cart-plus"></i> Añadir al
+                                carrito</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <span class="discount-tag">-5%</span>
+                        <img src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/1.0.0/img/300x200.png"
+                            class="card-img-top" alt="Herramienta 3">
+                        <div class="card-body">
+                            <h5 class="card-title">Regadera Decorativa</h5>
+                            <div class="rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star"></i>
+                                <i class="bi bi-star"></i>
+                                <small class="text-muted">(19)</small>
+                            </div>
+                            <p class="card-text">Metal con acabado vintage. Funcional y decorativa para interior o
+                                exterior.</p>
+                            <p class="text-decoration-line-through small">S/10.50</p>
+                            <p class="fw-bold">S/10.00</p>
+                            <button class="btn btn-primary w-100"><i class="bi bi-cart-plus"></i> Añadir al
+                                carrito</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <span class="discount-tag">-5%</span>
+                        <img src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/1.0.0/img/300x200.png"
+                            class="card-img-top" alt="Herramienta 4">
+                        <div class="card-body">
+                            <h5 class="card-title">Guantes de Jardinería</h5>
+                            <div class="rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star"></i>
+                                <small class="text-muted">(37)</small>
+                            </div>
+                            <p class="card-text">Resistentes a espinas y humedad. Interior suave y respirable para mayor
+                                comodidad.</p>
+                            <p class="text-decoration-line-through small">S/21.00</p>
+                            <p class="fw-bold">S/20.00</p>
+                            <button class="btn btn-primary w-100"><i class="bi bi-cart-plus"></i> Añadir al
+                                carrito</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="Herramientas.html" class="btn btn-outline-success btn-lg">Ver todas las herramientas</a>
+            </div>
+        </div>
+    </section>
+
+    
+    <!-- Sección Testimonios -->
+     <!-- Sección Testimonios -->
+<section class="container-fluid bg-light py-5">
+    <div class="container">
+        <h2 class="text-center section-title mb-5">Lo que dicen nuestros clientes</h2>
+
+        <!-- Contenedor de testimonios donde se agregarán los nuevos -->
+        <div class="row" id="testimonios-container">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="rating mb-3">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                        <p class="card-text fst-italic">"Las plantas llegaron en perfecto estado. El empaque fue
+                            excelente y la atención al cliente de primera. Definitivamente volveré a comprar en
+                            AinboFlora."</p>
+                        <div class="d-flex align-items-center mt-3">
+                            <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center"
+                                style="width: 50px; height: 50px;">
+                                <span class="fw-bold">MC</span>
+                            </div>
+                            <div class="ms-3">
+                                <h6 class="mb-0">María Campos</h6>
+                                <small class="text-muted">Lima, Perú</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- Botón para agregar testimonio -->
+        <div class="text-center mt-4">
+            <button class="btn btn-success btn-lg px-4 py-2" id="btnAgregarTestimonio">
+                <i class="bi bi-pencil-square me-2"></i>Dejar tu comentario
+            </button>
+        </div>
+
+        <!-- Formulario para nuevo testimonio (inicialmente oculto) -->
+        <div class="row justify-content-center mt-4 d-none" id="formularioTestimonio">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h4 class="card-title text-center mb-4">Comparte tu experiencia con AinboFlora</h4>
+                        <form id="nuevoTestimonioForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="nombreTestimonio" class="form-label">Nombre completo</label>
+                                    <input type="text" class="form-control" id="nombreTestimonio" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="ubicacionTestimonio" class="form-label">Ubicación (Ciudad, País)</label>
+                                    <input type="text" class="form-control" id="ubicacionTestimonio" required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">¿Cómo calificarías tu experiencia?</label>
+                                <div class="rating-input text-center mb-2">
+                                    <i class="bi bi-star fs-3 mx-1" data-rating="1"></i>
+                                    <i class="bi bi-star fs-3 mx-1" data-rating="2"></i>
+                                    <i class="bi bi-star fs-3 mx-1" data-rating="3"></i>
+                                    <i class="bi bi-star fs-3 mx-1" data-rating="4"></i>
+                                    <i class="bi bi-star fs-3 mx-1" data-rating="5"></i>
+                                    <input type="hidden" id="calificacionTestimonio" value="0" required>
+                                </div>
+                                <small class="text-muted d-block text-center">Selecciona de 1 a 5 estrellas</small>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="comentarioTestimonio" class="form-label">Tu comentario</label>
+                                <textarea class="form-control" id="comentarioTestimonio" rows="4" placeholder="Cuéntanos tu experiencia con nuestros productos..." required></textarea>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="button" class="btn btn-outline-secondary" id="btnCancelarTestimonio">Cancelar</button>
+                                <button type="submit" class="btn btn-success px-4">Publicar comentario</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Banner Newsletter -->
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-10 col-lg-8">
+                    <div class="card border-0 shadow">
+                        <div class="card-body p-5">
+                            <div class="row align-items-center">
+                                <div class="col-md-7 mb-3 mb-md-0">
+                                    <h3 class="text-success">¡Únete a nuestra comunidad!</h3>
+                                    <p>Recibe consejos de jardinería, ofertas exclusivas y novedades directamente en tu
+                                        correo.</p>
+                                </div>
+                                <div class="col-md-5">
+                                    <form>
+                                        <div class="input-group mb-2">
+                                            <input type="email" class="form-control" placeholder="Tu correo electrónico"
+                                                required>
+                                            <button class="btn btn-success" type="submit">Suscribirse</button>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="privacyCheck" required>
+                                            <label class="form-check-label small" for="privacyCheck">
+                                                Acepto recibir comunicaciones de AinboFlora
+                                            </label>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Sección de Contacto -->
+    <section id="seccion-contacto" class="border-bottom border-secondary border-2">
+        <div id="bg-contactos">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#198754" fill-opacity="1"
+                    d="M0,32L120,42.7C240,53,480,75,720,74.7C960,75,1200,53,1320,42.7L1440,32L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z">
+                </path>
+            </svg>
+        </div>
+
+        <div class="container border-top border-primary rounded-3 bg-white p-4"
+            style="max-width: 600px; margin-top: -180px;" id="contenedor-formulario">
+            <div class="text-center mb-4" id="titulo-formulario">
+                <h2>Contáctanos</h2>
+                <p class="fs-5">Estamos aquí para ayudarte con tus proyectos de jardinería</p>
+            </div>
+
+            <form method="POST" data-netlify="true" action="#">
+                <div class="mb-3">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Tu correo electrónico"
+                        required>
+                </div>
+
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Tu nombre" required>
+                </div>
+
+                <div class="mb-3">
+                    <input type="tel" class="form-control" name="phone" id="phone" placeholder="Tu teléfono">
+                </div>
+
+                <div class="mb-3">
+                    <select class="form-select" name="motivo" id="motivo">
+                        <option selected disabled>Selecciona el motivo de contacto</option>
+                        <option value="informacion">Información de productos</option>
+                        <option value="pedido">Consulta sobre mi pedido</option>
+                        <option value="reclamo">Reclamo</option>
+                        <option value="sugerencia">Sugerencia</option>
+                        <option value="otros">Otros</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <textarea class="form-control" name="message" id="message" rows="4" placeholder="Tu mensaje..."
+                        required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-success w-100 fs-5">Enviar Mensaje</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Información de la Tienda -->
+    <section class="container py-5">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="d-flex align-items-center mb-3">
+                    <i class="bi bi-truck fs-1 text-success me-3"></i>
+                    <div>
+                        <h4>Envío Gratis</h4>
+                        <p class="mb-0">En pedidos mayores a S/100</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="d-flex align-items-center mb-3">
+                    <i class="bi bi-shield-check fs-1 text-success me-3"></i>
+                    <div>
+                        <h4>Garantía de Calidad</h4>
+                        <p class="mb-0">Productos de primera calidad</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="d-flex align-items-center mb-3">
+                    <i class="bi bi-headset fs-1 text-success me-3"></i>
+                    <div>
+                        <h4>Soporte 24/7</h4>
+                        <p class="mb-0">Atención personalizada</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pie de página mejorado -->
+    <footer class="w-100 pt-5 pb-4">
+        <div class="container">
+            <div class="row pb-3">
+                <div class="col-md-3 mb-4">
+                    <h5 class="text-white mb-3">AinboFlora</h5>
+                    <p class="text-white-50">Tu tienda de jardinería online en Perú. Ofrecemos plantas, maceteros,
+                        semillas y herramientas de la mejor calidad.</p>
+                    <div id="iconos" class="mt-3">
+                        <a href="https://www.facebook.com/asociacionbotanicadelperu/?locale=es_LA" class="me-2"><i
+                                class="bi bi-facebook"></i></a>
+                        <a href="#" class="me-2"><i class="bi bi-twitter"></i></a>
+                        <a href="https://www.instagram.com/aportebotanico/?hl=es" class="me-2"><i
+                                class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="text-white mb-3">Enlaces Rápidos</h5>
+                    <ul class="list-unstyled text-white-50">
+                        <li class="mb-2"><a href="Plantas.html" class="text-decoration-none text-white-50">Plantas</a>
+                        </li>
+                        <li class="mb-2"><a href="Maceteros.html"
+                                class="text-decoration-none text-white-50">Maceteros</a></li>
+                        <li class="mb-2"><a href="Semillas.html" class="text-decoration-none text-white-50">Semillas</a>
+                        </li>
+                        <li class="mb-2"><a href="Herramientas.html"
+                                class="text-decoration-none text-white-50">Herramientas</a></li>
+                        <li><a href="Catálogo.html" class="text-decoration-none text-white-50">Catálogo Completo</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="text-white mb-3">Ayuda</h5>
+                    <ul class="list-unstyled text-white-50">
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-white-50">Cómo Comprar</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-white-50">Rastreo de Pedidos</a>
+                        </li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-white-50">Devoluciones</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-white-50">Preguntas Frecuentes</a>
+                        </li>
+                        <li><a href="#" class="text-decoration-none text-white-50">Términos y Condiciones</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="text-white mb-3">Contacto</h5>
+                    <ul class="list-unstyled text-white-50">
+                        <li class="mb-2"><i class="bi bi-geo-alt me-2"></i> Av. Javier Prado Este 4600, Lima</li>
+                        <li class="mb-2"><i class="bi bi-telephone me-2"></i> (01) 123-4567</li>
+                        <li class="mb-2"><i class="bi bi-whatsapp me-2"></i> +51 987 654 321</li>
+                        <li><i class="bi bi-envelope me-2"></i> info@ainboflora.pe</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="border-light">
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <p class="text-white-50 mb-0">AinboFlora &copy; Todos Los Derechos Reservados 2025</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="text-white-50 mb-0">
+                        <img src="https://cdnjs.cloudflare.com/ajax/libs/placeholder/1.0.0/img/100x30.png"
+                            alt="Métodos de pago" height="30">
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botón flotante de WhatsApp -->
+    <a href="https://wa.me/51987654321" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1000;"
+        target="_blank">
+        <div class="bg-success text-white rounded-circle d-flex justify-content-center align-items-center shadow"
+            style="width: 60px; height: 60px;">
+            <i class="bi bi-whatsapp fs-2"></i>
+        </div>
+    </a>
+
+    <!-- Overlay para fondo oscuro -->
+    <div class="overlay" id="overlay" onclick="cerrarCarrito()"></div>
+
+    <!-- Carrito lateral -->
+    <div class="carrito-lateral" id="carrito">
+        <div class="carrito-encabezado">
+            <h3>Mi Carrito</h3>
+            <button class="cerrar-carrito" onclick="cerrarCarrito()">×</button>
+        </div>
+        <div class="carrito-contenido" id="carrito-items"></div>
+        <div class="carrito-resumen">
+            <div class="subtotal">
+                <span>Subtotal:</span>
+                <span id="subtotal-valor">S/. 0.00</span>
+            </div>
+            <div class="envio">
+                <span>Envío:</span>
+                <span id="envio-valor" class="text-success">Gratis</span>
+            </div>
+            <div class="cupon-container">
+                <button class="cupon-toggle" onclick="toggleCupon()">¿Tienes un cupón de descuento?</button>
+                <div class="cupon-input" id="cupon-input">
+                    <input type="text" id="codigo-cupon" placeholder="Ingresa tu código">
+                    <button onclick="aplicarCupon()">Aplicar</button>
+                </div>
+                <p id="cupon-mensaje" class="text-success mt-2" style="display: none;">Cupón aplicado: -20%</p>
+            </div>
+            <div class="total">
+                <span>Total:</span>
+                <span id="total-valor">S/. 0.00</span>
+            </div>
+            <button class="tramitar-pedido" onclick="window.location.href='pasarela.html'">Tramitar pedido</button>
+        </div>
+    </div>
+
+
+    <!-- Chatbox Flotante -->
+<div class="chat-widget">
+    <div class="chat-icon" id="chatIcon">
+      <i class="fas fa-comment-dots"></i>
+      <span class="notification-badge">1</span>
+    </div>
+  
+    <div class="chat-container" id="chatContainer">
+      <div class="chat-header">
+        <div class="d-flex align-items-center">
+          <div class="avatar me-2"><i class="fas fa-robot"></i></div>
+          <div>
+            <h6 class="mb-0">Soporte en línea</h6>
+            <small class="status-text">En línea</small>
+          </div>
+        </div>
+        <button class="btn-close" id="closeChat"></button>
+      </div>
+  
+      <div class="chat-messages" id="chatMessages">
+        <div class="message received">
+          <div class="message-content">
+            <p>¡Hola! 👋 ¿En qué puedo ayudarte hoy?</p>
+            <span class="message-time">10:00 AM</span>
+          </div>
+        </div>
+      </div>
+  
+      <div class="chat-input-area">
+        <input type="text" id="userMessage" class="form-control" placeholder="Escribe tu mensaje...">
+        <button class="btn btn-primary" id="sendMessage"><i class="fas fa-paper-plane"></i></button>
+      </div>
+    </div>
+  </div>
+  
+
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/index.js"></script>
+</body>
+
+</html>

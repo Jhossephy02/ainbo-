@@ -1,0 +1,106 @@
+--Codigo de verificacion
+html, body {
+  height: 100%;
+  margin: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.input-icon {
+  position: relative;
+}
+
+.input-icon input {
+  width: 100%;
+  padding-right: 40px;
+  padding: 10px;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 20%;
+  right: 10px;
+  transform: translateY(-10%);
+  cursor: pointer;
+}
+
+.resend-text {
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+
+.image-side {
+    flex: 1;
+    background: url('image/Flor\ en\ 4k.jpg') center/cover no-repeat;
+    border-radius: 20px;
+    margin-bottom: 100;
+    
+  }
+
+  .container {
+    display: flex;
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+    height: 94vh;
+    background-color: #99949481;
+    border-bottom-left-radius: 30px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    margin-top: 10px;
+  }
+  .login-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #2e7d32;
+    color: rgb(10, 2, 2);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+.login-form {
+  flex: 1;
+  padding: 60px 40px;
+}
+
+.login-form p {
+  color: #777;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+.login-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.login-form input[type="password"] {
+  padding: 10px;
+  margin-bottom: 15px;
+  
+}
+
+
+

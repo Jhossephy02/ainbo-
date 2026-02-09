@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbox Flotante</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Estilos CSS irían aquí */
+        /* Los copiaré en la siguiente sección para mejor organización */
+    </style>
+
+    <link rel="stylesheet" href="css/ChatBox.css">
+</head>
+<body>
+    <!-- Contenido de tu página -->
+    <div class="container mt-5">
+        <h1>Mi Sitio Web</h1>
+        <p>Contenido de ejemplo...</p>
+    </div>
+
+    <!-- Chat Widget -->
+    <div class="chat-widget">
+        <!-- Icono flotante -->
+        <div class="chat-icon" id="chatIcon">
+            <i class="fas fa-comment-dots"></i>
+            <span class="notification-badge">1</span>
+        </div>
+        
+        <!-- Ventana de chat (inicialmente oculta) -->
+        <div class="chat-container" id="chatContainer">
+            <div class="chat-header">
+                <div class="d-flex align-items-center">
+                    <div class="avatar me-2">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-0">Soporte en línea</h6>
+                        <small class="status-text">En línea</small>
+                    </div>
+                </div>
+                <button class="btn-close" id="closeChat"></button>
+            </div>
+            
+            <div class="chat-messages" id="chatMessages">
+                <!-- Mensaje de bienvenida -->
+                <div class="message received">
+                    <div class="message-content">
+                        <p>¡Hola! 👋 ¿En qué puedo ayudarte hoy?</p>
+                        <span class="message-time">10:00 AM</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-input-area">
+                <input type="text" id="userMessage" class="form-control" placeholder="Escribe tu mensaje..." autocomplete="off">
+                <button class="btn btn-primary" id="sendMessage">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS y Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Código JavaScript iría aquí
+
+        // Lo mostraré en la siguiente sección
+    </script>
+
+    <script src="js/chatbox.js"></script>
+</body>
+</html>

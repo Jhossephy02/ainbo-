@@ -1,0 +1,125 @@
+
+body {
+  font-family: 'Quicksand', sans-serif;
+  background-color: #f2f2f2;
+  padding: 40px;
+}
+.modal {
+  max-width: 600px;
+  margin: 0 auto;
+  background: white;
+  padding: 30px 40px;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+}
+label {
+  display: block;
+  font-weight: 600;
+  margin: 12px 0 6px;
+  color: #444;
+}
+input[type="text"],
+select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+}
+.row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.column {
+  flex: 1;
+}
+.toggle-group {
+  display: flex;
+  gap: 10px;
+}
+.toggle {
+  flex: 1;
+  padding: 10px;
+  background: #e0f2f1;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  color: #2e7d32;
+  cursor: pointer;
+}
+.toggle.active {
+  background: #66bb6a;
+  color: white;
+}
+.hidden {
+  display: none;
+}
+.warning {
+  background-color: #fff9c4;
+  color: #827717;
+  padding: 0.9rem;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  margin-top: 1.5rem;
+}
+.summary {
+  margin-top: 1.5rem;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+}
+.btn.primary {
+  background: #388e3c;
+  color: white;
+}
+.btn.secondary {
+  background: #e0e0e0;
+}
+
+
+select#protectionOption {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1rem;
+}
+
+.checkout-btn{
+    margin: 40px auto;
+    display: block;
+    padding: 10px 20px;
+    background-color: #6da06f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn.save {
+  background: #3be535;
+  color: white;
+}
+
+

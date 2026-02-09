@@ -1,0 +1,106 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: auto;
+  }
+  
+  .carrito {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 400px;
+    height: 100vh;
+    background-color: #eaf4e7;
+    padding: 5px;
+    border-radius: 0 0 0 14px;
+    box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+    overflow-y: auto;
+  }
+  
+  .encabezado {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .cerrar {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .producto {
+    display: flex;
+    margin: 10px 0;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+  }
+  
+  .producto img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 10px;
+  }
+  
+  .info h4 {
+    margin: 0;
+  }
+  
+  .cantidad {
+    margin-top: 5px;
+  }
+  
+  .cantidad button {
+    width: 25px;
+    height: 25px;
+  }
+  
+  #cupon-section input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  #cupon-section button {
+    width: 100%;
+    background-color: #109e15;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    margin-top: 5px;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .resumen {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+  }
+  
+  .resumen-items {
+    background-color: #d7e4d5;
+    padding: 8px;
+    border-radius: 5px;
+    margin: 8px 0;
+  }
+  
+  .tramitar {
+    width: 100%;
+    background-color: #003c14;
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AinboFlora - Iniciar Sesión</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/Login.css">
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sección de login -->
+      <div class="col-lg-6 login-section">
+        <div class="login-container">
+          <div class="login-header">
+            <h1>¡Bienvenido!</h1>
+            <p>Conéctate para acceder a tu cuenta de AinboFlora</p>
+          </div>
+          
+          <form  id="login-form">
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control" id="email" placeholder="Email" required>
+              <label for="email">Correo electrónico</label>
+            </div>
+            
+            <div class="form-floating">
+              <input type="password" class="form-control" id="password" placeholder="Contraseña" required>
+              <label for="password">Contraseña</label>
+            </div>
+            
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="remember">
+                <label class="form-check-label" for="remember">
+                  Recuérdame
+                </label>
+              </div>
+              <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+            </div>
+            
+            <a type="submit" class="btn btn-primary btn-login" href="/index.html">INICIAR SESIÓN</a>
+          </form>
+          
+          <div class="divider">
+            <span>O continúa con</span>
+          </div>
+          
+          <div class="social-login">
+            <button class="social-btn">
+              <img src="https://cdn-icons-png.flaticon.com/128/5968/5968764.png" alt="Facebook">
+            </button>
+            <button class="social-btn">
+              <img src="https://cdn-icons-png.flaticon.com/512/281/281764.png" alt="Google">
+            </button>
+            <button class="social-btn">
+              <img src="https://cdn-icons-png.flaticon.com/128/25/25345.png" alt="Apple">
+            </button>
+          </div>
+          
+          <div class="signup-link">
+            ¿No tienes una cuenta? <a href="crearCuenta.html">Regístrate ahora</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Sección de imagen -->
+      <div class="col-lg-6 image-section d-none d-lg-block">
+        <div class="overlay"></div>
+        <div class="brand-overlay">
+          <a href="index.html">AinboFlora.</a>
+        </div>
+        <img src="/img/FlorHermosaComoTu.jpg" alt="Plantas y flores">
+        <div class="image-text">
+          <h2>Cultiva tu paraíso personal</h2>
+          <p>Únete a nuestra comunidad y descubre consejos, ofertas exclusivas y mucho más para tu jardín.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="js/LoginCuenta.js"></script>
+</body>
+</html>

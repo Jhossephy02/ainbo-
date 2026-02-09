@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="css/pasarela.css">
+</head>
+<body>
+    <div class="checkout-wrapper">
+        <form class="checkout-form">
+            <p class="cuenta">¿Tienes cuenta? <a href="#">Identifícate o créala ahora</a></p>
+            <input type="email" placeholder="Tu correo electrónico">
+            <h2>1. ¿Dónde entregamos tu pedido?</h2>
+            <input type="text" placeholder="Nombre completo">
+            <input type="text" placeholder="Teléfono del destinatario">
+            <input type="text" placeholder="Dirección de entrega (calle & número)">
+            <input type="text" placeholder="Piso o puerta">
+            <input type="text" placeholder="Código postal">
+            <input type="text" placeholder="Población (España)">
+            <label><input type="checkbox"> ¿Quieres una factura?</label>
+
+            <h2>2. Método de pago</h2>
+            <div class="payment-options">
+                <button type="button" class="pay-option visa" onclick="cambiarPago(event, 'visa', this)">
+                    <img src="https://cdn-icons-png.flaticon.com/512/349/349221.png" width="20"> Visa
+                </button>
+                <button type="button" class="pay-option paypal" onclick="cambiarPago(event, 'paypal', this)">
+                    <img src="https://cdn-icons-png.flaticon.com/512/196/196565.png" width="20"> PayPal
+                </button>
+                <button type="button" class="pay-option yape" onclick="cambiarPago(event, 'yape', this)">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1170/1170576.png" width="20"> YAPE
+                </button>
+            </div>
+            <div id="detallesPago"></div>
+
+            <button id="finalizarBtn" type="button" class="finalizar" onclick="irAPago()">🛒 Finalizar compra</button>
+            <p class="nota">¿Qué sucederá después? Recibirás un correo de confirmación y comenzaremos a preparar tu pedido. Al continuar aceptas los <a href="#">términos y condiciones</a>.</p>
+        </form>
+
+        <aside class="resumen-pedido">
+            <h3>Tu pedido #86052172</h3>
+            <ul>
+                <li><img src="https://via.placeholder.com/40" alt="Macetero"><br><strong>Macetero Toronto - L/18cm</strong><br>S/20,00</li>
+                <li><img src="https://via.placeholder.com/40" alt="Lirio"><br><strong>Lirio Araña - Exótica Belleza</strong><br>S/54,00</li>
+            </ul>
+            <p>Envío: <strong>gratis</strong></p>
+            <p><strong>Total: S/74,00</strong></p>
+            <p>⭐ 4.5 (Google Rating)</p>
+            <p><strong>Por LEE</strong><br>Unas plantas muy bonitas...</p>
+            <p><strong>Por JHOSSEPHY</strong><br>Maravillosas, preciosas, ideales...</p>
+            <p><strong>Por KENNY</strong><br>Llevaba tiempo esperando nuevas plantas...</p>
+        </aside>
+    </div>
+    <button class="cotizar-btn" onclick="abrirCotizador()">Cotiza de envío</button>
+
+    <script src="js/pasarela.js"></script>
+</body>
+</html>

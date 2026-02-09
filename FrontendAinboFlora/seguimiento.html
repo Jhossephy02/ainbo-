@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>regla de envío</title>
+  <link rel="stylesheet" href="Css/seguimiento.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet" />
+
+
+
+  
+</head>
+<body>
+
+  <h2>🌱 Nuevo envío</h2>
+  <div class="modal">
+    <form id="shippingForm">
+      <label>Nombre <span class="required">*</span></label>
+      <input type="text" required placeholder="Nombre del destinatario" />
+
+      <div class="row">
+        <div class="column">
+          <label>Tipo de envío</label>
+          <div class="toggle-group">
+            <button type="button" class="toggle active" id="btn-nacional">Nacional</button>
+            <button type="button" class="toggle" id="btn-internacional">Internacional</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="envio-nacional" class="space-y-4">
+        <div>
+          <label>Departamento</label>
+          <select id="departamento" class="w-full border rounded p-2">
+            <option value="">Selecciona un departamento</option>
+          </select>
+        </div>
+        <div>
+          <label>Provincia</label>
+          <select id="provincia" class="w-full border rounded p-2" disabled>
+            <option value="">Selecciona una provincia</option>
+          </select>
+        </div>
+        <div>
+          <label>Distrito</label>
+          <select id="distrito" class="w-full border rounded p-2" disabled>
+            <option value="">Selecciona un distrito</option>
+          </select>
+        </div>
+        <div>
+          <label>Dirección</label>
+          <input type="text" class="w-full border rounded p-2" placeholder="Dirección" />
+        </div>
+      </div>
+
+      <div id="form-internacional" class="form-section hidden">
+        <div id="envio-internacional">
+          <label>País</label>
+          <select>
+            <option>Selecciona un país</option>
+            <!-- Opciones aquí -->
+          </select>
+      
+          <label>Ciudad</label>
+          <input type="text" placeholder="Ciudad">
+      
+          <label>Dirección</label>
+          <input type="text" placeholder="Dirección">
+        </div>
+      </div>
+      
+
+      <label>Protección del paquete</label>
+      <select id="protectionOption">
+        <option value="0">Sin protección (S/ 0.00)</option>
+        <option value="5">Protección básica (S/ 5.00)</option>
+        <option value="10">Protección premium (S/ 10.00)</option>
+      </select>
+
+      <label>Precio del envío (S/)</label>
+      <input type="number" id="shippingPrice" placeholder="0.00" step="0.01" />
+
+      <button type="submit">Guardar</button>
+    </form> 
+
+    <div class="resumen">
+      <h3>Resumen del pedido</h3>
+      <p>Total estimado: <strong id="totalPrice">S/ 0.00</strong></p>
+    </div>
+
+    <div class="buttons">
+      <button class="btn save" onclick="guardarDatos()">Guardar</button>
+    </div>
+  </div>
+
+  <div id="checkout-modal" class="hidden">
+    <div class="checkout-content">
+      <h2>🚀 ¡Listo para ir a la caja!</h2>
+      <p>Redireccionando a la siguiente etapa...</p>
+      <button onclick="cerrarModal()" class="btn-modal">Cerrar</button>
+    </div>
+  </div>
+
+  <button class="checkout-btn" onclick="irACheckout()">Ir a caja</button>
+
+  <script src="js/seguimiento.js"></script>
+</body>
+</html>
