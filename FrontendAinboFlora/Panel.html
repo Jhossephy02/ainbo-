@@ -53,19 +53,7 @@
                   <th>Teléfono</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>Juan Pérez</td>
-                  <td>juanperez@gmail.com</td>
-                  <td>555-1234</td>
-                </tr>
-                <tr>
-                  <td>María Gómez</td>
-                  <td>mariagomez@yahoo.com</td>
-                  <td>555-5678</td>
-                </tr>
-                <!-- Agrega más clientes aquí -->
-              </tbody>
+              <tbody id="usuariosBody"></tbody>
             </table>
           </div>
         </div>
@@ -74,6 +62,53 @@
   </div>
 
   <script>
+    const host = window.location.hostname || 'localhost';
+    const API_BASE = window.AINBO_API || `http://${host}:3000/api`;
+    const token = localStorage.getItem('token') || '';
+    const usuarioStr = localStorage.getItem('usuario') || '';
+    try {
+      const usuario = usuarioStr ? JSON.parse(usuarioStr) : null;
+      const rol = (usuario && (usuario.Rol || usuario.rol)) || 'usuario';
+      if (rol !== 'admin') {
+        window.location.replace('perfil.html');
+      }
+    } catch {}
+
+    async function cargarUsuarios() {
+      const tbody = document.getElementById('usuariosBody');
+      if (!tbody) return;
+      tbody.innerHTML = '<tr><td colspan="3" class="text-muted">Cargando...</td></tr>';
+      try {
+        const resp = await fetch(`${API_BASE}/admin/usuarios`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const j = await resp.json();
+        if (!resp.ok) {
+          tbody.innerHTML = `<tr><td colspan="3" class="text-danger">${j.message || j.mensaje || 'Error cargando usuarios'}</td></tr>`;
+          return;
+        }
+        const usuarios = j.usuarios || [];
+        if (usuarios.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="3" class="text-muted">No hay usuarios registrados</td></tr>';
+          return;
+        }
+        tbody.innerHTML = '';
+        usuarios.forEach(u => {
+          const tr = document.createElement('tr');
+          const nombre = [u.Nombre, u.Apellido].filter(Boolean).join(' ') || (u.nombre_usuario || 'Usuario');
+          tr.innerHTML = `
+            <td>${nombre}</td>
+            <td>${u.Email || u.correo || '—'}</td>
+            <td>${u.NumeroCelular || '—'}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch {
+        tbody.innerHTML = '<tr><td colspan="3" class="text-danger">Error de conexión</td></tr>';
+      }
+    }
+    document.addEventListener('DOMContentLoaded', cargarUsuarios);
+
     // Gráfico de Barras - Ventas
     const ventasCtx = document.getElementById('ventasChart').getContext('2d');
     new Chart(ventasCtx, {
@@ -142,5 +177,6 @@
       }
     });
   </script>
+  <script>window.AINBO_API = 'http://127.0.0.1:3000/api';</script>
 </body>
 </html>

@@ -7,13 +7,35 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <link rel="stylesheet" href="css/style.css">
+  <script>tailwind.config = { corePlugins: { preflight: false } };</script>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-light">
-  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top" id="menu">
     <div class="container">
       <a class="navbar-brand" href="index.html"><span class="text-success fw-bold">AinboFlora.</span></a>
-      <div class="ms-auto d-flex align-items-center">
-        <button id="btnLogout" class="btn btn-outline-danger btn-sm">Cerrar sesión</button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="Rastreo.html">
+              <i class="bi bi-truck me-1"></i> Seguimiento
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="Login.html">
+              <i class="bi bi-person-circle me-1"></i> Accede al club
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="checkout.html">
+              <i class="bi bi-cart3 me-1"></i> Ver carrito
+            </a>
+          </li>
+        </ul>
+        <div class="d-flex">
+          <input class="form-control me-2" type="text" placeholder="Escribe aquí para buscar" aria-label="Buscar">
+          <button class="btn btn-primary btn-primary-outline-success" type="button">Buscar</button>
+        </div>
       </div>
     </div>
   </nav>
@@ -117,8 +139,21 @@
       </div>
     </div>
   </div>
-  <script>window.AINBO_API = 'http://localhost:3000/api';</script>
+  <script>window.AINBO_API = 'http://127.0.0.1:3000/api';</script>
   <script src="js/auth-guard.js"></script>
   <script src="js/perfil.js"></script>
+  <script>
+    (function(){
+      var nav=document.getElementById('menu')||document.querySelector('.navbar');
+      if(!nav) return;
+      function onScroll(){ if(window.scrollY>8){ nav.classList.add('scrolled'); } else { nav.classList.remove('scrolled'); } }
+      window.addEventListener('scroll', onScroll);
+      onScroll();
+      var links=nav.querySelectorAll('.nav-link, .dropdown-item');
+      var current=location.pathname.split('/').pop().toLowerCase()||'index.html';
+      function normalize(h){ try{ var p=new URL(h, location.href).pathname.split('/').pop().toLowerCase(); return p||'index.html'; }catch(e){ return h; } }
+      links.forEach(function(a){ var p=normalize(a.getAttribute('href')); if(p===current){ a.classList.add('active'); }});
+    })();
+  </script>
 </body>
 </html>

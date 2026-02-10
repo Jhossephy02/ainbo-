@@ -12,6 +12,8 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <script>tailwind.config = { corePlugins: { preflight: false } };</script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
@@ -36,56 +38,25 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-flower1 me-1"></i> Productos
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="catalogo.html?categoria=Plantas">Plantas</a></li>
-                            <li><a class="dropdown-item" href="catalogo.html?categoria=Maceteros">Maceteros</a></li>
-                            <li><a class="dropdown-item" href="catalogo.html?categoria=Abono">Semillas</a></li>
-                            <li><a class="dropdown-item" href="catalogo.html?categoria=Artículos de jardinería">Herramientas</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="catalogo.html">Catálogo Completo</a></li>
-                        </ul>
-                    </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="JardinVirtual.html">
-                            <i class="bi bi-tree me-1"></i> Jardín Virtual
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Blog.html">
-                            <i class="bi bi-journal-text me-1"></i> Blog
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Rastreo.html">
+                        <a class="nav-link" aria-current="page" href="Rastreo.html">
                             <i class="bi bi-truck me-1"></i> Seguimiento
                         </a>
                     </li>
-                </ul>
-
-                <div class="d-flex">
-                    <form class="d-flex me-2">
-                        <input class="form-control me-2" type="search" placeholder="¿Qué estás buscando?"
-                            aria-label="Buscar">
-                        <button class="btn btn-outline-success" type="submit">Buscar</button>
-                    </form>
-                    <div class="d-flex align-items-center">
-                        <a class="nav-link me-2" id="user-link" href="perfil.html">
-                            <i class="bi bi-person-circle fs-5"></i>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Login.html">
+                            <i class="bi bi-person-circle me-1"></i> Accede al club
                         </a>
-
-                        <button class="btn-carrito nav-link position-relative" onclick="abrirCarrito()" style="background:none; border:none;">
-                            <i class="bi bi-cart3 fs-5"></i>
-                            <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
-                          </button>
-
-                    </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="checkout.html">
+                            <i class="bi bi-cart3 me-1"></i> Ver carrito
+                        </a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <input id="globalSearchInput" class="form-control me-2" type="text" placeholder="Escribe aquí para buscar" aria-label="Buscar">
+                    <button id="globalSearchBtn" class="btn btn-primary btn-primary-outline-success" type="button">Buscar</button>
                 </div>
             </div>
         </div>
@@ -94,57 +65,68 @@
     <!-- Banner Principal -->
     <section class="banner-section">
         <div class="container">
-            <h1 class="display-4 fw-bold">Transforma tu hogar con naturaleza</h1>
-            <p class="lead">Plantas, maceteros y herramientas de la mejor calidad para tu jardín</p>
+            <h1 class="display-4 fw-bold">Somos productores de grass natural</h1>
+            <p class="lead">Venta de palmeras, plantas ornamentales y paisajismo para tu jardín</p>
             <button class="btn btn-success btn-lg mt-3">Ver Ofertas</button>
         </div>
     </section>
 
-    <!-- Categorías principales como cards -->
+    <!-- Nuestros Productos -->
     <div class="container mb-5">
-        <h2 class="text-center mb-4 section-title">Nuestras Categorías</h2>
+        <h2 class="text-center mb-4 section-title">Nuestros Productos</h2>
         <div class="row">
             <div class="col-6 col-md-3 mb-4">
                 <div class="card h-100 text-center category-buttons">
-                    <img src="img/Flor en 4k.jpg"
-                        class="card-img-top" alt="Plantas">
+                    <img src="img/verdes.jpg"
+                        class="card-img-top" alt="Grass Natural">
                     <div class="card-body">
-                        <h5 class="card-title">Plantas</h5>
-                        <p class="card-text small">Plantas de interior y exterior</p>
-                        <a href="catalogo.html?categoria=Plantas" class="btn btn-outline-success">Ver Plantas</a>
+                        <h5 class="card-title">Grass Natural</h5>
+                        <p class="card-text small">Productores y colocación profesional</p>
+                        <a href="catalogo.html?categoria=Plantas" class="btn btn-outline-success">Ver grass</a>
                     </div>
                 </div>
             </div>
             <div class="col-6 col-md-3 mb-4">
                 <div class="card h-100 text-center category-buttons">
-                    <img src="img/Ceramica1.jpg"
-                        class="card-img-top" alt="Maceteros">
+                    <img src="img/Flor en 4k.jpg"
+                        class="card-img-top" alt="Palmeras">
                     <div class="card-body">
-                        <h5 class="card-title">Maceteros</h5>
-                        <p class="card-text small">Decorativos y funcionales</p>
-                        <a href="catalogo.html?categoria=Maceteros" class="btn btn-outline-success">Ver Maceteros</a>
+                        <h5 class="card-title">Palmeras</h5>
+                        <p class="card-text small">Venta y trasplante especializado</p>
+                        <a href="catalogo.html?categoria=Plantas" class="btn btn-outline-success">Ver palmeras</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3 mb-4">
+                <div class="card h-100 text-center category-buttons">
+                    <img src="img/verdes.jpg"
+                        class="card-img-top" alt="Plantas ornamentales">
+                    <div class="card-body">
+                        <h5 class="card-title">Plantas ornamentales</h5>
+                        <p class="card-text small">Variedad para interior y exterior</p>
+                        <a href="catalogo.html?categoria=Plantas" class="btn btn-outline-success">Ver plantas</a>
                     </div>
                 </div>
             </div>
             <div class="col-6 col-md-3 mb-4">
                 <div class="card h-100 text-center category-buttons">
                     <img src="img/Semilla1.jpg"
-                        class="card-img-top" alt="Semillas">
+                        class="card-img-top" alt="Abonos">
                     <div class="card-body">
-                        <h5 class="card-title">Semillas</h5>
-                        <p class="card-text small">Cultiva tu propio jardín</p>
-                        <a href="catalogo.html?categoria=Abono" class="btn btn-outline-success">Ver Semillas</a>
+                        <h5 class="card-title">Abonos</h5>
+                        <p class="card-text small">Nutrición para crecimiento saludable</p>
+                        <a href="catalogo.html?categoria=Abono" class="btn btn-outline-success">Ver abonos</a>
                     </div>
                 </div>
             </div>
             <div class="col-6 col-md-3 mb-4">
                 <div class="card h-100 text-center category-buttons">
-                    <img src="img/Herramientas1.jpg"
-                        class="card-img-top" alt="Herramientas">
+                    <img src="img/Flor en 4k.jpg"
+                        class="card-img-top" alt="Árboles">
                     <div class="card-body">
-                        <h5 class="card-title">Herramientas</h5>
-                        <p class="card-text small">Para el cuidado profesional</p>
-                        <a href="catalogo.html?categoria=Artículos de jardinería" class="btn btn-outline-success">Ver Herramientas</a>
+                        <h5 class="card-title">Árboles</h5>
+                        <p class="card-text small">Surtido para proyectos residenciales</p>
+                        <a href="catalogo.html?categoria=Plantas" class="btn btn-outline-success">Ver árboles</a>
                     </div>
                 </div>
             </div>
@@ -256,6 +238,106 @@
                 </div>
                 <div class="row" id="productosDinamicos"></div>
             </div>
+        </div>
+    </section>
+
+    <section class="container product-section">
+        <div class="container">
+            <h2 class="text-center section-title">Nuestros Servicios</h2>
+            <div class="row">
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                        <h5 class="card-title">Asesoría de jardines</h5>
+                            <p class="card-text">Diseño y cuidado por especialistas para transformar tu espacio.</p>
+                        <a href="#seccion-contacto" class="btn btn-outline-success btn-sm mt-2">Cotizar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                        <h5 class="card-title">Fumigación</h5>
+                            <p class="card-text">Tratamientos seguros para proteger tus plantas y tu hogar.</p>
+                        <a href="#seccion-contacto" class="btn btn-outline-success btn-sm mt-2">Cotizar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                        <h5 class="card-title">Mantenimiento</h5>
+                            <p class="card-text">Servicio continuo para un jardín siempre radiante.</p>
+                        <a href="#seccion-contacto" class="btn btn-outline-success btn-sm mt-2">Cotizar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                        <h5 class="card-title">Paisajismo urbano</h5>
+                            <p class="card-text">Proyectos que mejoran la estancia y el bienestar.</p>
+                        <a href="#seccion-contacto" class="btn btn-outline-success btn-sm mt-2">Cotizar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <a href="mailto:info@ainboflora.pe" class="btn btn-success btn-lg">Solicita tu cotización</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculadora de Grass -->
+    <section class="container py-5">
+        <h2 class="text-center section-title mb-4">Calcula tu grass</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <label class="form-label">Ancho (m)</label>
+                                <input type="number" min="0" step="0.1" id="calcAncho" class="form-control" placeholder="Ej. 5.5">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label">Largo (m)</label>
+                                <input type="number" min="0" step="0.1" id="calcLargo" class="form-control" placeholder="Ej. 8">
+                            </div>
+                        </div>
+                        <div class="row g-3 mt-2">
+                            <div class="col-6">
+                                <label class="form-label">Precio referencial por m² (S/.)</label>
+                                <input type="number" min="0" step="0.1" id="calcPrecio" class="form-control" value="12">
+                            </div>
+                            <div class="col-6 d-flex align-items-end">
+                                <button id="calcBtn" class="btn btn-success w-100">Calcular</button>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Área estimada:</span>
+                                <strong id="calcArea">0 m²</strong>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span>Costo referencial:</span>
+                                <strong id="calcCosto">S/. 0.00</strong>
+                            </div>
+                        </div>
+                        <div class="mt-3 text-end">
+                            <a id="calcCotizar" href="#" class="btn btn-outline-primary btn-sm">Cotizar por WhatsApp</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Cotización rápida -->
+    <section class="container my-5">
+        <div class="p-5 bg-success bg-opacity-10 rounded-3 text-center">
+            <h2 class="section-title mb-3">Solicita tu cotización inmediata</h2>
+            <p class="mb-4">Un paso rápido para empezar tu proyecto de jardín con nosotros</p>
+            <a href="#seccion-contacto" class="btn btn-success btn-lg">Pedir cotización</a>
         </div>
     </section>
 
@@ -706,9 +788,45 @@
         </div>
     </section>
 
+    <!-- Nuestros Clientes -->
+    <section class="container py-5">
+        <h2 class="text-center section-title mb-4">Nuestros Clientes</h2>
+        <div class="row g-4 align-items-center justify-content-center">
+            <div class="col-6 col-md-2 text-center">
+                <div class="rounded-circle bg-success bg-opacity-10 d-inline-flex align-items-center justify-content-center" style="width:88px;height:88px;">
+                    <i class="bi bi-building text-success fs-2"></i>
+                </div>
+                <div class="small text-muted mt-2">Empresa</div>
+            </div>
+            <div class="col-6 col-md-2 text-center">
+                <div class="rounded-circle bg-success bg-opacity-10 d-inline-flex align-items-center justify-content-center" style="width:88px;height:88px;">
+                    <i class="bi bi-shop text-success fs-2"></i>
+                </div>
+                <div class="small text-muted mt-2">Tienda</div>
+            </div>
+            <div class="col-6 col-md-2 text-center">
+                <div class="rounded-circle bg-success bg-opacity-10 d-inline-flex align-items-center justify-content-center" style="width:88px;height:88px;">
+                    <i class="bi bi-house-heart text-success fs-2"></i>
+                </div>
+                <div class="small text-muted mt-2">Residencial</div>
+            </div>
+            <div class="col-6 col-md-2 text-center">
+                <div class="rounded-circle bg-success bg-opacity-10 d-inline-flex align-items-center justify-content-center" style="width:88px;height:88px;">
+                    <i class="bi bi-tree text-success fs-2"></i>
+                </div>
+                <div class="small text-muted mt-2">Parques</div>
+            </div>
+            <div class="col-6 col-md-2 text-center">
+                <div class="rounded-circle bg-success bg-opacity-10 d-inline-flex align-items-center justify-content-center" style="width:88px;height:88px;">
+                    <i class="bi bi-bricks text-success fs-2"></i>
+                </div>
+                <div class="small text-muted mt-2">Constructoras</div>
+            </div>
+        </div>
+    </section>
+
 
     <!-- Sección de Contacto -->
-    <section id="seccion-contacto" class="border-bottom border-secondary border-2">
         <div id="bg-contactos">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
                 <path fill="#198754" fill-opacity="1"
@@ -761,6 +879,49 @@
         </div>
     </section>
 
+    <!-- Datos y Ubicaciones -->
+    <section class="container py-5">
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Datos de contacto</h5>
+                        <ul class="list-unstyled mb-0">
+                      <li class="mb-2"><i class="bi bi-telephone me-2"></i> +51 978 011 943</li>
+                            <li class="mb-2"><i class="bi bi-whatsapp me-2"></i> +51 978 011 943</li>
+                            <li class="mb-2"><i class="bi bi-envelope me-2"></i> info@ainboflora.pe</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Ubicaciones</h5>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2"><i class="bi bi-geo-alt me-2"></i> Oficina principal: Lima</li>
+                            <li class="mb-2"><i class="bi bi-geo-alt me-2"></i> Oficina: Barranco</li>
+                            <li class="mb-2"><i class="bi bi-tree me-2"></i> Vivero: Lurín (Referencia Km 33)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row g-4 mt-1">
+            <div class="col-md-6">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Horario</h5>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2"><i class="bi bi-clock me-2"></i> Lunes a viernes: 6:00 am – 6:00 pm</li>
+                            <li class="mb-2"><i class="bi bi-clock me-2"></i> Sábados: 6:00 am – 1:00 pm</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Información de la Tienda -->
     <section class="container py-5">
         <div class="row">
@@ -793,6 +954,109 @@
             </div>
         </div>
     </section>
+
+    <!-- Ubícanos -->
+    <section class="container py-5">
+        <h2 class="text-center section-title mb-4">Ubícanos</h2>
+        <div class="ratio ratio-16x9 rounded-3 shadow-sm">
+            <iframe src="https://www.google.com/maps?q=Lima%20Peru&output=embed" title="Mapa AinboFlora" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </section>
+
+    <!-- Preguntas Frecuentes -->
+    <section class="container py-5">
+        <h2 class="text-center section-title mb-4">Preguntas Frecuentes</h2>
+        <div class="accordion" id="faqAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="faq1">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1c">
+                        ¿Hacen envíos a todo Lima?
+                    </button>
+                </h2>
+                <div id="faq1c" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Sí, realizamos envíos a todo Lima. Los pedidos mayores a S/100 tienen envío gratis.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="faq2">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2c">
+                        ¿Instalan el grass natural?
+                    </button>
+                </h2>
+                <div id="faq2c" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Sí. Ofrecemos producción, venta e instalación profesional de grass natural con mantenimiento.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="faq3">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3c">
+                        ¿Qué métodos de pago aceptan?
+                    </button>
+                </h2>
+                <div id="faq3c" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Aceptamos tarjeta, Yape y PagoEfectivo. También contamos con medios digitales.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="faq4">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4c">
+                        ¿Cómo solicito una cotización?
+                    </button>
+                </h2>
+                <div id="faq4c" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Puedes usar el botón “Pedir cotización” o escribirnos por WhatsApp. Respondemos el mismo día.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galería de Proyectos -->
+    <section class="container py-5">
+        <h2 class="text-center section-title mb-4">Galería de Proyectos</h2>
+        <div class="row g-3">
+            <div class="col-6 col-md-4">
+                <img src="img/verdes.jpg" class="img-fluid rounded-3 shadow-sm" alt="Proyecto 1">
+            </div>
+            <div class="col-6 col-md-4">
+                <img src="img/riego.jpg" class="img-fluid rounded-3 shadow-sm" alt="Proyecto 2">
+            </div>
+            <div class="col-6 col-md-4">
+                <img src="img/Ceramica7.jpg" class="img-fluid rounded-3 shadow-sm" alt="Proyecto 3">
+            </div>
+            <div class="col-6 col-md-4">
+                <img src="img/Ceramica2.jpg" class="img-fluid rounded-3 shadow-sm" alt="Proyecto 4">
+            </div>
+            <div class="col-6 col-md-4">
+                <img src="img/Herramienta4.jpg" class="img-fluid rounded-3 shadow-sm" alt="Proyecto 5">
+            </div>
+            <div class="col-6 col-md-4">
+                <img src="img/Semilla2.jpg" class="img-fluid rounded-3 shadow-sm" alt="Proyecto 6">
+            </div>
+        </div>
+    </section>
+
+    <!-- Barra de Contacto Fija -->
+    <div class="position-fixed bottom-0 start-0 end-0 bg-white border-top py-2 shadow-sm" style="z-index:1100;">
+        <div class="container d-flex justify-content-center gap-3">
+            <a href="https://wa.me/51978011943" target="_blank" class="btn btn-success">
+                <i class="bi bi-whatsapp me-1"></i> WhatsApp
+            </a>
+            <a href="tel:+51978011943" class="btn btn-outline-success">
+                <i class="bi bi-telephone me-1"></i> Llamar
+            </a>
+            <a href="#seccion-contacto" class="btn btn-outline-primary">
+                <i class="bi bi-clipboard-check me-1"></i> Cotizar
+            </a>
+        </div>
+    </div>
 
     <!-- Pie de página mejorado -->
     <footer class="w-100 pt-5 pb-4">
@@ -842,8 +1106,8 @@
                     <h5 class="text-white mb-3">Contacto</h5>
                     <ul class="list-unstyled text-white-50">
                         <li class="mb-2"><i class="bi bi-geo-alt me-2"></i> Av. Javier Prado Este 4600, Lima</li>
-                        <li class="mb-2"><i class="bi bi-telephone me-2"></i> (01) 123-4567</li>
-                        <li class="mb-2"><i class="bi bi-whatsapp me-2"></i> +51 987 654 321</li>
+                        <li class="mb-2"><i class="bi bi-telephone me-2"></i> +51 978 011 943</li>
+                        <li class="mb-2"><i class="bi bi-whatsapp me-2"></i> +51 978 011 943</li>
                         <li><i class="bi bi-envelope me-2"></i> info@ainboflora.pe</li>
                     </ul>
                 </div>
@@ -864,7 +1128,7 @@
     </footer>
 
     <!-- Botón flotante de WhatsApp -->
-    <a href="https://wa.me/51987654321" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1000;"
+    <a href="https://wa.me/51978011943" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1000;"
         target="_blank">
         <div class="bg-success text-white rounded-circle d-flex justify-content-center align-items-center shadow"
             style="width: 60px; height: 60px;">
@@ -950,6 +1214,62 @@
     <script src="js/productos.js"></script>
     <script src="js/auth-guard.js"></script>
     <script src="js/index.js"></script>
+    <script>
+      (function(){
+        var nav=document.getElementById('menu')||document.querySelector('.navbar');
+        if(!nav) return;
+        function onScroll(){ if(window.scrollY>8){ nav.classList.add('scrolled'); } else { nav.classList.remove('scrolled'); } }
+        window.addEventListener('scroll', onScroll);
+        onScroll();
+        var links=nav.querySelectorAll('.nav-link, .dropdown-item');
+        var current=location.pathname.split('/').pop().toLowerCase()||'index.html';
+        function normalize(h){ try{ var p=new URL(h, location.href).pathname.split('/').pop().toLowerCase(); return p||'index.html'; }catch(e){ return h; } }
+        links.forEach(function(a){ var p=normalize(a.getAttribute('href')); if(p===current){ a.classList.add('active'); }});
+      })();
+      (function(){
+        var form=document.querySelector('#seccion-contacto form');
+        if(form){
+          form.addEventListener('submit', function(e){
+            e.preventDefault();
+            var nombre=document.getElementById('name')?.value||'';
+            var correo=document.getElementById('email')?.value||'';
+            var telefono=document.getElementById('phone')?.value||'';
+            var motivo=document.getElementById('motivo')?.value||'';
+            var mensaje=document.getElementById('message')?.value||'';
+            var texto=encodeURIComponent('Hola, soy '+nombre+' ('+correo+' / '+telefono+'). Motivo: '+motivo+'. '+mensaje);
+            var url='https://wa.me/51978011943?text='+texto;
+            window.open(url, '_blank');
+          });
+        }
+        var input=document.getElementById('globalSearchInput');
+        var btn=document.getElementById('globalSearchBtn');
+        function doSearch(){
+          var q=(input?.value||'').trim();
+          if(q.length){ window.location.href='catalogo.html?query='+encodeURIComponent(q); }
+        }
+        if(btn) btn.addEventListener('click', doSearch);
+        if(input) input.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); doSearch(); }});
+        var ancho=document.getElementById('calcAncho');
+        var largo=document.getElementById('calcLargo');
+        var precio=document.getElementById('calcPrecio');
+        var btn=document.getElementById('calcBtn');
+        var areaEl=document.getElementById('calcArea');
+        var costoEl=document.getElementById('calcCosto');
+        var cotizar=document.getElementById('calcCotizar');
+        function calc(){
+          var a=parseFloat(ancho?.value||'0')||0;
+          var l=parseFloat(largo?.value||'0')||0;
+          var p=parseFloat(precio?.value||'0')||0;
+          var area=(a*l);
+          var costo=(area*p);
+          areaEl.textContent=(area.toFixed(2)+' m²');
+          costoEl.textContent=('S/. '+costo.toFixed(2));
+          var texto=encodeURIComponent('Cotización de grass: Área '+area.toFixed(2)+' m². Precio referencial S/.'+p+' por m². Total estimado S/.'+costo.toFixed(2));
+          cotizar.setAttribute('href', 'https://wa.me/51978011943?text='+texto);
+        }
+        if(btn) btn.addEventListener('click', function(e){ e.preventDefault(); calc(); });
+      })();
+    </script>
 </body>
 
 </html>

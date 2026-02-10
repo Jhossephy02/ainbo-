@@ -63,11 +63,17 @@ document.addEventListener('DOMContentLoaded', () => {
   actualizarContadorCarrito();
   cargarProductos();
   window.agregarAlCarrito = agregarAlCarrito;
+  // Evita que los botones dentro de formularios recarguen la página
+  document.addEventListener('submit', e => {
+    try { e.preventDefault(); } catch {}
+  });
   document.body.addEventListener('click', e => {
     const btn = e.target.closest('button');
     if (!btn) return;
     const text = (btn.textContent || '').toLowerCase();
     if (!text.includes('añadir al') && !btn.classList.contains('btn-add-cart')) return;
+    const form = btn.closest('form');
+    if (form) { try { e.preventDefault(); } catch {} }
     const card = btn.closest('.card');
     if (!card) return;
     const nombreEl = card.querySelector('.card-title');
@@ -83,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof window.abrirCarrito === 'function') {
       window.abrirCarrito();
     } else {
-      try { window.location.href = 'carrito.html'; } catch {}
+      try { window.location.href = 'checkout.html'; } catch {}
     }
     if (typeof window.renderResumen === 'function') window.renderResumen();
   });

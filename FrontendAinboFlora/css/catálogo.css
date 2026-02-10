@@ -47,9 +47,9 @@ header {
 
 .catalog-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1.25rem;
-  margin-top: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.75rem;
 }
 
 .catalog-grid img {
@@ -58,8 +58,8 @@ header {
 
 .product {
   background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-radius: 14px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
   border: 1px solid #e9ecef;
   padding: 1rem;
   text-align: center;
@@ -74,9 +74,9 @@ header {
 
 .product img {
   max-width: 100%;
-  height: 180px;
+  height: 200px;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 12px;
 }
 
 .modal {
@@ -127,8 +127,8 @@ header {
 }
 
 .carousel .product {
-  min-width: 240px;
-  margin: 12px;
+  min-width: 260px;
+  margin: 14px;
   flex-shrink: 0;
   cursor: pointer;
 }

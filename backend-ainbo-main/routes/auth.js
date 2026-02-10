@@ -154,3 +154,12 @@ router.post('/admin/usuarios', verificarToken, verificarAdmin, async (req, res) 
         return res.status(500).json({ message: 'Error de servidor', error: err?.message });
     }
 });
+
+// Listar usuarios (solo admin)
+router.get('/admin/usuarios', verificarToken, verificarAdmin, (req, res) => {
+    const q = 'SELECT Id, Nombre, Apellido, Email, NumeroCelular, Rol, fecha_registro FROM Usuarios ORDER BY Id DESC';
+    db.query(q, [], (err, rows) => {
+        if (err) return res.status(500).json({ message: 'Error listando usuarios' });
+        return res.status(200).json({ usuarios: rows || [] });
+    });
+});
