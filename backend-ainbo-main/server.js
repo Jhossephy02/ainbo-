@@ -4,6 +4,16 @@ const app = express();
 require('dotenv').config();
 const db = require('./config/db');
 const bcrypt = require('bcrypt');
+let redisClient = null;
+try {
+  const { createClient } = require('redis');
+  if (process.env.REDIS_URL) {
+    redisClient = createClient({ url: process.env.REDIS_URL });
+    redisClient.on('error', () => {});
+    redisClient.connect().catch(() => { redisClient = null; });
+  }
+} catch (e) {}
+app.locals.redis = redisClient;
 
 // Cargar ruta
 const authRoutes = require('./routes/auth');
@@ -91,6 +101,18 @@ app.listen(PORT, () => {
   ensureConstraint('DetallesPedido', 'fk_detalles_pedido', 'ALTER TABLE DetallesPedido ADD CONSTRAINT fk_detalles_pedido FOREIGN KEY (PedidoId) REFERENCES Pedidos(Id) ON DELETE CASCADE');
   ensureConstraint('DetallesPedido', 'fk_detalles_producto', 'ALTER TABLE DetallesPedido ADD CONSTRAINT fk_detalles_producto FOREIGN KEY (ProductoId) REFERENCES Productos(Id) ON DELETE RESTRICT');
   ensureConstraint('EstadosPedido', 'fk_estados_pedido', 'ALTER TABLE EstadosPedido ADD CONSTRAINT fk_estados_pedido FOREIGN KEY (PedidoId) REFERENCES Pedidos(Id) ON DELETE CASCADE');
+  const ensureColumn = (table, column, type) => {
+    const q = 'SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ? AND COLUMN_NAME = ? LIMIT 1';
+    db.query(q, [table, column], (err, rows) => {
+      if (err) return;
+      if (!rows || rows.length === 0) db.query(`ALTER TABLE ${table} ADD COLUMN ${column} ${type}`, [], () => {});
+    });
+  };
+  ensureColumn('Productos', 'Luz', 'VARCHAR(32)');
+  ensureColumn('Productos', 'Riego', 'VARCHAR(32)');
+  ensureColumn('Productos', 'PetFriendly', 'TINYINT(1) DEFAULT 1');
+  ensureColumn('Productos', 'ImagenWhite', 'VARCHAR(255)');
+  ensureColumn('Productos', 'ImagenAmbient', 'VARCHAR(255)');
   db.query('SELECT COUNT(1) AS c FROM Productos', [], (err, rows) => {
     if (err) return;
     const c = (rows && rows[0] && rows[0].c) || 0;
@@ -119,4 +141,34 @@ app.listen(PORT, () => {
         () => console.log('Admin bootstrap creado: admin@ainbo.test'));
     } catch {}
   });
+});
+
+app.get('/sitemap.xml', (req, res) => {
+  db.query('SELECT Id, Nombre, Categoria FROM Productos ORDER BY Id DESC', [], (err, rows) => {
+    res.set('Content-Type', 'application/xml');
+    if (err) {
+      return res.send(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>`);
+    }
+    const base = `${req.protocol}://${req.get('host')}`;
+    const urls = [
+      `${base}/`,
+      `${base}/catalogo.html`,
+      `${base}/Login.html`,
+      `${base}/Rastreo.html`
+    ].map(u => `<url><loc>${u}</loc></url>`).join('');
+    const prod = (rows || []).map(r => {
+      const slug = String(r.Nombre || '').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+      const path = `/productos/${slug}-${r.Id}`;
+      return `<url><loc>${base}${path}</loc></url>`;
+    }).join('');
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>` +
+      `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">` +
+      urls + prod +
+      `</urlset>`;
+    res.send(xml);
+  });
+});
+
+app.use((err, req, res, next) => {
+  res.status(500).json({ mensaje: 'Ups, algo salió mal', detalle: 'Intenta nuevamente' });
 });

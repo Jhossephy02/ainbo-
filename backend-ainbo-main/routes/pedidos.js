@@ -98,6 +98,9 @@ router.post('/crear-pedido', verificarToken, (req, res) => {
                     return res.status(201).json({ mensaje: 'Pedido creado', pedidoId, numeroOrden, metodoPago: metodo, cip: pagoCodigo });
                   });
                   const it = items[idx];
+                  if (pagoEstado !== 'aprobado') {
+                    return next(idx + 1);
+                  }
                   db.query('UPDATE Productos SET Stock = GREATEST(Stock - ?, 0) WHERE Id = ?', [Number(it.cantidad), it.productoId], (e) => {
                     if (e) {
                       db.rollback(() => {});
@@ -194,6 +197,68 @@ router.get('/admin/pedidos', verificarToken, verificarAdmin, (req, res) => {
   db.query(q, [], (err, rows) => {
     if (err) return res.status(500).json({ mensaje: 'Error listando pedidos' });
     return res.status(200).json({ pedidos: rows || [] });
+  });
+});
+
+// Webhooks de pago Culqi
+router.post('/webhooks/culqi', (req, res) => {
+  const payload = req.body || {};
+  const numeroOrden = String(payload.numeroOrden || '');
+  const status = String(payload.status || '').toLowerCase();
+  if (!numeroOrden) return res.status(400).json({ mensaje: 'Sin orden' });
+  const aprobado = status === 'success' || status === 'aprobado' || status === 'approved';
+  db.query('SELECT * FROM Pedidos WHERE NumeroOrden=?', [numeroOrden], (e, rows) => {
+    if (e || !rows || rows.length === 0) return res.status(404).json({ mensaje: 'Pedido no encontrado' });
+    const pedido = rows[0];
+    const nuevoEstado = aprobado ? 'aprobado' : 'rechazado';
+    db.query('UPDATE Pedidos SET PaymentStatus=? WHERE Id=?', [nuevoEstado, pedido.Id], (eu) => {
+      if (eu) return res.status(500).json({ mensaje: 'Error actualizando estado' });
+      if (!aprobado) return res.status(200).json({ mensaje: 'Actualizado' });
+      db.query('SELECT ProductoId, Cantidad FROM DetallesPedido WHERE PedidoId=?', [pedido.Id], (ed, dets) => {
+        if (ed) return res.status(500).json({ mensaje: 'Error obteniendo detalles' });
+        const next = (i) => {
+          if (i >= (dets || []).length) return res.status(200).json({ mensaje: 'Confirmado y stock actualizado' });
+          const d = dets[i];
+          db.query('UPDATE Productos SET Stock = GREATEST(Stock - ?, 0) WHERE Id=?', [Number(d.Cantidad), d.ProductoId], () => next(i + 1));
+        };
+        next(0);
+      });
+    });
+  });
+});
+
+// Webhooks de pago Mercado Pago
+router.post('/webhooks/mercadopago', (req, res) => {
+  const payload = req.body || {};
+  const numeroOrden = String(payload.external_reference || payload.numeroOrden || '');
+  const status = String(payload.status || '').toLowerCase();
+  if (!numeroOrden) return res.status(400).json({ mensaje: 'Sin orden' });
+  const aprobado = status === 'approved' || status === 'success' || status === 'aprobado';
+  db.query('SELECT * FROM Pedidos WHERE NumeroOrden=?', [numeroOrden], (e, rows) => {
+    if (e || !rows || rows.length === 0) return res.status(404).json({ mensaje: 'Pedido no encontrado' });
+    const pedido = rows[0];
+    const nuevoEstado = aprobado ? 'aprobado' : 'rechazado';
+    db.query('UPDATE Pedidos SET PaymentStatus=? WHERE Id=?', [nuevoEstado, pedido.Id], (eu) => {
+      if (eu) return res.status(500).json({ mensaje: 'Error actualizando estado' });
+      if (!aprobado) return res.status(200).json({ mensaje: 'Actualizado' });
+      db.query('SELECT ProductoId, Cantidad FROM DetallesPedido WHERE PedidoId=?', [pedido.Id], (ed, dets) => {
+        if (ed) return res.status(500).json({ mensaje: 'Error obteniendo detalles' });
+        const next = (i) => {
+          if (i >= (dets || []).length) return res.status(200).json({ mensaje: 'Confirmado y stock actualizado' });
+          const d = dets[i];
+          db.query('UPDATE Productos SET Stock = GREATEST(Stock - ?, 0) WHERE Id=?', [Number(d.Cantidad), d.ProductoId], () => next(i + 1));
+        };
+        next(0);
+      });
+    });
+  });
+});
+
+// Inventario crítico
+router.get('/admin/inventario/critico', verificarToken, verificarAdmin, (req, res) => {
+  db.query('SELECT Id, Nombre, Stock, Categoria FROM Productos WHERE Stock < 3 ORDER BY Stock ASC', [], (err, rows) => {
+    if (err) return res.status(500).json({ mensaje: 'Error obteniendo inventario' });
+    res.status(200).json({ productos: rows || [] });
   });
 });
 

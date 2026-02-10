@@ -25,6 +25,7 @@ function renderResumen() {
   });
   document.getElementById('subtotal').textContent = `S/. ${subtotal.toFixed(2)}`;
   document.getElementById('total').textContent = `S/. ${subtotal.toFixed(2)}`;
+  renderCrossSell(items);
 }
 
 async function crearPedido(e) {
@@ -291,3 +292,45 @@ document.addEventListener('DOMContentLoaded', () => {
   radios.forEach(r => r.addEventListener('change', toggle));
   toggle();
 });
+
+async function renderCrossSell(items){
+  try{
+    const wrap=document.getElementById('cross-sell');
+    if(!wrap) return;
+    const resp=await fetch(`${API_BASE}/productos`);
+    const j=await resp.json();
+    const all=(j && j.success && Array.isArray(j.data))? j.data : [];
+    const cats=new Set(items.map(i=>String(i.nombre||'').toLowerCase()));
+    const extras=all.filter(p=>{
+      const cat=String(p.Categoria||'').toLowerCase();
+      if(cat.includes('maceter') || cat.includes('herramient')) return true;
+      if(cat.includes('abono') || cat.includes('semilla')) return true;
+      return false;
+    }).slice(0,4);
+    wrap.innerHTML=extras.map(p=>{
+      return `<div class="d-flex align-items-center justify-content-between border rounded p-2 mb-2">
+        <div class="d-flex align-items-center">
+          <img src="${p.Imagen || 'img/img1.png'}" class="rounded me-2" style="width:36px;height:36px;object-fit:cover;">
+          <div>
+            <div class="fw-semibold">${p.Nombre}</div>
+            <small class="text-muted">S/. ${Number(p.Precio||0).toFixed(2)}</small>
+          </div>
+        </div>
+        <button class="btn btn-sm btn-outline-success" data-id="${p.Id}" data-nombre="${p.Nombre}" data-precio="${Number(p.Precio)||0}" data-img="${p.Imagen||'img/img1.png'}"><i class="bi bi-plus-lg me-1"></i>Agregar</button>
+      </div>`;
+    }).join('');
+    wrap.addEventListener('click', function(e){
+      const btn=e.target.closest('button');
+      if(!btn) return;
+      const id=Number(btn.dataset.id||0);
+      const nombre=btn.dataset.nombre||'';
+      const precio=Number(btn.dataset.precio||0);
+      const imagen=btn.dataset.img||'img/img1.png';
+      const carrito=JSON.parse(localStorage.getItem('carrito'))||[];
+      const ex=carrito.find(x=>x.id===id);
+      if(ex){ ex.cantidad+=1; } else { carrito.push({id,nombre,precio,cantidad:1,imagen}); }
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+      renderResumen();
+    });
+  }catch{}
+}

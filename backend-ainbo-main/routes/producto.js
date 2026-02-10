@@ -6,7 +6,7 @@ const { verificarToken, verificarAdmin } = require('../middleware/auth');
 
 // Registrar los productos (solo admin)
 router.post('/registrar-producto', verificarToken, verificarAdmin, (req, res) => {
-    const { Nombre, Descripcion, Precio, Imagen, Stock = 0, Categoria } = req.body;
+    const { Nombre, Descripcion, Precio, Imagen, Stock = 0, Categoria, Luz, Riego, PetFriendly, ImagenWhite, ImagenAmbient } = req.body;
 
     // Validación
     if (!Nombre || !Descripcion || !Precio || !Imagen || !Categoria) {
@@ -21,8 +21,8 @@ router.post('/registrar-producto', verificarToken, verificarAdmin, (req, res) =>
     }
 
     // Consulta SQL actualizada
-    const query = 'INSERT INTO Productos (Nombre, Descripcion, Precio, Stock, Imagen, Categoria) VALUES (?, ?, ?, ?, ?, ?)';
-    db.query(query, [Nombre, Descripcion, precioNumber, stockNumber, Imagen, Categoria], (err, result) => {
+    const query = 'INSERT INTO Productos (Nombre, Descripcion, Precio, Stock, Imagen, Categoria, Luz, Riego, PetFriendly, ImagenWhite, ImagenAmbient) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+    db.query(query, [Nombre, Descripcion, precioNumber, stockNumber, Imagen, Categoria, Luz || null, Riego || null, PetFriendly ? 1 : 0, ImagenWhite || null, ImagenAmbient || null], (err, result) => {
         if (err) {
             console.error('Error al registrar el producto:', err);
             return res.status(500).json({ message: 'Error al registrar el producto', error: err.message });
@@ -37,19 +37,37 @@ router.post('/registrar-producto', verificarToken, verificarAdmin, (req, res) =>
 
 router.get('/productos', (req, res) => {
     const query = 'SELECT * FROM Productos';
-    db.query(query, (err, results) => {
-        if (err) {
-            console.error('Error al obtener productos:', err);
-            return res.status(500).json({ 
-                success: false,
-                message: 'Error al obtener productos'
-            });
+    const redis = req.app.locals.redis;
+    const cacheKey = 'productos_all';
+    const sendData = (rows) => res.status(200).json({ success: true, data: rows });
+    if (redis) {
+      redis.get(cacheKey).then(cached => {
+        if (cached) {
+          try { return sendData(JSON.parse(cached)); } catch {}
         }
-        res.status(200).json({
-            success: true,
-            data: results
+        db.query(query, (err, results) => {
+          if (err) {
+            return res.status(500).json({ success: false, message: 'Error al obtener productos' });
+          }
+          sendData(results);
+          redis.set(cacheKey, JSON.stringify(results), { EX: 60 }).catch(() => {});
         });
-    });
+      }).catch(() => {
+        db.query(query, (err, results) => {
+          if (err) {
+            return res.status(500).json({ success: false, message: 'Error al obtener productos' });
+          }
+          sendData(results);
+        });
+      });
+    } else {
+      db.query(query, (err, results) => {
+        if (err) {
+          return res.status(500).json({ success: false, message: 'Error al obtener productos' });
+        }
+        sendData(results);
+      });
+    }
 });
 
 // Seed inicial de productos si la tabla está vacía
@@ -91,9 +109,9 @@ router.get('/seed-productos', aplicarSeed);
 // Actualizar producto (solo admin)
 router.put('/admin/productos/:id', verificarToken, verificarAdmin, (req, res) => {
     const id = req.params.id;
-    const { Nombre, Descripcion, Precio, Imagen, Stock, Categoria } = req.body;
-    const q = 'UPDATE Productos SET Nombre=?, Descripcion=?, Precio=?, Stock=?, Imagen=?, Categoria=? WHERE Id=?';
-    db.query(q, [Nombre, Descripcion, Number(Precio), Number(Stock), Imagen, Categoria, id], (err) => {
+    const { Nombre, Descripcion, Precio, Imagen, Stock, Categoria, Luz, Riego, PetFriendly, ImagenWhite, ImagenAmbient } = req.body;
+    const q = 'UPDATE Productos SET Nombre=?, Descripcion=?, Precio=?, Stock=?, Imagen=?, Categoria=?, Luz=?, Riego=?, PetFriendly=?, ImagenWhite=?, ImagenAmbient=? WHERE Id=?';
+    db.query(q, [Nombre, Descripcion, Number(Precio), Number(Stock), Imagen, Categoria, Luz || null, Riego || null, PetFriendly ? 1 : 0, ImagenWhite || null, ImagenAmbient || null, id], (err) => {
         if (err) return res.status(500).json({ message: 'Error actualizando producto' });
         res.status(200).json({ message: 'Producto actualizado' });
     });

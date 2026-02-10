@@ -19,25 +19,32 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Enviar mensaje
-    function sendMessageHandler() {
+    async function sendMessageHandler() {
         const messageText = userMessage.value.trim();
         if (messageText !== '') {
             // Agregar mensaje del usuario
             addMessage(messageText, 'sent');
             userMessage.value = '';
             
-            // Simular respuesta del bot después de un retraso
-            setTimeout(() => {
-                const responses = [
-                    "Gracias por tu mensaje. ¿Cómo puedo ayudarte?",
-                    "Interesante, ¿puedes darme más detalles?",
-                    "Estoy procesando tu solicitud...",
-                    "¿Hay algo más en lo que pueda ayudarte?",
-                    "Voy a verificar eso por ti."
-                ];
-                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-                addMessage(randomResponse, 'received');
-            }, 1000 + Math.random() * 2000);
+            // Respuesta inteligente según ambiente
+            try {
+                const host = window.location.hostname || 'localhost';
+                const API_BASE = window.AINBO_API || `http://${host}:3000/api`;
+                const ambiente = messageText.toLowerCase();
+                let filtro = '';
+                if (ambiente.includes('sala') || ambiente.includes('interior')) filtro = 'Plantas';
+                else if (ambiente.includes('balcón') || ambiente.includes('exterior') || ambiente.includes('jardín')) filtro = 'Plantas';
+                else if (ambiente.includes('oficina')) filtro = 'Plantas';
+                const resp = await fetch(`${API_BASE}/productos`);
+                const j = await resp.json();
+                const all = (j && j.success && Array.isArray(j.data)) ? j.data : [];
+                const candidatos = all.filter(p => String(p.Categoria||'').toLowerCase().includes(String(filtro||'').toLowerCase()));
+                const picks = candidatos.slice(0,3).map(p => `• ${p.Nombre} (S/. ${Number(p.Precio||0).toFixed(2)})`).join('<br>');
+                const texto = picks ? `Según tu espacio, te recomiendo:<br>${picks}` : 'Gracias por tu mensaje. ¿Puedes indicar si es interior, balcón u oficina?';
+                addMessage(texto, 'received');
+            } catch {
+                addMessage("Gracias por tu mensaje. ¿Cómo puedo ayudarte?", 'received');
+            }
         }
     }
     

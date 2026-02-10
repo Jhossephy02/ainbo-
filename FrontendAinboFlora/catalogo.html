@@ -71,6 +71,41 @@
   <!-- Filtros por categoría -->
   <!-- Barra removida para evitar duplicación visual; usar URL param o seleccionar sección manualmente -->
 
+  <!-- Filtros Avanzados -->
+  <section class="container my-4">
+    <div class="row g-3 align-items-end">
+      <div class="col-md-3">
+        <label class="form-label">Categoría</label>
+        <select id="filtroCategoria" class="form-select">
+          <option value="Todas">Todas</option>
+          <option value="Plantas">Plantas</option>
+          <option value="Maceteros">Maceteros</option>
+          <option value="Abono">Abono</option>
+          <option value="Artículos de jardinería">Artículos de jardinería</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">Uso</label>
+        <select id="filtroUso" class="form-select">
+          <option value="">Todos</option>
+          <option value="interior">Interior</option>
+          <option value="exterior">Exterior</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">Precio mín</label>
+        <input id="precioMin" type="number" class="form-control" placeholder="0">
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">Precio máx</label>
+        <input id="precioMax" type="number" class="form-control" placeholder="999">
+      </div>
+      <div class="col-md-3">
+        <button id="aplicarFiltros" class="btn btn-success w-100"><i class="bi bi-funnel me-1"></i> Aplicar filtros</button>
+      </div>
+    </div>
+  </section>
+
   <!-- Secciones del Catálogo -->
   <section class="catalog-section" data-categoria="Plantas">
     <h2>Plantas</h2>
@@ -390,6 +425,9 @@
       const params = new URLSearchParams(window.location.search);
       const cat = params.get('categoria');
       const q = (params.get('query')||'').toLowerCase();
+      const min = Number(params.get('min')||'0')||0;
+      const max = Number(params.get('max')||'0')||0;
+      const uso = (params.get('uso')||'').toLowerCase();
       if (cat) {
         filtrarCategoria(cat);
         const el = document.querySelector(`[data-categoria="${cat}"]`);
@@ -412,6 +450,10 @@
           sec.style.display = visible ? 'block' : 'none';
         });
         if(firstMatch){ firstMatch.scrollIntoView({ behavior: 'smooth' }); }
+      }
+      // Aplicar rango de precios y uso desde URL
+      if(min || max || uso){
+        aplicarFiltrosAvanzados({min, max, uso});
       }
       // Navbar search in catalog
       var input=document.getElementById('catalogSearchInput');
@@ -439,6 +481,38 @@
       }
       if(btn) btn.addEventListener('click', doSearch);
       if(input) input.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); doSearch(); }});
+      // Filtros avanzados UI
+      var catSel=document.getElementById('filtroCategoria');
+      var usoSel=document.getElementById('filtroUso');
+      var minIn=document.getElementById('precioMin');
+      var maxIn=document.getElementById('precioMax');
+      var aplicar=document.getElementById('aplicarFiltros');
+      function parsePrecio(txt){ try{ return Number((txt||'').replace(/[^0-9.,]/g,'').replace(',','.'))||0; }catch(e){ return 0; } }
+      window.aplicarFiltrosAvanzados=function(params){
+        var min=params.min||Number(minIn.value||0)||0;
+        var max=params.max||Number(maxIn.value||0)||0;
+        var uso=(params.uso||usoSel.value||'').toLowerCase();
+        var cat=(params.cat||catSel.value||'Todas');
+        // Mostrar secciones por categoría
+        filtrarCategoria(cat);
+        // Filtrar por precio y uso
+        document.querySelectorAll('.catalog-section').forEach(sec=>{
+          sec.querySelectorAll('.product').forEach(card=>{
+            var precioEl=card.querySelector('p');
+            var tituloEl=card.querySelector('h3');
+            var precio=parsePrecio(precioEl?.innerText||'0');
+            var titulo=(tituloEl?.innerText||'').toLowerCase();
+            var okPrecio=(min?precio>=min:true)&& (max?precio<=max:true);
+            var okUso=(uso?titulo.includes(uso):true);
+            card.style.display=(okPrecio && okUso)?'block':'none';
+          });
+          var visible = Array.from(sec.querySelectorAll('.product')).some(c=>c.style.display!=='none');
+          sec.style.display = visible ? 'block' : 'none';
+        });
+      };
+      if(aplicar) aplicar.addEventListener('click', function(e){ e.preventDefault(); aplicarFiltrosAvanzados({}); });
+      // Lazy loading por defecto
+      document.querySelectorAll('img').forEach(function(img){ if(!img.getAttribute('loading')) img.setAttribute('loading','lazy'); });
     })();
   </script>
   

@@ -14,6 +14,12 @@
     <link rel="stylesheet" href="css/style.css">
     <script>tailwind.config = { corePlugins: { preflight: false } };</script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description" content="Vivero en Lima. Venta de plantas, grass natural, maceteros y servicios de jardinería. Envío a todo Lima.">
+    <meta name="keywords" content="Vivero en Lima, plantas, grass natural, maceteros, abonos, jardinería">
+    <meta property="og:title" content="AinboFlora - Vivero en Lima">
+    <meta property="og:description" content="Compra plantas y solicita servicios de jardinería. Cotiza por WhatsApp.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_PE">
 </head>
 
 <body>
@@ -54,8 +60,9 @@
                         </a>
                     </li>
                 </ul>
-                <div class="d-flex">
-                    <input id="globalSearchInput" class="form-control me-2" type="text" placeholder="Escribe aquí para buscar" aria-label="Buscar">
+                <div class="d-flex position-relative">
+                    <input id="globalSearchInput" class="form-control me-2" type="text" placeholder="Escribe aquí para buscar" aria-label="Buscar" autocomplete="off">
+                    <div id="searchSuggestions" class="search-suggestions d-none"></div>
                     <button id="globalSearchBtn" class="btn btn-primary btn-primary-outline-success" type="button">Buscar</button>
                 </div>
             </div>
@@ -71,6 +78,65 @@
         </div>
     </section>
 
+    <section class="container py-5">
+        <h2 class="text-center section-title mb-4">Testimonios</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <p class="mb-1">“Excelente atención y el grass quedó perfecto.”</p>
+                        <div class="d-flex align-items-center mt-2">
+                            <i class="bi bi-person-circle me-2"></i>
+                            <strong>María G.</strong>
+                            <span class="ms-auto text-warning">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <p class="mb-1">“Compré palmeras y las instalaron en el mismo día.”</p>
+                        <div class="d-flex align-items-center mt-2">
+                            <i class="bi bi-person-circle me-2"></i>
+                            <strong>José R.</strong>
+                            <span class="ms-auto text-warning">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <p class="mb-1">“Buena calidad de maceteros y asesoría.”</p>
+                        <div class="d-flex align-items-center mt-2">
+                            <i class="bi bi-person-circle me-2"></i>
+                            <strong>Lucía P.</strong>
+                            <span class="ms-auto text-warning">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-half"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <!-- Nuestros Productos -->
     <div class="container mb-5">
         <h2 class="text-center mb-4 section-title">Nuestros Productos</h2>
@@ -163,6 +229,7 @@
                             <p class="fw-bold">S/35.00</p>
                             <button type="submit" class="btn btn-primary w-100"><i class="bi bi-cart-plus"></i> Añadir al
                                 carrito</button>
+                            <a class="btn btn-outline-success w-100 mt-2" target="_blank" href="https://wa.me/51978011943?text=Comprar:%20Macetero%20Moderno%20Blanco%20%C2%B7%20S/.%2035.00"><i class="bi bi-whatsapp"></i> Comprar por WhatsApp</a>
                         </div>
                     </div>
                 </div>
@@ -186,6 +253,7 @@
                             <p class="fw-bold">S/45.00</p>
                             <button type="submit" class="btn btn-primary w-100"><i class="bi bi-cart-plus"></i> Añadir al
                                 carrito</button>
+                            <a class="btn btn-outline-success w-100 mt-2" target="_blank" href="https://wa.me/51978011943?text=Comprar:%20Kit%20de%20Suculentas%20%C2%B7%20S/.%2045.00"><i class="bi bi-whatsapp"></i> Comprar por WhatsApp</a>
                         </div>
                     </div>
                 </div>
@@ -209,6 +277,7 @@
                             <p class="fw-bold">S/15.00</p>
                             <button class="btn btn-primary w-100"><i class="bi bi-cart-plus"></i> Añadir al
                                 carrito</button>
+                            <a class="btn btn-outline-success w-100 mt-2" target="_blank" href="https://wa.me/51978011943?text=Comprar:%20Semillas%20de%20Lavanda%20%C2%B7%20S/.%2015.00"><i class="bi bi-whatsapp"></i> Comprar por WhatsApp</a>
                         </div>
                     </div>
                 </div>
@@ -232,6 +301,7 @@
                             <p class="fw-bold">S/28.00</p>
                             <button class="btn btn-primary w-100"><i class="bi bi-cart-plus"></i> Añadir al
                                 carrito</button>
+                            <a class="btn btn-outline-success w-100 mt-2" target="_blank" href="https://wa.me/51978011943?text=Comprar:%20Set%20de%20Herramientas%20Mini%20%C2%B7%20S/.%2028.00"><i class="bi bi-whatsapp"></i> Comprar por WhatsApp</a>
                         </div>
                     </div>
                     </form>
@@ -1249,6 +1319,47 @@
         }
         if(btn) btn.addEventListener('click', doSearch);
         if(input) input.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); doSearch(); }});
+        (function(){
+          var API_BASE=window.AINBO_API||('http://'+(window.location.hostname||'localhost')+':3000/api');
+          var input=document.getElementById('globalSearchInput');
+          var box=document.getElementById('searchSuggestions');
+          var all=[];
+          function render(list){
+            if(!box) return;
+            if(!list || list.length===0){ box.classList.add('d-none'); box.innerHTML=''; return; }
+            box.classList.remove('d-none');
+            box.innerHTML=list.map(function(p){
+              var img=p.Imagen || p.ImagenWhite || 'img/img1.png';
+              return '<div class="search-item" data-id="'+(p.Id||0)+'"><img src="'+img+'" alt="'+(p.Nombre||'')+'"><span class="title">'+(p.Nombre||'')+'</span></div>';
+            }).join('');
+          }
+          function filter(q){
+            q=(q||'').toLowerCase();
+            if(!q){ render([]); return; }
+            var list=all.filter(function(p){ return String(p.Nombre||'').toLowerCase().includes(q); }).slice(0,8);
+            render(list);
+          }
+          document.addEventListener('click', function(e){
+            if(!box || !input) return;
+            if(e.target.closest('#searchSuggestions')) return;
+            if(e.target!==input) box.classList.add('d-none');
+          });
+          box && box.addEventListener('click', function(e){
+            var item=e.target.closest('.search-item');
+            if(!item) return;
+            var id=Number(item.dataset.id||0);
+            var p=all.find(function(x){ return Number(x.Id||0)===id; });
+            var name=p && p.Nombre ? p.Nombre : input.value;
+            window.location.href='catalogo.html?query='+encodeURIComponent(name||'');
+          });
+          if(input){
+            input.addEventListener('input', function(){ filter(input.value); });
+            input.addEventListener('focus', function(){ if((box && box.innerHTML)&& input.value) box.classList.remove('d-none'); });
+          }
+          fetch(API_BASE+'/productos').then(function(r){ return r.json(); }).then(function(j){
+            if(j && j.success && Array.isArray(j.data)){ all=j.data; }
+          }).catch(function(){});
+        })();
         var ancho=document.getElementById('calcAncho');
         var largo=document.getElementById('calcLargo');
         var precio=document.getElementById('calcPrecio');
@@ -1268,6 +1379,22 @@
           cotizar.setAttribute('href', 'https://wa.me/51978011943?text='+texto);
         }
         if(btn) btn.addEventListener('click', function(e){ e.preventDefault(); calc(); });
+        // Venta cruzada en home (si existe contenedor)
+        (function(){
+          var cross=document.getElementById('home-cross-sell');
+          if(!cross) return;
+          var API_BASE=window.AINBO_API||('http://'+(window.location.hostname||'localhost')+':3000/api');
+          fetch(API_BASE+'/productos').then(function(r){return r.json();}).then(function(j){
+            var all=(j && j.success && Array.isArray(j.data))? j.data : [];
+            var extras=all.filter(function(p){
+              var c=String(p.Categoria||'').toLowerCase();
+              return c.includes('maceter') || c.includes('abono') || c.includes('herramient');
+            }).slice(0,3);
+            cross.innerHTML=extras.map(function(p){
+              return '<div class="col-md-4"><div class="card h-100"><img src="'+(p.Imagen||'img/img1.png')+'" class="card-img-top" alt="'+(p.Nombre||'')+'"><div class="card-body"><h6 class="card-title">'+(p.Nombre||'')+'</h6><p class="fw-bold">S/. '+Number(p.Precio||0).toFixed(2)+'</p><a href="catalogo.html?query='+encodeURIComponent(p.Nombre||'')+'" class="btn btn-outline-success btn-sm">Ver</a></div></div></div>';
+            }).join('');
+          }).catch(function(){});
+        })();
       })();
     </script>
 </body>

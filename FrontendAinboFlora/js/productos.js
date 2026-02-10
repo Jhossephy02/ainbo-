@@ -22,6 +22,13 @@ function agregarAlCarrito(id, nombre, precio, imagen) {
   localStorage.setItem('carrito', JSON.stringify(carrito));
   actualizarContadorCarrito();
   mostrarToast('Añadido al carrito', `${nombre} x1`);
+  try {
+    const cartLink = document.querySelector('a[href="checkout.html"]') || document.querySelector('.bi-cart3')?.closest('a');
+    if (cartLink) {
+      cartLink.classList.add('shake');
+      setTimeout(() => cartLink.classList.remove('shake'), 400);
+    }
+  } catch {}
 }
 
 async function cargarProductos() {
@@ -43,9 +50,23 @@ async function cargarProductos() {
                 <h5 class="card-title">${p.Nombre}</h5>
                 <p class="card-text">${p.Descripcion || ''}</p>
                 <p class="fw-bold">S/. ${Number(p.Precio).toFixed(2)}</p>
+                ${(() => {
+                  const luz = p.Luz || '';
+                  const riego = p.Riego || '';
+                  const pet = (p.PetFriendly === 1 || p.PetFriendly === true);
+                  if (!luz && !riego && typeof pet !== 'boolean') return '';
+                  return `<div class="d-flex gap-2 align-items-center mb-2">
+                    ${luz ? `<span class="badge bg-light text-dark"><i class="bi bi-sun me-1"></i>${luz}</span>` : ''}
+                    ${riego ? `<span class="badge bg-light text-dark"><i class="bi bi-droplet me-1"></i>${riego}</span>` : ''}
+                    ${typeof pet === 'boolean' ? `<span class="badge ${pet ? 'bg-success' : 'bg-danger'}"><i class="bi ${pet ? 'bi-shield-check' : 'bi-exclamation-triangle'} me-1"></i>${pet ? 'Pet Friendly' : 'No Pet Friendly'}</span>` : ''}
+                  </div>`;
+                })()}
                 <button class="btn btn-primary w-100 btn-add-cart" data-id="${p.Id || p.idProductos || 0}" data-nombre="${p.Nombre}" data-precio="${Number(p.Precio) || 0}">
                   <i class="bi bi-cart-plus"></i> Añadir al carrito
                 </button>
+                <a class="btn btn-outline-success w-100 mt-2" target="_blank" href="https://wa.me/51978011943?text=${encodeURIComponent('Comprar: '+(p.Nombre||'')+' · S/. '+(Number(p.Precio).toFixed(2)))}">
+                  <i class="bi bi-whatsapp"></i> Comprar por WhatsApp
+                </a>
               </div>
             </div>
           </div>`;
