@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 require('dotenv').config();
+const db = require('./config/db');
+const bcrypt = require('bcrypt');
 
 // Cargar ruta
 const authRoutes = require('./routes/auth');
@@ -51,7 +53,17 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor escuchando ${PORT}`);
   console.log(`Api disponible en ${PORT}/api`);
+  db.query('ALTER TABLE Usuarios ADD COLUMN IF NOT EXISTS Rol ENUM("usuario","admin") DEFAULT "usuario"', [], () => {});
+  db.query('SELECT COUNT(1) AS c FROM Usuarios WHERE Rol="admin"', [], async (err, rows) => {
+    if (err) return;
+    const c = (rows && rows[0] && rows[0].c) || 0;
+    if (c > 0) return;
+    try {
+      const hash = await bcrypt.hash('admin123', 10);
+      db.query('INSERT INTO Usuarios (Nombre, Apellido, Email, NumeroCelular, Contraseña, Rol) VALUES (?, ?, ?, ?, ?, "admin")',
+        ['Admin', 'Ainbo', 'admin@ainbo.test', '999999999', hash],
+        () => console.log('Admin bootstrap creado: admin@ainbo.test'));
+    } catch {}
+  });
 });
 
-
-module.exports = app;

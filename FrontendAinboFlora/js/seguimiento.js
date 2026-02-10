@@ -196,7 +196,7 @@ document.addEventListener('input', e => {
 
 
 function irACheckout() {
-    window.location.href = "../../checkout_pago_funcional/check.html";
+    window.location.href = "checkout.html";
 }
 
 function actualizarCamposPorTipoEnvio() {
@@ -223,4 +223,3 @@ function guardarDatos() {
   // Aquí podrías guardar en servidor, localStorage o simplemente mostrar mensaje.
   alert('Datos guardados correctamente ✅');
 }
-

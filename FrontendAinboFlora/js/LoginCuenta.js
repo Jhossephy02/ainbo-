@@ -26,7 +26,12 @@ document.addEventListener('DOMContentLoaded', function() {
             if (response.ok) {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('usuario', JSON.stringify(data.usuario));
-                window.location.href = 'index.html';
+                const rol = (data.usuario && (data.usuario.Rol || data.usuario.rol)) || 'usuario';
+                if (rol === 'admin') {
+                    window.location.href = 'checkout.html';
+                } else {
+                    window.location.href = 'index.html';
+                }
             } else {
                 alert(data.message || 'Error al iniciar sesión');
             }

@@ -11,13 +11,13 @@ function actualizarContadorCarrito() {
   }
 }
 
-function agregarAlCarrito(id, nombre, precio) {
+function agregarAlCarrito(id, nombre, precio, imagen) {
   const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
   const existente = carrito.find(item => item.id === id);
   if (existente) {
     existente.cantidad += 1;
   } else {
-    carrito.push({ id, nombre, precio, cantidad: 1 });
+    carrito.push({ id, nombre, precio, cantidad: 1, imagen: imagen || 'img/img1.png' });
   }
   localStorage.setItem('carrito', JSON.stringify(carrito));
   actualizarContadorCarrito();
@@ -38,12 +38,12 @@ async function cargarProductos() {
           <div class="col-md-4 col-lg-3 mb-4">
             <div class="card h-100">
               <span class="badge-new">Nuevo</span>
-              <img src="${p.Imagen || 'https://cdnjs.cloudflare.com/ajax/libs/placeholders/1.0.0/img/300x200.png'}" class="card-img-top" alt="${p.Nombre}">
+              <img src="${p.Imagen || 'img/img1.png'}" class="card-img-top" alt="${p.Nombre}">
               <div class="card-body">
                 <h5 class="card-title">${p.Nombre}</h5>
                 <p class="card-text">${p.Descripcion || ''}</p>
                 <p class="fw-bold">S/. ${Number(p.Precio).toFixed(2)}</p>
-                <button class="btn btn-primary w-100 btn-add-cart" data-id="${p.Id || p.idProductos || 0}" data-nombre="${p.Nombre}" data-precio="${Number(p.Precio) || 0}" onclick="agregarAlCarrito(${p.Id || p.idProductos || 0}, '${p.Nombre}', ${Number(p.Precio) || 0})">
+                <button class="btn btn-primary w-100 btn-add-cart" data-id="${p.Id || p.idProductos || 0}" data-nombre="${p.Nombre}" data-precio="${Number(p.Precio) || 0}">
                   <i class="bi bi-cart-plus"></i> Añadir al carrito
                 </button>
               </div>
@@ -77,8 +77,14 @@ document.addEventListener('DOMContentLoaded', () => {
     precioTxt = precioTxt.replace(/[^0-9.,]/g, '').replace(',', '.');
     const precio = Number(precioTxt) || 0;
     const id = Number(btn.dataset.id || 0) || Math.floor(Math.random() * 1000000);
-    agregarAlCarrito(id, nombre, precio);
-    if (typeof window.abrirCarrito === 'function') window.abrirCarrito();
+    const imgEl = card.querySelector('img');
+    const imagen = imgEl ? imgEl.src : 'img/img1.png';
+    agregarAlCarrito(id, nombre, precio, imagen);
+    if (typeof window.abrirCarrito === 'function') {
+      window.abrirCarrito();
+    } else {
+      try { window.location.href = 'carrito.html'; } catch {}
+    }
     if (typeof window.renderResumen === 'function') window.renderResumen();
   });
 });
@@ -102,9 +108,13 @@ function mostrarToast(titulo, detalle) {
     </div>
   `;
   cont.appendChild(toastEl);
-  const toast = new bootstrap.Toast(toastEl, { delay: 1800 });
-  toast.show();
-  toastEl.addEventListener('hidden.bs.toast', () => toastEl.remove());
+  if (window.bootstrap && typeof bootstrap.Toast === 'function') {
+    const toast = new bootstrap.Toast(toastEl, { delay: 1800 });
+    toast.show();
+    toastEl.addEventListener('hidden.bs.toast', () => toastEl.remove());
+  } else {
+    setTimeout(() => toastEl.remove(), 1800);
+  }
 }
 
 function mostrarSkeletons(container, count) {

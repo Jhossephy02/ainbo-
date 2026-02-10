@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../config/db');
-const { verificarToken } = require('../middleware/auth');
+const { verificarToken, verificarAdmin } = require('../middleware/auth');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 require('dotenv').config();
@@ -41,9 +41,11 @@ router.post('/crear-pedido', verificarToken, (req, res) => {
   db.beginTransaction(err => {
     if (err) return res.status(500).json({ mensaje: 'Error iniciando transacción' });
 
-    const qPrep = 'ALTER TABLE Pedidos ADD COLUMN IF NOT EXISTS NumeroOrden VARCHAR(20) UNIQUE, ADD COLUMN IF NOT EXISTS PaymentMethod VARCHAR(20), ADD COLUMN IF NOT EXISTS PaymentStatus VARCHAR(20), ADD COLUMN IF NOT EXISTS PagoCodigo VARCHAR(32)';
-    db.query(qPrep, [], () => {
-      db.query('CREATE TABLE IF NOT EXISTS EstadosPedido (Id INT AUTO_INCREMENT PRIMARY KEY, PedidoId INT NOT NULL, Estado VARCHAR(32) NOT NULL, Fecha DATETIME DEFAULT CURRENT_TIMESTAMP)', [], () => {
+    const qCrearPedidos = 'CREATE TABLE IF NOT EXISTS Pedidos (Id INT AUTO_INCREMENT PRIMARY KEY, NumeroOrden VARCHAR(20) UNIQUE, UsuarioId INT NOT NULL, Total DECIMAL(10,2) NOT NULL, Estado VARCHAR(32) NOT NULL, Direccion VARCHAR(255), CuponCodigo VARCHAR(64), PaymentMethod VARCHAR(20), PaymentStatus VARCHAR(20), PagoCodigo VARCHAR(32), Fecha DATETIME DEFAULT CURRENT_TIMESTAMP)';
+    const qCrearDetalles = 'CREATE TABLE IF NOT EXISTS DetallesPedido (Id INT AUTO_INCREMENT PRIMARY KEY, PedidoId INT NOT NULL, ProductoId INT NOT NULL, Cantidad INT NOT NULL, PrecioUnitario DECIMAL(10,2) NOT NULL)';
+    db.query(qCrearPedidos, [], () => {
+      db.query(qCrearDetalles, [], () => {
+        db.query('CREATE TABLE IF NOT EXISTS EstadosPedido (Id INT AUTO_INCREMENT PRIMARY KEY, PedidoId INT NOT NULL, Estado VARCHAR(32) NOT NULL, Fecha DATETIME DEFAULT CURRENT_TIMESTAMP)', [], () => {
         const qPedido = 'INSERT INTO Pedidos (NumeroOrden, UsuarioId, Total, Estado, Direccion, CuponCodigo, PaymentMethod, PaymentStatus, PagoCodigo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
         db.query(qPedido, [numeroOrden, usuarioId, total, 'pendiente', direccion, cuponCodigo || null, metodo, pagoEstado, pagoCodigo], (err, result) => {
       if (err) {
@@ -122,6 +124,7 @@ router.post('/crear-pedido', verificarToken, (req, res) => {
         });
       });
       });
+      });
     });
   });
 });
@@ -165,6 +168,32 @@ router.get('/seguimiento/:codigo', (req, res) => {
         return res.status(200).json({ pedido, detalles: dets || [], historial: hist || [] });
       });
     });
+  });
+});
+
+// Resumen de ventas (solo admin)
+router.get('/admin/ventas/totales', verificarToken, verificarAdmin, (req, res) => {
+  const q = 'SELECT COUNT(*) AS pedidos, COALESCE(SUM(Total),0) AS ingresos FROM Pedidos';
+  db.query(q, [], (err, rows) => {
+    if (err) return res.status(500).json({ mensaje: 'Error obteniendo totales' });
+    return res.status(200).json(rows[0] || { pedidos: 0, ingresos: 0 });
+  });
+});
+
+router.get('/admin/ventas/metodos', verificarToken, verificarAdmin, (req, res) => {
+  const q = 'SELECT PaymentMethod AS metodo, COUNT(*) AS pedidos, COALESCE(SUM(Total),0) AS ingresos FROM Pedidos GROUP BY PaymentMethod';
+  db.query(q, [], (err, rows) => {
+    if (err) return res.status(500).json({ mensaje: 'Error obteniendo resumen por método' });
+    return res.status(200).json({ resumen: rows || [] });
+  });
+});
+
+// Listado de pedidos (solo admin)
+router.get('/admin/pedidos', verificarToken, verificarAdmin, (req, res) => {
+  const q = 'SELECT P.Id, P.NumeroOrden, P.UsuarioId, U.Nombre, U.Email, P.Total, P.Estado, P.PaymentMethod, P.PaymentStatus, P.PagoCodigo FROM Pedidos P LEFT JOIN Usuarios U ON U.Id = P.UsuarioId ORDER BY P.Id DESC';
+  db.query(q, [], (err, rows) => {
+    if (err) return res.status(500).json({ mensaje: 'Error listando pedidos' });
+    return res.status(200).json({ pedidos: rows || [] });
   });
 });
 

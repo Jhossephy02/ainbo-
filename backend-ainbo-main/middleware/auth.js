@@ -17,4 +17,12 @@ const verificarToken = (req, res, next) => {
   }
 };
 
-module.exports = { verificarToken };
+const verificarAdmin = (req, res, next) => {
+  const rol = (req.usuario && (req.usuario.Rol || req.usuario.rol)) || 'usuario';
+  if (rol !== 'admin') {
+    return res.status(403).json({ mensaje: 'Se requiere rol administrador' });
+  }
+  next();
+};
+
+module.exports = { verificarToken, verificarAdmin };

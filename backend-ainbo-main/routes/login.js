@@ -38,7 +38,8 @@ router.post('/login', (req, res) => {
                 {
                     Id: usuario.Id,
                     Email: usuario.Email,
-                    Nombre: usuario.Nombre
+                    Nombre: usuario.Nombre,
+                    Rol: usuario.Rol || 'usuario'
                 },
                 secret,
                 { expiresIn: '24h' }
@@ -50,7 +51,8 @@ router.post('/login', (req, res) => {
                 usuario: {
                     Id: usuario.Id,
                     Nombre: usuario.Nombre,
-                    Email: usuario.Email
+                    Email: usuario.Email,
+                    Rol: usuario.Rol || 'usuario'
                 }
             });
         }
