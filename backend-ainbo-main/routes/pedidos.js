@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const db = require('../config/db');
 const { verificarToken } = require('../middleware/auth');
+const nodemailer = require('nodemailer');
+const crypto = require('crypto');
+require('dotenv').config();
 
 router.post('/crear-pedido', verificarToken, (req, res) => {
   const { direccion, cuponCodigo, items } = req.body;
@@ -20,11 +23,15 @@ router.post('/crear-pedido', verificarToken, (req, res) => {
     total += c * p;
   }
 
+  const numeroOrden = `ABF-${crypto.randomInt(100000, 999999)}`;
+
   db.beginTransaction(err => {
     if (err) return res.status(500).json({ mensaje: 'Error iniciando transacción' });
 
-    const qPedido = 'INSERT INTO Pedidos (UsuarioId, Total, Estado, Direccion, CuponCodigo) VALUES (?, ?, ?, ?, ?)';
-    db.query(qPedido, [usuarioId, total, 'pendiente', direccion, cuponCodigo || null], (err, result) => {
+    const qPrep = 'ALTER TABLE Pedidos ADD COLUMN IF NOT EXISTS NumeroOrden VARCHAR(20) UNIQUE';
+    db.query(qPrep, [], () => {
+      const qPedido = 'INSERT INTO Pedidos (NumeroOrden, UsuarioId, Total, Estado, Direccion, CuponCodigo) VALUES (?, ?, ?, ?, ?, ?)';
+      db.query(qPedido, [numeroOrden, usuarioId, total, 'pendiente', direccion, cuponCodigo || null], (err, result) => {
       if (err) {
         db.rollback(() => {});
         return res.status(500).json({ mensaje: 'Error creando pedido' });
@@ -41,13 +48,46 @@ router.post('/crear-pedido', verificarToken, (req, res) => {
         const multiInsert = inserts.slice(1);
         const processNext = (i) => {
           if (i >= multiInsert.length) {
-            db.commit(err => {
-              if (err) {
-                db.rollback(() => {});
-                return res.status(500).json({ mensaje: 'Error confirmando pedido' });
-              }
-              return res.status(201).json({ mensaje: 'Pedido creado', pedidoId });
-            });
+              // Reducir stock
+              const reducir = () => {
+                const next = (idx) => {
+                  if (idx >= items.length) return db.commit(async (err) => {
+                    if (err) {
+                      db.rollback(() => {});
+                      return res.status(500).json({ mensaje: 'Error confirmando pedido' });
+                    }
+                    try {
+                      const [user] = await new Promise((resolve) => {
+                        db.query('SELECT Email, Nombre FROM Usuarios WHERE Id = ?', [usuarioId], (e, rows) => resolve(rows || []));
+                      });
+                      const transporter = nodemailer.createTransport({
+                        service: 'gmail',
+                        auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS?.replace(/\"/g, '') }
+                      });
+                      const to = (user && user.Email) || '';
+                      if (to) {
+                        await transporter.sendMail({
+                          from: process.env.SMTP_USER,
+                          to,
+                          subject: `Confirmación de pedido ${numeroOrden}`,
+                          html: `<h3>Gracias por tu compra</h3><p>Tu número de orden es <strong>${numeroOrden}</strong>.</p><p>Total: S/. ${total.toFixed(2)}</p>`
+                        });
+                      }
+                    } catch {}
+                    return res.status(201).json({ mensaje: 'Pedido creado', pedidoId, numeroOrden });
+                  });
+                  const it = items[idx];
+                  db.query('UPDATE Productos SET Stock = GREATEST(Stock - ?, 0) WHERE Id = ?', [Number(it.cantidad), it.productoId], (e) => {
+                    if (e) {
+                      db.rollback(() => {});
+                      return res.status(500).json({ mensaje: 'Error actualizando stock' });
+                    }
+                    next(idx + 1);
+                  });
+                };
+                next(0);
+              };
+              reducir();
             return;
           }
           db.query(qDetalle, multiInsert[i], (e) => {
@@ -59,6 +99,7 @@ router.post('/crear-pedido', verificarToken, (req, res) => {
           });
         };
         processNext(0);
+      });
       });
     });
   });

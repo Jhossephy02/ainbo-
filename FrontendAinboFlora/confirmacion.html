@@ -10,8 +10,11 @@
   <div class="container py-5 text-center">
     <div class="card p-4">
       <h3>¡Gracias por tu compra!</h3>
-      <p class="mt-2">Tu pedido ha sido registrado con el número:</p>
-      <h4 id="pedidoId" class="text-success"></h4>
+      <p class="mt-2">Tu pedido ha sido registrado.</p>
+      <div class="mt-2">
+        <div>Número de orden: <strong id="numeroOrden">N/A</strong></div>
+        <div>ID interno: <span id="pedidoId" class="text-success"></span></div>
+      </div>
       <a id="verRastreo" class="btn btn-outline-success mt-2">Ver rastreo</a>
       <a href="index.html" class="btn btn-primary mt-3">Volver a la tienda</a>
     </div>
@@ -19,8 +22,11 @@
   <script>
     const params = new URLSearchParams(window.location.search);
     const id = params.get('pedidoId') || 'N/A';
+    const orden = params.get('numeroOrden') || 'N/A';
     document.getElementById('pedidoId').textContent = id;
-    document.getElementById('verRastreo').href = 'Rastreo.html?codigo=' + encodeURIComponent(id);
+    document.getElementById('numeroOrden').textContent = orden;
+    const codigo = orden !== 'N/A' ? orden : id;
+    document.getElementById('verRastreo').href = 'Rastreo.html?codigo=' + encodeURIComponent(codigo);
   </script>
 </body>
 </html>

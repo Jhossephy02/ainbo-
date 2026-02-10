@@ -51,7 +51,8 @@ async function crearPedido(e) {
     const data = await resp.json();
     if (resp.ok) {
       localStorage.removeItem('carrito');
-      window.location.href = 'confirmacion.html?pedidoId=' + data.pedidoId;
+      const qp = new URLSearchParams({ pedidoId: String(data.pedidoId || ''), numeroOrden: String(data.numeroOrden || '') });
+      window.location.href = 'confirmacion.html?' + qp.toString();
     } else {
       alert(data.mensaje || 'Error al crear pedido');
     }

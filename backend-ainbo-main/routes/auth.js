@@ -5,32 +5,40 @@ const bcrypt = require('bcrypt');
 
 // Ruta para registro normal
 router.post('/registro', async (req, res) => {
-    console.log('Registro de usuario:', req.body);
-    console.log( req.body);
-    // Desestructuración de los datos del cuerpo de la solicitud
     const { Nombre, Apellido, Email, NumeroCelular, Contraseña } = req.body;
-
     if (!Nombre || !Apellido || !Email || !NumeroCelular || !Contraseña) {
         return res.status(400).json({ message: 'Todos los campos son obligatorios' });
     }
-
+    const emailOk = typeof Email === 'string' && Email.includes('@') && Email.includes('.');
+    if (!emailOk) {
+        return res.status(400).json({ message: 'Email inválido' });
+    }
+    const telStr = String(NumeroCelular || '').replace(/\D/g, '');
+    if (telStr.length < 7 || telStr.length > 15) {
+        return res.status(400).json({ message: 'Número de celular inválido' });
+    }
+    if (String(Contraseña).length < 6) {
+        return res.status(400).json({ message: 'La contraseña debe tener al menos 6 caracteres' });
+    }
     try {
-        const hash = await bcrypt.hash(Contraseña, 10);
-        const query = 'INSERT INTO Usuarios (Nombre, Apellido, Email, NumeroCelular, Contraseña) VALUES (?, ?, ?, ?, ?)';
-
-        db.query(query, [Nombre, Apellido, Email, NumeroCelular, hash], (err, result) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).json({ message: 'Error al registrar el usuario', error: err.message });
+        db.query('SELECT Id FROM Usuarios WHERE Email = ?', [Email], async (err, rows) => {
+            if (err) return res.status(500).json({ message: 'Error validando usuario' });
+            if (rows && rows.length > 0) {
+                return res.status(409).json({ message: 'Email ya registrado' });
             }
-            res.status(201).json({ 
-                message: 'Usuario registrado exitosamente',
-                userId: result.insertId
+            const hash = await bcrypt.hash(Contraseña, 10);
+            const query = 'INSERT INTO Usuarios (Nombre, Apellido, Email, NumeroCelular, Contraseña) VALUES (?, ?, ?, ?, ?)';
+            db.query(query, [Nombre, Apellido, Email, telStr, hash], (err, result) => {
+                if (err) {
+                    return res.status(500).json({ message: 'Error al registrar el usuario', error: err.message });
+                }
+                res.status(201).json({ 
+                    message: 'Usuario registrado exitosamente',
+                    userId: result.insertId
+                });
             });
-            
         });
     } catch (err) {
-        console.error(err);
         res.status(500).json({message: 'Error al registrar el usuario', error: err.message});
     }
 });
