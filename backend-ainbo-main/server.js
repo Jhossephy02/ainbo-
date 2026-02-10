@@ -8,11 +8,7 @@ const authRoutes = require('./routes/auth');
 const loginRoutes = require('./routes/login');
 const productoRoutes = require('./routes/producto');
 const passwordRoutes = require('./routes/password');
-
-// Middleware para parsear el JSON
-const loginRoutes = require('./routes/login');
-const productoRoutes = require('./routes/producto');
-
+const pedidosRoutes = require('./routes/pedidos');
 
 //midlware para parsear el json
 app.use(cors());
@@ -48,9 +44,10 @@ app.use('/api', authRoutes);
 app.use('/api', loginRoutes);
 app.use('/api', productoRoutes);
 app.use('/api', passwordRoutes);
+app.use('/api', pedidosRoutes);
 
 // Inicialización del puerto
-const PORT = process.env.PORT || 3306;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log(`Servidor escuchando ${PORT}`);

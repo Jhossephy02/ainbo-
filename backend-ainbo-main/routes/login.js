@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const db = require('../config/db');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 router.post('/login', (req, res) => {
-    console.log(req.body);
     const {Email, Contraseña} = req.body;
 
     // Validación de datos
@@ -17,12 +17,11 @@ router.post('/login', (req, res) => {
         [Email], // Corregido: eliminado el !
         async (err, results) => {
             if(err) {
-                console.log(err);
-                return res.status(500).send('Error en el servidor');
+                return res.status(500).json({ message: 'Error en el servidor' });
             }
 
             if(results.length === 0) {
-                return res.status(404).send('Usuario no encontrado');
+                return res.status(404).json({ message: 'Usuario no encontrado' });
             }
 
             const usuario = results[0]; // Cambiado de Email a usuario para mayor claridad
@@ -31,16 +30,27 @@ router.post('/login', (req, res) => {
             const match = await bcrypt.compare(Contraseña, usuario.Contraseña);
 
             if(!match) {
-                return res.status(401).send('Contraseña incorrecta');
+                return res.status(401).json({ message: 'Contraseña incorrecta' });
             }
 
-            return res.status(200).send({
-                mensaje: 'Usuario logueado exitosamente',
-                Usuario: {
-                    Id: usuario.Id, // Asegúrate de que coincida con el nombre de columna en tu DB
-                    Nombre: usuario.Nombre,
+            const secret = process.env.JWT_SECRET || 'dev-secret';
+            const token = jwt.sign(
+                {
+                    Id: usuario.Id,
                     Email: usuario.Email,
-                    Contraseña: usuario.Contraseña
+                    Nombre: usuario.Nombre
+                },
+                secret,
+                { expiresIn: '24h' }
+            );
+
+            return res.status(200).json({
+                mensaje: 'Login exitoso',
+                token,
+                usuario: {
+                    Id: usuario.Id,
+                    Nombre: usuario.Nombre,
+                    Email: usuario.Email
                 }
             });
         }
@@ -55,7 +65,7 @@ router.post('/login/google', async (req, res) => {
 
  }
 
- db.query('SELECT * FROM usuarios WHERE correo = ?', [correo], (err, results) => {
+  db.query('SELECT * FROM Usuarios WHERE correo = ?', [correo], (err, results) => {
 
   if (err) {
 
@@ -67,7 +77,7 @@ router.post('/login/google', async (req, res) => {
   if (results.length === 0) {
    // Usuario no existe, lo registramos
    const insertQuery = `
-    INSERT INTO usuarios (nombre_usuario, correo, fecha_registro, auth_provider, firebase_uid, email_verified)
+    INSERT INTO Usuarios (nombre_usuario, correo, fecha_registro, auth_provider, firebase_uid, email_verified)
     VALUES (?, ?, NOW(), 'google', ?, ?)
    `;
    db.query(insertQuery, [nombre_usuario, correo, firebase_uid, email_verified ? 1 : 0], (err, result) => {

@@ -3,14 +3,14 @@ body {
   font-family: 'Segoe UI', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f7f7f7;
+  background-color: #f8f9fa;
 }
 
 header {
-  background-color: #5d8d5d;
-  color: rgb(0, 0, 0);
+  background-color: #f8f9fa;
+  color: #212529;
   text-align: center;
-  padding: 2rem 1rem;
+  padding: 2.5rem 1rem;
 }
 
 .filter-bar {
@@ -19,62 +19,64 @@ header {
   gap: 1rem;
   flex-wrap: wrap;
   padding: 1rem;
-  background-color: #e1e1e1;
+  background-color: #ffffff;
 }
 
 .filter-bar button {
-  background-color: #5d8d5d;
-  color: white;
+  background-color: #198754;
+  color: #fff;
   border: none;
   padding: 0.5rem 1rem;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
 }
 
 .filter-bar button:hover {
-  background-color: #24d132;
+  background-color: #146c43;
 }
 
 .catalog-section {
-  padding: 2rem;
+  padding: 2rem 1rem;
 }
 
 .catalog-section h2 {
   text-align: center;
-  color: #5c443a;
+  color: #198754;
+  margin-bottom: 1rem;
 }
 
 .catalog-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1.5rem;
-  margin-top: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
 }
 
 .catalog-grid img {
-  border: 3px solid #efff13; /* borde verde visible */
+  border: none;
 }
 
 .product {
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  border: 3px solid #41d3ff; /* borde verde visible */
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border: 1px solid #e9ecef;
   padding: 1rem;
   text-align: center;
-  transition: transform 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   cursor: pointer;
 }
 
 .product:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
 }
 
 .product img {
   max-width: 100%;
-  height: 150px;
+  height: 180px;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 10px;
 }
 
 .modal {
@@ -90,13 +92,13 @@ header {
 }
 
 .modal-content {
-  background-color: white;
+  background-color: #fff;
   padding: 2rem;
-  border-radius: 10px;
+  border-radius: 12px;
   text-align: center;
   width: 80%;
-  max-width: 400px;
-  box-shadow: 0 5px 15px rgba(82, 248, 5, 0.3);
+  max-width: 420px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 .close {
@@ -104,7 +106,7 @@ header {
   top: 10px;
   right: 20px;
   font-size: 2rem;
-  color: #0affeb;
+  color: #6c757d;
   cursor: pointer;
 }
 
@@ -125,8 +127,8 @@ header {
 }
 
 .carousel .product {
-  min-width: 220px;
-  margin: 10px;
+  min-width: 240px;
+  margin: 12px;
   flex-shrink: 0;
   cursor: pointer;
 }
@@ -134,20 +136,21 @@ header {
 .prev, .next {
   position: absolute;
   top: 50%;
-  background-color: rgba(0,0,0,0.5);
-  color: white;
+  background-color: rgba(0,0,0,0.35);
+  color: #fff;
   border: none;
-  font-size: 24px;
-  padding: 10px;
+  font-size: 20px;
+  padding: 8px 10px;
   cursor: pointer;
   transform: translateY(-50%);
   z-index: 10;
+  border-radius: 8px;
 }
 
 .prev {
-  left: 0;
+  left: 4px;
 }
 
 .next {
-  right: 0;
+  right: 4px;
 }

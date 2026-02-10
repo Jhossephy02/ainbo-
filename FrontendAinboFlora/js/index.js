@@ -1,28 +1,10 @@
- // Script para mostrar el número de productos en el carrito
+ // Inicializa contador de carrito desde localStorage
  document.addEventListener('DOMContentLoaded', function() {
-  // Simular agregar al carrito
-  const addButtons = document.querySelectorAll('.btn-primary');
-  const cartBadge = document.querySelector('.badge');
-  let cartCount = 0;
-  
-  addButtons.forEach(button => {
-      button.addEventListener('click', function() {
-          cartCount++;
-          cartBadge.textContent = cartCount;
-          
-          // Feedback visual
-          this.innerHTML = '<i class="bi bi-check-circle"></i> Añadido';
-          this.classList.remove('btn-primary');
-          this.classList.add('btn-success');
-          
-          setTimeout(() => {
-              this.innerHTML = '<i class="bi bi-cart-plus"></i> Añadir al carrito';
-              this.classList.remove('btn-success');
-              this.classList.add('btn-primary');
-          }, 1500);
-      });
-  });
-  
+   const cartBadge = document.getElementById('cart-count') || document.querySelector('.badge');
+   const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+   const total = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+   if (cartBadge) cartBadge.textContent = total;
+   
   // Activar tooltips
   const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
   tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -32,13 +14,13 @@
 
 
 
-    // Objeto para almacenar los productos del carrito
-    let carritoItems = {
-      'delicia': { id: 'delicia', nombre: 'Delicia Carnívora', precio: 120.00, cantidad: 2 },
-      'bonsai': { id: 'bonsai', nombre: 'Bonsái de 15 años', precio: 2250.00, cantidad: 1, detalle: '70cm - 80cm' },
-      'kit': { id: 'kit', nombre: 'Kit de Herramientas', precio: 85.00, cantidad: 0 }
-    };
-    
+    function getCarrito() {
+      return JSON.parse(localStorage.getItem('carrito')) || [];
+    }
+    function setCarrito(items) {
+      localStorage.setItem('carrito', JSON.stringify(items));
+    }
+ 
     // Variables para descuentos
     let descuentoAplicado = false;
     let porcentajeDescuento = 0.20; 
@@ -82,99 +64,62 @@
       }
     }
     
-    // Función para agregar un producto al carrito
-    function agregarAlCarrito(id, nombre, precio, cantidad, detalle = '') {
-      if (carritoItems[id]) {
-        carritoItems[id].cantidad += cantidad;
-      } else {
-        carritoItems[id] = { id, nombre, precio, cantidad, detalle };
-      }
-      
-      // Actualizar contador de productos
-      actualizarContadorCarrito();
-      
-      // Mostrar animación o mensaje de confirmación
-      const boton = event.currentTarget;
-      const textoOriginal = boton.innerHTML;
-      
-      boton.innerHTML = '<i class="bi bi-check-circle"></i> ¡Añadido!';
-      boton.classList.remove('btn-success');
-      boton.classList.add('btn-outline-success');
-      
-      setTimeout(() => {
-        boton.innerHTML = textoOriginal;
-        boton.classList.remove('btn-outline-success');
-        boton.classList.add('btn-success');
-      }, 1500);
-      
-      // Abrir el carrito automáticamente
-      abrirCarrito();
-    }
-    
+    // Las adiciones al carrito se manejan en productos.js
+ 
     // Función para cambiar la cantidad de un producto
     function cambiarCantidad(id, cambio) {
-      if (carritoItems[id]) {
-        carritoItems[id].cantidad += cambio;
-        
-        // Si la cantidad llega a 0, eliminar el producto
-        if (carritoItems[id].cantidad <= 0) {
-          delete carritoItems[id];
-        }
-        
-        actualizarCarrito();
-        actualizarContadorCarrito();
+      const carrito = getCarrito();
+      const item = carrito.find(i => String(i.id) === String(id));
+      if (!item) return;
+      item.cantidad += cambio;
+      if (item.cantidad <= 0) {
+        const idx = carrito.findIndex(i => String(i.id) === String(id));
+        carrito.splice(idx, 1);
       }
+      setCarrito(carrito);
+      actualizarCarrito();
+      actualizarContadorCarrito();
     }
     
     // Función para eliminar un producto del carrito
     function eliminarProducto(id) {
-      if (carritoItems[id]) {
-        delete carritoItems[id];
-        actualizarCarrito();
-        actualizarContadorCarrito();
-      }
+      const carrito = getCarrito();
+      const nuevo = carrito.filter(i => String(i.id) !== String(id));
+      setCarrito(nuevo);
+      actualizarCarrito();
+      actualizarContadorCarrito();
     }
     
     // Función para actualizar el contenido del carrito
     function actualizarCarrito() {
       const carritoItemsElement = document.getElementById('carrito-items');
       carritoItemsElement.innerHTML = '';
-      
-      let hayProductos = false;
+      const carrito = getCarrito();
       let subtotal = 0;
-      
-      // Agregar cada producto al carrito
-      for (const id in carritoItems) {
-        if (carritoItems[id].cantidad > 0) {
-          hayProductos = true;
-          const item = carritoItems[id];
-          subtotal += item.precio * item.cantidad;
-          
-          const productoElement = document.createElement('div');
-          productoElement.className = 'carrito-producto';
-          productoElement.innerHTML = `
-            <img src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/1.0.0/img/100x100.png" alt="${item.nombre}">
-            <div class="producto-info">
-              <h5>${item.nombre}</h5>
-              <p class="producto-precio">S/. ${item.precio.toFixed(2)}</p>
-              ${item.detalle ? `<p class="producto-detalle">${item.detalle}</p>` : ''}
-              <div class="producto-cantidad">
-                <button class="cantidad-btn" onclick="cambiarCantidad('${id}', -1)">-</button>
-                <span class="cantidad-valor">${item.cantidad}</span>
-                <button class="cantidad-btn" onclick="cambiarCantidad('${id}', 1)">+</button>
-              </div>
+      carrito.forEach(item => {
+        subtotal += Number(item.precio) * Number(item.cantidad);
+        const productoElement = document.createElement('div');
+        productoElement.className = 'carrito-producto';
+        productoElement.innerHTML = `
+          <img src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/1.0.0/img/100x100.png" alt="${item.nombre}">
+          <div class="producto-info">
+            <h5>${item.nombre}</h5>
+            <p class="producto-precio">S/. ${Number(item.precio).toFixed(2)}</p>
+            <div class="producto-cantidad">
+              <button class="cantidad-btn" onclick="cambiarCantidad('${item.id}', -1)">-</button>
+              <span class="cantidad-valor">${item.cantidad}</span>
+              <button class="cantidad-btn" onclick="cambiarCantidad('${item.id}', 1)">+</button>
             </div>
-            <button class="eliminar-producto" onclick="eliminarProducto('${id}')">
-              <i class="bi bi-trash"></i>
-            </button>
-          `;
-          
-          carritoItemsElement.appendChild(productoElement);
-        }
-      }
+          </div>
+          <button class="eliminar-producto" onclick="eliminarProducto('${item.id}')">
+            <i class="bi bi-trash"></i>
+          </button>
+        `;
+        carritoItemsElement.appendChild(productoElement);
+      });
       
       // Mostrar mensaje si el carrito está vacío
-      if (!hayProductos) {
+      if (carrito.length === 0) {
         carritoItemsElement.innerHTML = `
           <div class="carrito-vacio">
             <i class="bi bi-cart-x"></i>
@@ -201,21 +146,15 @@
     
     // Función para actualizar el contador de productos en el icono del carrito
     function actualizarContadorCarrito() {
-      const contador = document.querySelector('.contador-carrito');
+      const contador = document.getElementById('cart-count');
       let totalItems = 0;
-      
-      for (const id in carritoItems) {
-        totalItems += carritoItems[id].cantidad;
-      }
+      const carrito = getCarrito();
+      carrito.forEach(i => totalItems += Number(i.cantidad));
       
       contador.textContent = totalItems;
       
       // Ocultar el contador si no hay productos
-      if (totalItems === 0) {
-        contador.style.display = 'none';
-      } else {
-        contador.style.display = 'flex';
-      }
+      if (contador) contador.style.display = totalItems === 0 ? 'none' : 'flex';
     }
     
     // Inicializar el carrito al cargar la página

@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const registerForm = document.getElementById('register-form');
-    const API_URL = 'http://localhost:3306/api'; // Cambia el puerto aquí
+    const API_URL = window.AINBO_API || 'http://localhost:3000/api';
 
     registerForm.addEventListener('submit', async (e) => {
         e.preventDefault();
