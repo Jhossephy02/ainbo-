@@ -38,7 +38,7 @@ async function cargarProductos() {
           <div class="col-md-4 col-lg-3 mb-4">
             <div class="card h-100">
               <span class="badge-new">Nuevo</span>
-              <img src="${p.Imagen || 'img/img1.png'}" class="card-img-top" alt="${p.Nombre}">
+              <img src="${p.Imagen || 'img/img1.png'}" class="card-img-top" alt="${p.Nombre}" loading="lazy">
               <div class="card-body">
                 <h5 class="card-title">${p.Nombre}</h5>
                 <p class="card-text">${p.Descripcion || ''}</p>
