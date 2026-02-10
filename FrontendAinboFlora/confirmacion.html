@@ -14,6 +14,11 @@
       <div class="mt-2">
         <div>Número de orden: <strong id="numeroOrden">N/A</strong></div>
         <div>ID interno: <span id="pedidoId" class="text-success"></span></div>
+        <div>Método de pago: <span id="metodoPago">N/A</span></div>
+        <div id="cipLine" class="d-none">Código de pago: <strong id="cipCode"></strong></div>
+        <div id="qrLine" class="d-none mt-2">
+          <img id="qrImg" alt="QR de pago" class="img-thumbnail" style="max-width:180px;">
+        </div>
       </div>
       <a id="verRastreo" class="btn btn-outline-success mt-2">Ver rastreo</a>
       <a href="index.html" class="btn btn-primary mt-3">Volver a la tienda</a>
@@ -23,8 +28,20 @@
     const params = new URLSearchParams(window.location.search);
     const id = params.get('pedidoId') || 'N/A';
     const orden = params.get('numeroOrden') || 'N/A';
+    const metodoPago = params.get('metodoPago') || 'N/A';
+    const cip = params.get('cip') || '';
     document.getElementById('pedidoId').textContent = id;
     document.getElementById('numeroOrden').textContent = orden;
+    document.getElementById('metodoPago').textContent = metodoPago;
+    if (cip) {
+      document.getElementById('cipCode').textContent = cip;
+      document.getElementById('cipLine').classList.remove('d-none');
+      const qrData = encodeURIComponent(`Orden ${orden} | ${metodoPago} | ${cip}`);
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${qrData}`;
+      const qrImg = document.getElementById('qrImg');
+      qrImg.src = qrUrl;
+      document.getElementById('qrLine').classList.remove('d-none');
+    }
     const codigo = orden !== 'N/A' ? orden : id;
     document.getElementById('verRastreo').href = 'Rastreo.html?codigo=' + encodeURIComponent(codigo);
   </script>

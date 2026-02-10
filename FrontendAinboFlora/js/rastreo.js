@@ -19,7 +19,10 @@ async function buscarPedido(e) {
   items.innerHTML = '';
   if (!codigo) return;
   try {
-    const resp = await fetch(`${API_BASE}/pedido/${encodeURIComponent(codigo)}`);
+    let resp = await fetch(`${API_BASE}/seguimiento/${encodeURIComponent(codigo)}`);
+    if (!resp.ok) {
+      resp = await fetch(`${API_BASE}/pedido/${encodeURIComponent(codigo)}`);
+    }
     const data = await resp.json();
     if (!resp.ok) {
       alerta.textContent = data.mensaje || 'Pedido no encontrado';
@@ -28,6 +31,7 @@ async function buscarPedido(e) {
     }
     const pedido = data.pedido;
     const dets = data.detalles || [];
+    const hist = data.historial || [];
     pedidoIdEl.textContent = `#${pedido.Id}`;
     estadoEl.textContent = pedido.Estado || 'pendiente';
     let total = 0;
@@ -39,6 +43,16 @@ async function buscarPedido(e) {
       li.innerHTML = `<span>Producto ${d.ProductoId} x${d.Cantidad}</span><span>${formatoMoneda(lineTotal)}</span>`;
       items.appendChild(li);
     });
+    const histUl = document.getElementById('historial');
+    if (histUl) {
+      histUl.innerHTML = '';
+      hist.forEach(h => {
+        const li = document.createElement('li');
+        li.className = 'list-group-item d-flex justify-content-between';
+        li.innerHTML = `<span>${String(h.Estado).replace(/_/g,' ')}</span><span>${new Date(h.Fecha).toLocaleString()}</span>`;
+        histUl.appendChild(li);
+      });
+    }
     totalEl.textContent = formatoMoneda(total || pedido.Total || 0);
     cont.classList.remove('d-none');
   } catch {

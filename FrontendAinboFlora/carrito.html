@@ -13,40 +13,11 @@
       <button onclick="continuarComprando()">← continuar comprando</button>
       <button class="cerrar" onclick="cerrarCarrito()">✕</button>
     </div>
-
-    <div class="producto">
-      <img src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/1.0.0/img/100x100.png" alt="Delicia Carnívora">
-      <div class="info">
-        <h4>Delicia Carnívora</h4>
-        <p>S/. 120.00</p>
-        <div class="cantidad">
-          <button onclick="cambiarCantidad('delicia', -1)">-</button>
-          <label id="cant-delicia">2</label>
-          <button onclick="cambiarCantidad('delicia', 1)">+</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="producto">
-      <img src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/1.0.0/img/100x100.png" alt="Bonsái de 15 años">
-      <div class="info">
-        <h4>Bonsái de 15 años</h4>
-        <p>S/. 2250.00</p>
-        <small>70cm - 80cm</small>
-        <div class="cantidad">
-          <button onclick="cambiarCantidad('bonsai', -1)">-</button>
-          <label id="cant-bonsai">1</label>
-          <button onclick="cambiarCantidad('bonsai', 1)">+</button>
-        </div>
-      </div>
-    </div>
+    <div id="carrito-items"></div>
 
     <div class="resumen">
-      <p>Subtotal: <span id="subtotal">S/. 3490.00</span></p>
-      <div class="resumen-items">
-        <p id="resumen-delicia">Delicia carnivora - 2 und</p>
-        <p id="resumen-bonsai">Bonsai de 15 años - 1 und</p>
-      </div>
+      <p>Subtotal: <span id="subtotal">S/. 0.00</span></p>
+      <div id="resumen-items" class="resumen-items"></div>
 
       <label>
         <input type="checkbox" id="descuento"> ¿Tienes un cupón?
@@ -59,7 +30,7 @@
       </div>
 
       <p>Envío: <span style="color:red">Gratis</span></p>
-      <p><strong>Total: <span id="total">S/. 3490.00</span></strong></p>
+      <p><strong>Total: <span id="total">S/. 0.00</span></strong></p>
 
       
       <a href="checkout.html" class="tramitar" style="text-decoration: none; display: inline-block;">
