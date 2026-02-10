@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const registerForm = document.getElementById('register-form');
-    const API_URL = window.AINBO_API || 'http://localhost:3000/api';
+    const host = window.location.hostname || 'localhost';
+    const API_URL = window.AINBO_API || `http://${host}:3000/api`;
 
     registerForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -12,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const Contraseña = registerForm.querySelector('input[type="password"]').value;
 
         try {
-            const response = await fetch(`${API_URL}/registrar`, {
+            const response = await fetch(`${API_URL}/registro`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

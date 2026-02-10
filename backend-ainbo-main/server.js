@@ -11,13 +11,12 @@ const passwordRoutes = require('./routes/password');
 const pedidosRoutes = require('./routes/pedidos');
 
 //midlware para parsear el json
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// CORS para permisos en el navegador
+// CORS
 app.use(cors({
-  origin: '*', 
+  origin: (origin, callback) => callback(null, true),
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true

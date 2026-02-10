@@ -1,4 +1,5 @@
-const API_BASE = window.AINBO_API || 'http://localhost:3000/api';
+const host = window.location.hostname || 'localhost';
+const API_BASE = window.AINBO_API || `http://${host}:3000/api`;
 
 function getLS() {
   return JSON.parse(localStorage.getItem('carrito')) || [];

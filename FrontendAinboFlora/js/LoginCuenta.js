@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('login-form');
-    const API_URL = window.AINBO_API || 'http://localhost:3000/api';
+    const host = window.location.hostname || 'localhost';
+    const API_URL = window.AINBO_API || `http://${host}:3000/api`;
 
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -15,7 +16,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: JSON.stringify({ Email, Contraseña })
             });
 
-            const data = await response.json();
+            let data;
+            try {
+                data = await response.json();
+            } catch {
+                throw new Error('json_parse_error');
+            }
 
             if (response.ok) {
                 localStorage.setItem('token', data.token);
@@ -25,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert(data.message || 'Error al iniciar sesión');
             }
         } catch (error) {
-            alert('Error de conexión con el servidor');
+            alert(error.message === 'json_parse_error' ? 'El servidor devolvió una respuesta inválida' : 'Error de conexión con el servidor');
         }
     });
 });
