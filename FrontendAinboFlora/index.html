@@ -30,52 +30,135 @@
             COMPRA</p>
     </header>
 
-    <!-- Barra de navegación mejorada -->
-    <nav class="navbar navbar-expand-lg navbar-light p-3 shadow-sm sticky-top bg-white" id="menu">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <span class="fs-4 text-success fw-bold">AinboFlora.</span>
+    <nav class="navbar navbar-expand-lg navbar-dark p-3 sticky-top bg-brand" id="menu">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">
+          <span class="fs-4 text-white fw-bold">AinboFlora.</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house-door me-1"></i> Inicio</a></li>
+            <li class="nav-item"><a class="nav-link" href="catalogo.html"><i class="bi bi-shop me-1"></i> Tienda</a></li>
+            <li class="nav-item"><a class="nav-link" href="#nosotros"><i class="bi bi-people me-1"></i> Nosotros</a></li>
+            <li class="nav-item"><a class="nav-link" href="#servicios"><i class="bi bi-tools me-1"></i> Servicios</a></li>
+            <li class="nav-item"><a class="nav-link" href="#proyectos"><i class="bi bi-brush me-1"></i> Proyectos</a></li>
+            <li class="nav-item"><a class="nav-link" href="#seccion-contacto"><i class="bi bi-telephone me-1"></i> Contacto</a></li>
+            <li class="nav-item"><a class="nav-link" href="pages/Rastreo.html"><i class="bi bi-truck me-1"></i> Seguimiento</a></li>
+          </ul>
+          <div class="d-flex position-relative align-items-center gap-2">
+            <input id="globalSearchInput" class="form-control me-2" type="text" placeholder="Buscar productos" aria-label="Buscar" autocomplete="off">
+            <div id="searchSuggestions" class="search-suggestions d-none"></div>
+            <button id="globalSearchBtn" class="btn btn-primary" type="button">Buscar</button>
+            <a href="tel:+51910898346" class="btn cta-phone ms-3 d-none d-lg-inline-flex align-items-center">
+              <i class="bi bi-telephone-fill me-2"></i>
+              <span class="me-1">Central telefónica</span>
+              <strong>910-898-346</strong>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="Rastreo.html">
-                            <i class="bi bi-truck me-1"></i> Seguimiento
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Login.html">
-                            <i class="bi bi-person-circle me-1"></i> Accede al club
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="checkout.html">
-                            <i class="bi bi-cart3 me-1"></i> Ver carrito
-                        </a>
-                    </li>
-                </ul>
-                <div class="d-flex position-relative">
-                    <input id="globalSearchInput" class="form-control me-2" type="text" placeholder="Escribe aquí para buscar" aria-label="Buscar" autocomplete="off">
-                    <div id="searchSuggestions" class="search-suggestions d-none"></div>
-                    <button id="globalSearchBtn" class="btn btn-primary btn-primary-outline-success" type="button">Buscar</button>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
     </nav>
 
-    <!-- Banner Principal -->
-    <section class="banner-section">
-        <div class="container">
-            <h1 class="display-4 fw-bold">Somos productores de grass natural</h1>
-            <p class="lead">Venta de palmeras, plantas ornamentales y paisajismo para tu jardín</p>
-            <button class="btn btn-success btn-lg mt-3">Ver Ofertas</button>
+    <section class="position-relative" id="hero">
+      <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="hero-slide" style="background-image:url('img/Banner-Principal.jpg');background-size:cover;background-position:center;">
+              <div class="hero-overlay"></div>
+              <div class="container hero-content text-center text-white">
+                <h1 class="display-4 fw-bold">Somos productores de grass natural</h1>
+                <p class="lead">Venta de palmeras, plantas ornamentales y paisajismo</p>
+                <a href="catalogo.html" class="btn btn-success btn-lg mt-3 transition-soft">Ver ofertas</a>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="hero-slide" style="background-image:url('img/verdes.jpg');background-size:cover;background-position:center;">
+              <div class="hero-overlay"></div>
+              <div class="container hero-content text-center text-white">
+                <h1 class="display-5 fw-bold">Plantas ornamentales</h1>
+                <p class="lead">Variedad para interior y exterior</p>
+                <a href="catalogo.html?categoria=Plantas" class="btn btn-outline-light btn-lg mt-3 transition-soft">Ver plantas</a>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="hero-slide" style="background-image:url('img/Flor en 4k.jpg');background-size:cover;background-position:center;">
+              <div class="hero-overlay"></div>
+              <div class="container hero-content text-center text-white">
+                <h1 class="display-5 fw-bold">Palmeras y árboles</h1>
+                <p class="lead">Expertos en trasplante y mantenimiento</p>
+                <a href="catalogo.html?categoria=Plantas" class="btn btn-outline-light btn-lg mt-3 transition-soft">Ver especies</a>
+              </div>
+            </div>
+          </div>
         </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Siguiente</span>
+        </button>
+      </div>
+    </section>
+    
+    <section class="container py-5" id="servicios">
+      <h2 class="text-center section-title mb-4">Nuestros Servicios</h2>
+      <div class="row g-4">
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card h-100 shadow-soft transition-soft service-card text-center p-3">
+            <i class="bi bi-flower1 display-6 text-brand"></i>
+            <h5 class="mt-2">Asesoría de jardines</h5>
+            <p class="text-muted mb-0">Diseño y recomendación de especies para tu espacio.</p>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card h-100 shadow-soft transition-soft service-card text-center p-3">
+            <i class="bi bi-shield-check display-6 text-brand"></i>
+            <h5 class="mt-2">Fumigación</h5>
+            <p class="text-muted mb-0">Control de plagas con cuidado del entorno.</p>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card h-100 shadow-soft transition-soft service-card text-center p-3">
+            <i class="bi bi-tools display-6 text-brand"></i>
+            <h5 class="mt-2">Mantenimiento</h5>
+            <p class="text-muted mb-0">Riego, poda y fertilización programada.</p>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card h-100 shadow-soft transition-soft service-card text-center p-3">
+            <i class="bi bi-brush display-6 text-brand"></i>
+            <h5 class="mt-2">Paisajismo</h5>
+            <p class="text-muted mb-0">Instalación de grass, palmeras y ornamentales.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container py-5" id="nosotros">
+      <h2 class="text-center section-title mb-4">Nosotros</h2>
+      <div class="row align-items-center g-4">
+        <div class="col-12 col-md-6">
+          <img src="img/verdes.jpg" class="img-fluid rounded-3 shadow-sm" alt="Nuestro vivero">
+        </div>
+        <div class="col-12 col-md-6">
+          <h5 class="mb-2">Historia</h5>
+          <p class="text-muted">Somos productores y especialistas en paisajismo. Acompañamos a clientes residenciales y corporativos con asesoría, venta e instalación.</p>
+          <h5 class="mt-3 mb-2">Valores</h5>
+          <ul class="text-muted">
+            <li>Calidad en especies y servicio</li>
+            <li>Compromiso con el cuidado del entorno</li>
+            <li>Atención cercana y confiable</li>
+          </ul>
+          <a href="#seccion-contacto" class="btn btn-success mt-2">Contáctanos</a>
+        </div>
+      </div>
     </section>
 
     <section class="container py-5">
@@ -138,7 +221,7 @@
         </div>
     </section>
     <!-- Nuestros Productos -->
-    <div class="container mb-5">
+    <div id="productosHome" class="container mb-5">
         <h2 class="text-center mb-4 section-title">Nuestros Productos</h2>
         <div class="row">
             <div class="col-6 col-md-3 mb-4">
@@ -200,7 +283,7 @@
     </div>
 
     <!-- Sección de Nuevos Productos -->
-    <section class="container-fluid product-section bg-light">
+    <section class="container-fluid product-section bg-light" id="nuevosProductos">
         <div class="container">
             <h2 class="text-center section-title">Nuevos Productos</h2>
             <p class="intro-text">
@@ -525,7 +608,7 @@
     </section>
 
     <!-- Sección de Semillas -->
-    <section class="container-fluid product-section bg-light">
+    <section class="container-fluid product-section bg-light" id="semillasPremium">
         <div class="container">
             <h2 class="text-center section-title">Semillas Premium</h2>
             <p class="intro-text">
@@ -615,7 +698,7 @@
     </section>
 
     <!-- Sección de Herramientas -->
-    <section class="container-fluid product-section">
+    <section class="container-fluid product-section" id="herramientasJardin">
         <div class="container">
             <h2 class="text-center section-title">Herramientas de Jardinería</h2>
             <p class="intro-text">
@@ -897,6 +980,7 @@
 
 
     <!-- Sección de Contacto -->
+    <section id="seccion-contacto">
         <div id="bg-contactos">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
                 <path fill="#198754" fill-opacity="1"
@@ -1089,27 +1173,58 @@
     </section>
 
     <!-- Galería de Proyectos -->
-    <section class="container py-5">
+    <section class="container py-5" id="proyectos">
         <h2 class="text-center section-title mb-4">Galería de Proyectos</h2>
         <div class="row g-3">
             <div class="col-6 col-md-4">
-                <img src="img/verdes.jpg" class="img-fluid rounded-3 shadow-sm" alt="Proyecto 1">
+              <div class="position-relative">
+                <img src="img/verdes.jpg" class="img-fluid rounded-3 shadow-sm project-thumb" alt="Proyecto 1" data-category="Residencial" data-desc="Instalación de jardín doméstico con plantas ornamentales" data-bs-toggle="modal" data-bs-target="#projectModal">
+                <span class="project-chip badge bg-success">Residencial</span>
+              </div>
             </div>
             <div class="col-6 col-md-4">
-                <img src="img/riego.jpg" class="img-fluid rounded-3 shadow-sm" alt="Proyecto 2">
+              <div class="position-relative">
+                <img src="img/riego.jpg" class="img-fluid rounded-3 shadow-sm project-thumb" alt="Proyecto 2" data-category="Paisajismo" data-desc="Sistema de riego automatizado y selección de especies" data-bs-toggle="modal" data-bs-target="#projectModal">
+                <span class="project-chip badge bg-primary">Paisajismo</span>
+              </div>
             </div>
             <div class="col-6 col-md-4">
-                <img src="img/Ceramica7.jpg" class="img-fluid rounded-3 shadow-sm" alt="Proyecto 3">
+              <div class="position-relative">
+                <img src="img/Ceramica7.jpg" class="img-fluid rounded-3 shadow-sm project-thumb" alt="Proyecto 3" data-category="Comercial" data-desc="Decoración de espacios comerciales con maceteros artesanales" data-bs-toggle="modal" data-bs-target="#projectModal">
+                <span class="project-chip badge bg-warning text-dark">Comercial</span>
+              </div>
             </div>
             <div class="col-6 col-md-4">
-                <img src="img/Ceramica2.jpg" class="img-fluid rounded-3 shadow-sm" alt="Proyecto 4">
+              <div class="position-relative">
+                <img src="img/Ceramica2.jpg" class="img-fluid rounded-3 shadow-sm project-thumb" alt="Proyecto 4" data-category="Residencial" data-desc="Renovación de terraza con plantas de interior" data-bs-toggle="modal" data-bs-target="#projectModal">
+                <span class="project-chip badge bg-success">Residencial</span>
+              </div>
             </div>
             <div class="col-6 col-md-4">
-                <img src="img/Herramienta4.jpg" class="img-fluid rounded-3 shadow-sm" alt="Proyecto 5">
+              <div class="position-relative">
+                <img src="img/Herramienta4.jpg" class="img-fluid rounded-3 shadow-sm project-thumb" alt="Proyecto 5" data-category="Urbano" data-desc="Instalación de áreas verdes en espacios urbanos" data-bs-toggle="modal" data-bs-target="#projectModal">
+                <span class="project-chip badge bg-info text-dark">Urbano</span>
+              </div>
             </div>
             <div class="col-6 col-md-4">
-                <img src="img/Semilla2.jpg" class="img-fluid rounded-3 shadow-sm" alt="Proyecto 6">
+              <div class="position-relative">
+                <img src="img/Semilla2.jpg" class="img-fluid rounded-3 shadow-sm project-thumb" alt="Proyecto 6" data-category="Paisajismo" data-desc="Diseño de jardín aromático con semillas premium" data-bs-toggle="modal" data-bs-target="#projectModal">
+                <span class="project-chip badge bg-primary">Paisajismo</span>
+              </div>
             </div>
+        </div>
+        <div class="modal fade" id="projectModal" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+              <div class="modal-body p-0">
+                <img id="projectModalImg" src="" alt="Proyecto" class="w-100 rounded-3">
+                <div class="p-3">
+                  <h6 id="projectModalCategory" class="mb-1"></h6>
+                  <p id="projectModalDesc" class="text-muted mb-0"></p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
     </section>
 
@@ -1127,6 +1242,16 @@
             </a>
         </div>
     </div>
+
+    <!-- Banda de confianza -->
+    <section class="container py-4">
+      <div class="d-flex flex-wrap justify-content-center gap-3 confianza-band">
+        <div class="confianza-item"><i class="bi bi-shield-check me-2"></i>Clientes felices</div>
+        <div class="confianza-item"><i class="bi bi-truck me-2"></i>Entregas seguras</div>
+        <div class="confianza-item"><i class="bi bi-award me-2"></i>Calidad garantizada</div>
+        <div class="confianza-item"><i class="bi bi-people me-2"></i>Soporte 24/7</div>
+      </div>
+    </section>
 
     <!-- Pie de página mejorado -->
     <footer class="w-100 pt-5 pb-4">
@@ -1394,6 +1519,90 @@
               return '<div class="col-md-4"><div class="card h-100"><img src="'+(p.Imagen||'img/img1.png')+'" class="card-img-top" alt="'+(p.Nombre||'')+'"><div class="card-body"><h6 class="card-title">'+(p.Nombre||'')+'</h6><p class="fw-bold">S/. '+Number(p.Precio||0).toFixed(2)+'</p><a href="catalogo.html?query='+encodeURIComponent(p.Nombre||'')+'" class="btn btn-outline-success btn-sm">Ver</a></div></div></div>';
             }).join('');
           }).catch(function(){});
+        })();
+        (function(){
+          var modalImg=document.getElementById('projectModalImg');
+          var modalCat=document.getElementById('projectModalCategory');
+          var modalDesc=document.getElementById('projectModalDesc');
+          document.addEventListener('click', function(e){
+            var t=e.target.closest('.project-thumb');
+            if(!t || !modalImg) return;
+            modalImg.src=t.getAttribute('src')||'';
+            if(modalCat) modalCat.textContent=t.getAttribute('data-category')||'Proyecto';
+            if(modalDesc) modalDesc.textContent=t.getAttribute('data-desc')||'';
+          });
+        })();
+        (function(){
+          var home=document.getElementById('productosHome');
+          if(!home) return;
+          home.querySelectorAll('.card').forEach(function(card){
+            var title=(card.querySelector('.card-title')?.innerText||'').trim();
+            function classify(t){
+              var s=String(t||'').toLowerCase();
+              if(/kit/.test(s)) return 'Kit';
+              if(/semilla/.test(s)) return 'Semillas';
+              if(/macetero|decorativo/.test(s)) return 'Decorativo';
+              if(/herramienta|tijeras|regadera|guantes/.test(s)) return 'Herramienta';
+              if(/grass|palmera|árbol|planta/.test(s)) return 'Planta';
+              return 'Producto';
+            }
+            if(!card.querySelector('.product-chip')){
+              var chip=document.createElement('span');
+              chip.className='product-chip';
+              chip.textContent=classify(title);
+              card.appendChild(chip);
+            }
+            var isBest=/mix|artesanal|premium/i.test(title);
+            if(isBest && !card.querySelector('.badge-bestseller')){
+              var b=document.createElement('span');
+              b.className='badge-bestseller';
+              b.textContent='Bestseller';
+              card.appendChild(b);
+            }
+            var isPlant=/planta|palmera|árbol|grass/i.test(title);
+            if(isPlant && !card.querySelector('.tech-icons')){
+              var icons=document.createElement('div');
+              icons.className='tech-icons';
+              icons.innerHTML='<i class="bi bi-brightness-high-fill" title="Luz"></i><i class="bi bi-droplet-fill" title="Riego"></i><i class="bi bi-shield-check" title="Pet Friendly"></i>';
+              var body=card.querySelector('.card-body');
+              (body||card).appendChild(icons);
+            }
+          });
+        })();
+        (function(){
+          function addSectionChips(sectionId, label){
+            var sec=document.getElementById(sectionId);
+            if(!sec) return;
+            sec.querySelectorAll('.card').forEach(function(card){
+              if(!card.querySelector('.product-chip')){
+                var chip=document.createElement('span');
+                chip.className='product-chip';
+                var title=(card.querySelector('.card-title')?.innerText||'').trim();
+                function classify(t, fb){
+                  var s=String(t||'').toLowerCase();
+                  if(/kit/.test(s)) return 'Kit';
+                  if(/premium/.test(s)) return 'Premium';
+                  if(/semilla/.test(s)) return 'Semillas';
+                  if(/macetero|decorativo/.test(s)) return 'Decorativo';
+                  if(/herramienta|tijeras|regadera|guantes/.test(s)) return 'Herramienta';
+                  return fb||'Producto';
+                }
+                chip.textContent=classify(title, label);
+                card.appendChild(chip);
+              }
+              var title=(card.querySelector('.card-title')?.innerText||'').trim();
+              var isBest=/mix|artesanal|premium/i.test(title);
+              if(isBest && !card.querySelector('.badge-bestseller')){
+                var b=document.createElement('span');
+                b.className='badge-bestseller';
+                b.textContent='Bestseller';
+                card.appendChild(b);
+              }
+            });
+          }
+          addSectionChips('nuevosProductos','Nuevo');
+          addSectionChips('semillasPremium','Semillas');
+          addSectionChips('herramientasJardin','Herramienta');
         })();
       })();
     </script>

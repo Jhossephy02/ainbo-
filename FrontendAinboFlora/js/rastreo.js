@@ -13,10 +13,20 @@ async function buscarPedido(e) {
   const items = document.getElementById('items');
   const pedidoIdEl = document.getElementById('pedido-id');
   const estadoEl = document.getElementById('pedido-estado');
+  const estadoBadge = document.getElementById('estadoBadge');
+  const estadoBadgeText = document.getElementById('estadoBadgeText');
   const totalEl = document.getElementById('total');
   alerta.classList.add('d-none');
   cont.classList.add('d-none');
   items.innerHTML = '';
+  const histEl = document.getElementById('historial');
+  if (histEl) histEl.innerHTML = '<div class="skeleton-line mb-2"></div><div class="skeleton-line mb-2"></div><div class="skeleton-line mb-2"></div>';
+  for (let i = 0; i < 3; i++) {
+    const li = document.createElement('li');
+    li.className = 'list-group-item d-flex justify-content-between';
+    li.innerHTML = '<div class="skeleton-box" style="width: 100%;"></div>';
+    items.appendChild(li);
+  }
   if (!codigo) return;
   try {
     let resp = await fetch(`${API_BASE}/seguimiento/${encodeURIComponent(codigo)}`);
@@ -33,24 +43,45 @@ async function buscarPedido(e) {
     const dets = data.detalles || [];
     const hist = data.historial || [];
     pedidoIdEl.textContent = `#${pedido.Id}`;
-    estadoEl.textContent = pedido.Estado || 'pendiente';
+    const estado = (pedido.PaymentStatus || pedido.Estado || 'pendiente').toLowerCase();
+    estadoEl.textContent = estado;
+    if (estadoBadge) {
+      estadoBadge.classList.remove('d-none','status-pendiente','status-aprobado','status-rechazado');
+      estadoBadgeText.textContent = estado.charAt(0).toUpperCase()+estado.slice(1);
+      estadoBadge.classList.add(estado === 'aprobado' ? 'status-aprobado' : estado === 'rechazado' ? 'status-rechazado' : 'status-pendiente');
+    }
     let total = 0;
+    items.innerHTML = '';
+    // mapear productos para mostrar nombre e imagen
+    let productos = [];
+    try {
+      const allResp = await fetch(`${API_BASE}/productos`);
+      const j = await allResp.json();
+      productos = (j && j.success && Array.isArray(j.data)) ? j.data : [];
+    } catch {}
     dets.forEach(d => {
       const li = document.createElement('li');
       li.className = 'list-group-item d-flex justify-content-between';
       const lineTotal = Number(d.PrecioUnitario) * Number(d.Cantidad);
       total += lineTotal;
-      li.innerHTML = `<span>Producto ${d.ProductoId} x${d.Cantidad}</span><span>${formatoMoneda(lineTotal)}</span>`;
+      const prod = productos.find(p => Number(p.Id) === Number(d.ProductoId));
+      const nombre = prod ? prod.Nombre : `Producto ${d.ProductoId}`;
+      const img = prod ? (prod.Imagen || 'img/img1.png') : 'img/img1.png';
+      li.innerHTML = `
+        <div class="d-flex align-items-center">
+          <img src="${img}" alt="${nombre}" class="rounded me-2" style="width:40px;height:40px;object-fit:cover;">
+          <span>${nombre} x${d.Cantidad}</span>
+        </div>
+        <span>${formatoMoneda(lineTotal)}</span>`;
       items.appendChild(li);
     });
-    const histUl = document.getElementById('historial');
-    if (histUl) {
-      histUl.innerHTML = '';
+    if (histEl) {
+      histEl.innerHTML = '';
       hist.forEach(h => {
-        const li = document.createElement('li');
-        li.className = 'list-group-item d-flex justify-content-between';
-        li.innerHTML = `<span>${String(h.Estado).replace(/_/g,' ')}</span><span>${new Date(h.Fecha).toLocaleString()}</span>`;
-        histUl.appendChild(li);
+        const div = document.createElement('div');
+        div.className = 'timeline-item d-flex justify-content-between';
+        div.innerHTML = `<span>${String(h.Estado).replace(/_/g,' ')}</span><span class="text-muted">${new Date(h.Fecha).toLocaleString()}</span>`;
+        histEl.appendChild(div);
       });
     }
     totalEl.textContent = formatoMoneda(total || pedido.Total || 0);

@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel Administrativo</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <style>
     body {
       background-color: #f8f9fa;
@@ -17,12 +19,59 @@
   </style>
 </head>
 <body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-brand shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold" href="index.html">AinboFlora Admin</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="adminNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="perfil.html">Volver a perfil</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
   <div class="container py-5">
     <h1 class="mb-4 text-center">Panel Administrativo</h1>
     <div class="row g-4">
+      <!-- KPIs -->
+      <div class="col-md-3">
+        <div class="card text-center">
+          <div class="card-body">
+            <h6 class="text-muted">Pedidos</h6>
+            <h3 id="kpiPedidos">—</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card text-center">
+          <div class="card-body">
+            <h6 class="text-muted">Ingresos (S/.)</h6>
+            <h3 id="kpiIngresos">—</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card text-center">
+          <div class="card-body">
+            <h6 class="text-muted">Métodos pago</h6>
+            <h3 id="kpiMetodos">—</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card text-center">
+          <div class="card-body">
+            <h6 class="text-muted">Inventario crítico</h6>
+            <h3 id="kpiCritico">—</h3>
+          </div>
+        </div>
+      </div>
+
       <!-- Ventas -->
       <div class="col-md-6">
-        <div class="card">
+        <div class="card h-100">
           <div class="card-body">
             <h5 class="card-title">Estadísticas de Ventas</h5>
             <canvas id="ventasChart" height="200"></canvas>
@@ -30,12 +79,84 @@
         </div>
       </div>
 
-      <!-- Compras -->
+      <!-- Métodos de pago -->
       <div class="col-md-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">Métodos de pago</h5>
+            <canvas id="metodosChart" height="200"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pedidos recientes -->
+      <div class="col-12">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Resumen de Compras</h5>
-            <canvas id="comprasBlob" height="200"></canvas>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="card-title mb-0">Pedidos recientes</h5>
+              <small class="text-muted" id="pedidosCount"></small>
+            </div>
+            <div class="row g-2 mb-3">
+              <div class="col-12 col-md-2">
+                <select id="filtroEstado" class="form-select form-select-sm">
+                  <option value="">Todos</option>
+                  <option value="aprobado">Aprobado</option>
+                  <option value="pendiente">Pendiente</option>
+                  <option value="cancelado">Cancelado</option>
+                </select>
+              </div>
+              <div class="col-6 col-md-2">
+                <input id="filtroDesde" type="date" class="form-control form-control-sm">
+              </div>
+              <div class="col-6 col-md-2">
+                <input id="filtroHasta" type="date" class="form-control form-control-sm">
+              </div>
+              <div class="col-12 col-md-auto">
+                <button id="btnFiltrar" class="btn btn-sm btn-success">Filtrar</button>
+                <button id="btnLimpiar" class="btn btn-sm btn-outline-success">Limpiar</button>
+                <button id="btnExport" class="btn btn-sm btn-primary">Exportar CSV</button>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-sm align-middle">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Cliente</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                    <th>Pago</th>
+                  </tr>
+                </thead>
+                <tbody id="pedidosBody"></tbody>
+              </table>
+            </div>
+            <div class="d-flex justify-content-end gap-2">
+              <button id="prevPage" class="btn btn-sm btn-outline-secondary">Anterior</button>
+              <button id="nextPage" class="btn btn-sm btn-outline-secondary">Siguiente</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Inventario crítico</h5>
+            <div class="table-responsive">
+              <table class="table table-sm align-middle">
+                <thead>
+                  <tr>
+                    <th>Producto</th>
+                    <th>Stock</th>
+                    <th>Mínimo</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="inventarioBody"></tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -79,7 +200,9 @@
       if (!tbody) return;
       tbody.innerHTML = '<tr><td colspan="3" class="text-muted">Cargando...</td></tr>';
       try {
-        const resp = await fetch(`${API_BASE}/admin/usuarios`, {
+        const url = new URL(`${API_BASE}/admin/usuarios`);
+        url.searchParams.set('limit', '50');
+        const resp = await fetch(url.toString(), {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const j = await resp.json();
@@ -107,74 +230,238 @@
         tbody.innerHTML = '<tr><td colspan="3" class="text-danger">Error de conexión</td></tr>';
       }
     }
-    document.addEventListener('DOMContentLoaded', cargarUsuarios);
-
-    // Gráfico de Barras - Ventas
-    const ventasCtx = document.getElementById('ventasChart').getContext('2d');
-    new Chart(ventasCtx, {
-      type: 'bar',
-      data: {
-        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo'],
-        datasets: [{
-          label: 'Ventas ($)',
-          data: [1200, 1900, 3000, 2500, 3200],
-          backgroundColor: '#0d6efd'
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'top'
-          },
-          title: {
-            display: false
-          }
+    async function cargarKPIs() {
+      try {
+        const [totales, metodos, inventario] = await Promise.all([
+          fetch(`${API_BASE}/pedidos/admin/ventas/totales`, { headers: { 'Authorization': `Bearer ${token}` }}).then(r=>r.json()).catch(()=>null),
+          fetch(`${API_BASE}/pedidos/admin/ventas/metodos`, { headers: { 'Authorization': `Bearer ${token}` }}).then(r=>r.json()).catch(()=>null),
+          fetch(`${API_BASE}/pedidos/admin/inventario/critico`, { headers: { 'Authorization': `Bearer ${token}` }}).then(r=>r.json()).catch(()=>null)
+        ]);
+        const kPedidos = document.getElementById('kpiPedidos');
+        const kIngresos = document.getElementById('kpiIngresos');
+        const kMetodos = document.getElementById('kpiMetodos');
+        const kCritico = document.getElementById('kpiCritico');
+        if (totales && (totales[0] || totales.pedidos)) {
+          const data = Array.isArray(totales) ? totales[0] : totales;
+          if (kPedidos) kPedidos.textContent = data.pedidos ?? data.Pedidos ?? '0';
+          if (kIngresos) kIngresos.textContent = (data.ingresos ?? data.Ingresos ?? 0).toFixed(2);
         }
-      }
-    });
-
-    // Gráfico Tipo Burbuja - Compras
-    const comprasCtx = document.getElementById('comprasBlob').getContext('2d');
-    new Chart(comprasCtx, {
-      type: 'bubble',
-      data: {
-        datasets: [{
-          label: 'Compras',
-          data: [
-            {x: 10, y: 20, r: 10},
-            {x: 15, y: 10, r: 15},
-            {x: 25, y: 12, r: 20},
-            {x: 30, y: 8, r: 8}
-          ],
-          backgroundColor: '#198754'
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'top'
-          },
-          title: {
-            display: false
-          }
-        },
-        scales: {
-          x: {
-            title: {
-              display: true,
-              text: 'Día'
-            }
-          },
-          y: {
-            title: {
-              display: true,
-              text: 'Cantidad ($)'
-            }
-          }
+        if (metodos && metodos.resumen && Array.isArray(metodos.resumen) && kMetodos) {
+          kMetodos.textContent = metodos.resumen.length;
         }
+        if (inventario && Array.isArray(inventario.productos) && kCritico) {
+          kCritico.textContent = inventario.productos.length;
+        }
+        const ctxVentas = document.getElementById('ventasChart')?.getContext('2d');
+        const ctxMetodos = document.getElementById('metodosChart')?.getContext('2d');
+        if (ctxVentas && totales && Array.isArray(totales) && totales.length) {
+          new Chart(ctxVentas, {
+            type: 'bar',
+            data: {
+              labels: ['Ingresos'],
+              datasets: [{
+                label: 'Ingresos totales (S/.)',
+                data: [totales[0].ingresos || 0],
+                backgroundColor: '#0d6efd'
+              }]
+            },
+            options: { responsive: true, plugins: { legend: { display: false } } }
+          });
+        }
+        if (ctxMetodos && metodos && Array.isArray(metodos.resumen)) {
+          const labels = metodos.resumen.map(m=>m.metodo || 'Otro');
+          const data = metodos.resumen.map(m=>m.pedidos || 0);
+          new Chart(ctxMetodos, {
+            type: 'doughnut',
+            data: {
+              labels,
+              datasets: [{
+                data,
+                backgroundColor: ['#198754','#0d6efd','#ffc107','#dc3545']
+              }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+          });
+        }
+      } catch {}
+    }
+
+    let pedidosData = [];
+    let pageIndex = 0;
+    const pageSize = 10;
+    let pedidosTotal = 0;
+    function renderPedidos(data) {
+      const tbody = document.getElementById('pedidosBody');
+      const label = document.getElementById('pedidosCount');
+      if (!tbody) return;
+      if (label) label.textContent = `${pedidosTotal || data.length || 0} pedidos`;
+      if (!data.length) {
+        tbody.innerHTML = '<tr><td colspan="5" class="text-muted">Sin resultados</td></tr>';
+        return;
       }
+      tbody.innerHTML = '';
+      data.forEach(p => {
+        const tr = document.createElement('tr');
+        const totalNum = Number(p.Total || 0);
+        const estado = (p.Estado || '').toLowerCase();
+        const badge = estado==='aprobado'?'success':estado==='pendiente'?'warning':'secondary';
+        tr.innerHTML = `
+          <td>${p.NumeroOrden || p.Id || p.id || '—'}</td>
+          <td>${p.Nombre || p.Email || '—'}</td>
+          <td>S/. ${totalNum.toFixed(2)}</td>
+          <td><span class="badge bg-${badge}">${p.Estado || '—'}</span></td>
+          <td>${p.PaymentMethod || '—'}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+    function aplicarFiltros() {
+      const estado = document.getElementById('filtroEstado')?.value || '';
+      const desde = document.getElementById('filtroDesde')?.value || '';
+      const hasta = document.getElementById('filtroHasta')?.value || '';
+      cargarPedidos({ estado, desde, hasta, pageIndex: 0 });
+    }
+    function exportCSV() {
+      const headers = ['Numero','Cliente','Total','Estado','Pago'];
+      const rows = pedidosData.map(p => [
+        p.NumeroOrden || p.Id || '',
+        p.Nombre || p.Email || '',
+        Number(p.Total||0).toFixed(2),
+        p.Estado || '',
+        p.PaymentMethod || ''
+      ]);
+      const csv = [headers.join(','), ...rows.map(r=>r.join(','))].join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'pedidos.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+    async function cargarPedidos(params) {
+      const tbody = document.getElementById('pedidosBody');
+      const label = document.getElementById('pedidosCount');
+      if (!tbody) return;
+      tbody.innerHTML = '<tr><td colspan="5" class="text-muted">Cargando...</td></tr>';
+      try {
+        const estado = params?.estado || '';
+        const desde = params?.desde || '';
+        const hasta = params?.hasta || '';
+        pageIndex = typeof params?.pageIndex === 'number' ? params.pageIndex : pageIndex;
+        const offset = pageIndex * pageSize;
+        const url = new URL(`${API_BASE}/pedidos/admin/pedidos`);
+        url.searchParams.set('limit', String(pageSize));
+        url.searchParams.set('offset', String(offset));
+        if (estado) url.searchParams.set('estado', estado);
+        if (desde) url.searchParams.set('desde', desde);
+        if (hasta) url.searchParams.set('hasta', hasta);
+        const resp = await fetch(url.toString(), {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const j = await resp.json();
+        if (!resp.ok) {
+          tbody.innerHTML = '<tr><td colspan="5" class="text-danger">Error cargando pedidos</td></tr>';
+          return;
+        }
+        pedidosData = j.pedidos || [];
+        pedidosTotal = Number(j.total || pedidosData.length || 0);
+        renderPedidos(pedidosData);
+      } catch {
+        tbody.innerHTML = '<tr><td colspan="5" class="text-danger">Error de conexión</td></tr>';
+      }
+    }
+    async function cargarInventario() {
+      const tbody = document.getElementById('inventarioBody');
+      if (!tbody) return;
+      tbody.innerHTML = '<tr><td colspan="4" class="text-muted">Cargando...</td></tr>';
+      try {
+        const resp = await fetch(`${API_BASE}/pedidos/admin/inventario/critico`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const j = await resp.json();
+        if (!resp.ok) {
+          tbody.innerHTML = '<tr><td colspan="4" class="text-danger">Error cargando inventario</td></tr>';
+          return;
+        }
+        const productos = j.productos || [];
+        if (!productos.length) {
+          tbody.innerHTML = '<tr><td colspan="4" class="text-muted">Sin productos críticos</td></tr>';
+          return;
+        }
+        tbody.innerHTML = '';
+        productos.forEach(p => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${p.Nombre || p.Producto || 'Producto'}</td>
+            <td>${p.StockActual ?? p.Stock ?? 0}</td>
+            <td>${p.StockMinimo ?? p.Minimo ?? 0}</td>
+            <td>
+              <button class="btn btn-sm btn-success me-2" data-id="${p.Id || p.ProductoId}">Aumentar</button>
+              <button class="btn btn-sm btn-outline-danger" data-off="${p.Id || p.ProductoId}">Desactivar</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+        tbody.querySelectorAll('button[data-id]').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const id = btn.getAttribute('data-id');
+            const cantidad = prompt('Cantidad a aumentar:');
+            const val = Number(cantidad || '0');
+            if (!id || !val || val <= 0) return;
+            try {
+              const resp = await fetch(`${API_BASE}/pedidos/admin/inventario/ajustar`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify({ ProductoId: id, cantidad: val })
+              });
+              if (resp.ok) {
+                cargarInventario();
+                cargarKPIs();
+              }
+            } catch {}
+          });
+        });
+        tbody.querySelectorAll('button[data-off]').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const id = btn.getAttribute('data-off');
+            if (!id) return;
+            try {
+              const resp = await fetch(`${API_BASE}/pedidos/admin/productos/desactivar`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify({ ProductoId: id })
+              });
+              if (resp.ok) cargarInventario();
+            } catch {}
+          });
+        });
+      } catch {
+        tbody.innerHTML = '<tr><td colspan="4" class="text-danger">Error de conexión</td></tr>';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function(){
+      cargarUsuarios();
+      cargarKPIs();
+      cargarPedidos();
+      cargarInventario();
+      document.getElementById('btnFiltrar')?.addEventListener('click', aplicarFiltros);
+      document.getElementById('btnLimpiar')?.addEventListener('click', () => {
+        const e = document.getElementById('filtroEstado'); if (e) e.value = '';
+        const d = document.getElementById('filtroDesde'); if (d) d.value = '';
+        const h = document.getElementById('filtroHasta'); if (h) h.value = '';
+        cargarPedidos({ pageIndex: 0 });
+      });
+      document.getElementById('btnExport')?.addEventListener('click', exportCSV);
+      document.getElementById('prevPage')?.addEventListener('click', () => {
+        if (pageIndex > 0) { pageIndex -= 1; aplicarFiltros(); }
+      });
+      document.getElementById('nextPage')?.addEventListener('click', () => {
+        const count = pedidosTotal || pedidosData.length;
+        const maxPage = Math.floor(Math.max(count-1,0)/pageSize);
+        if (pageIndex < maxPage) { pageIndex += 1; aplicarFiltros(); }
+      });
     });
   </script>
   <script>window.AINBO_API = 'http://127.0.0.1:3000/api';</script>

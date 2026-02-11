@@ -25,40 +25,36 @@
             <p class="text-dark mb-0 p-2 fs-6">Envíos gratis en compras mayores a S/100</p>
         </header>
     
-        <!-- Barra de navegación -->
-        <nav class="navbar navbar-expand-lg navbar-light p-3 sticky-top bg-white" id="menu">
-            <div class="container">
-                <a class="navbar-brand" href="index.html">
-                    <span class="fs-4 text-success fw-bold">AinboFlora.</span>
+        <nav class="navbar navbar-expand-lg navbar-dark p-3 sticky-top bg-brand" id="menu">
+          <div class="container">
+            <a class="navbar-brand" href="index.html">
+              <span class="fs-4 text-white fw-bold">AinboFlora.</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house-door me-1"></i> Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="catalogo.html"><i class="bi bi-shop me-1"></i> Tienda</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html#nosotros"><i class="bi bi-people me-1"></i> Nosotros</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html#servicios"><i class="bi bi-tools me-1"></i> Servicios</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html#proyectos"><i class="bi bi-brush me-1"></i> Proyectos</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html#seccion-contacto"><i class="bi bi-telephone me-1"></i> Contacto</a></li>
+                <li class="nav-item"><a class="nav-link" href="pages/Rastreo.html"><i class="bi bi-truck me-1"></i> Seguimiento</a></li>
+              </ul>
+              <div class="d-flex position-relative align-items-center gap-2">
+                <input id="catalogSearchInput" class="form-control me-2" type="text" placeholder="Buscar productos" aria-label="Buscar" autocomplete="off">
+                <div class="search-suggestions d-none"></div>
+                <button id="catalogSearchBtn" class="btn btn-primary" type="button">Buscar</button>
+                <a href="tel:+51910898346" class="btn cta-phone ms-3 d-none d-lg-inline-flex align-items-center">
+                  <i class="bi bi-telephone-fill me-2"></i>
+                  <span class="me-1">Central telefónica</span>
+                  <strong>910-898-346</strong>
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-    
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="Rastreo.html">
-                                <i class="bi bi-truck me-1"></i> Seguimiento
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="Login.html">
-                                <i class="bi bi-person-circle me-1"></i> Accede al club
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="checkout.html">
-                                <i class="bi bi-cart3 me-1"></i> Ver carrito
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="d-flex">
-                        <input id="catalogSearchInput" class="form-control me-2" type="text" placeholder="Escribe aquí para buscar" aria-label="Buscar">
-                        <button id="catalogSearchBtn" class="btn btn-primary btn-primary-outline-success" type="button">Buscar</button>
-                    </div>
-                </div>
+              </div>
             </div>
+          </div>
         </nav>
     
         
@@ -104,6 +100,21 @@
         <button id="aplicarFiltros" class="btn btn-success w-100"><i class="bi bi-funnel me-1"></i> Aplicar filtros</button>
       </div>
     </div>
+  </section>
+  <style>
+    @media (max-width: 576px) {
+      .catalog-grid { gap: 12px; }
+      .catalog-grid .product img { height: 120px; }
+      .catalog-grid .product h3 { font-size: 15px; }
+      .catalog-grid .product p { font-size: 14px; }
+    }
+  </style>
+
+  <!-- Productos desde la base de datos -->
+  <section class="container my-4">
+    <h2 class="section-title">Productos (conectados a la base de datos)</h2>
+    <div id="api-products" class="catalog-grid"></div>
+    <div id="api-products-empty" class="text-muted small d-none">No se pudo cargar productos</div>
   </section>
 
   <!-- Secciones del Catálogo -->
@@ -511,15 +522,111 @@
         });
       };
       if(aplicar) aplicar.addEventListener('click', function(e){ e.preventDefault(); aplicarFiltrosAvanzados({}); });
+      // Inyectar chips de categoría y fila de iconos técnicos
+      document.querySelectorAll('.catalog-section').forEach(function(sec){
+        var cat=sec.getAttribute('data-categoria')||'';
+        sec.querySelectorAll('.product').forEach(function(card){
+          // Chip de categoría
+          if(!card.querySelector('.product-chip')){
+            var chip=document.createElement('span');
+            chip.className='product-chip';
+            chip.textContent=cat||'Catálogo';
+            card.appendChild(chip);
+          }
+          // Iconos técnicos solo para "Plantas"
+          if(cat==='Plantas' && !card.querySelector('.tech-icons')){
+            var icons=document.createElement('div');
+            icons.className='tech-icons';
+            icons.innerHTML='<i class="bi bi-brightness-high-fill" title="Luz"></i><i class="bi bi-droplet-fill" title="Riego"></i><i class="bi bi-shield-check" title="Pet Friendly"></i>';
+            card.appendChild(icons);
+          }
+          var title=(card.querySelector('h3')?.innerText||'').trim();
+          var isBest=/mix|artesanal|premium/i.test(title);
+          if(isBest && !card.querySelector('.badge-bestseller')){
+            var b=document.createElement('span');
+            b.className='badge-bestseller';
+            b.textContent='Bestseller';
+            card.appendChild(b);
+          }
+        });
+      });
       // Lazy loading por defecto
       document.querySelectorAll('img').forEach(function(img){ if(!img.getAttribute('loading')) img.setAttribute('loading','lazy'); });
     })();
   </script>
+  <script>window.AINBO_API = 'http://127.0.0.1:3000/api';</script>
+  <script src="js/productos.js"></script>
+  <script>
+    (function(){
+      const host = window.location.hostname || 'localhost';
+      const API_BASE = window.AINBO_API || `http://${host}:3000/api`;
+      const grid = document.getElementById('api-products');
+      const empty = document.getElementById('api-products-empty');
+      if(!grid) return;
+      grid.innerHTML = '<div class="text-muted">Cargando productos...</div>';
+      const cacheKey = 'apiProducts';
+      const ttlMs = 5 * 60 * 1000;
+      try {
+        const cached = JSON.parse(sessionStorage.getItem(cacheKey) || 'null');
+        if (cached && (Date.now() - Number(cached.ts || 0)) < ttlMs && Array.isArray(cached.data) && cached.data.length) {
+          render(cached.data);
+          return;
+        }
+      } catch {}
+      fetch(`${API_BASE}/productos?limit=24`)
+        .then(r => r.json().then(j => ({ ok: r.ok, j })))
+        .then(({ ok, j }) => {
+          if (!ok) throw new Error('bad');
+          const data = (j.data || j.productos || []);
+          if (!Array.isArray(data) || !data.length) throw new Error('empty');
+          try { sessionStorage.setItem(cacheKey, JSON.stringify({ ts: Date.now(), data })); } catch {}
+          render(data);
+        })
+        .catch(() => {
+          grid.innerHTML = '';
+          if (empty) empty.classList.remove('d-none');
+        });
+      function render(data){
+        grid.innerHTML = data.map(p => {
+          const id = p.Id || p.id;
+          const nombre = p.Nombre || p.nombre || 'Producto';
+          const precio = Number(p.Precio || p.precio || 0).toFixed(2);
+          const img = p.Imagen || p.imagen || 'img/img1.png';
+          return `
+            <div class="product">
+              <img src="${img}" alt="${nombre}">
+              <h3>${nombre}</h3>
+              <p>S/. ${precio}</p>
+              <div class="d-flex gap-2 p-2">
+                <button class="btn btn-sm btn-success" data-add="${id}" data-nombre="${nombre}" data-precio="${precio}" data-img="${img}"><i class="bi bi-bag-plus me-1"></i>Agregar</button>
+                <a href="checkout.html" class="btn btn-sm btn-outline-primary">Comprar</a>
+              </div>
+            </div>
+          `;
+        }).join('');
+        grid.addEventListener('click', function(e){
+          const btn = e.target.closest('button[data-add]');
+          if(!btn) return;
+          const id = Number(btn.getAttribute('data-add')||0);
+          const nombre = btn.getAttribute('data-nombre')||'';
+          const precio = Number(btn.getAttribute('data-precio')||0);
+          const img = btn.getAttribute('data-img')||'img/img1.png';
+          try {
+            agregarAlCarrito(id, nombre, precio, img);
+          } catch {
+            const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            const ex = carrito.find(x => x.id === id);
+            if (ex) { ex.cantidad += 1; } else { carrito.push({ id, nombre, precio, cantidad: 1, imagen: img }); }
+            localStorage.setItem('carrito', JSON.stringify(carrito));
+          }
+        });
+      }
+    })();
+  </script>
   
 
-
 </body>
-</script>
+ 
 <script>
   (function(){
     var nav=document.getElementById('menu')||document.querySelector('.navbar');

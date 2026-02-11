@@ -9,6 +9,8 @@ body {
     --color-accent: #D4AF37;
     --color-bg-soft: #f8f9fa;
     --color-text: #2D3436;
+    --brand-green: #114B34;
+    --brand-green-dark: #0C3A27;
 }
 
 .navbar {
@@ -35,6 +37,9 @@ body {
 #menu .navbar-brand, #menu .navbar-brand span {
     color: var(--color-primary);
 }
+#menu.navbar-dark .navbar-brand, #menu.navbar-dark .navbar-brand span {
+    color: #fff;
+}
 
 #menu .nav-link {
     color: var(--color-text);
@@ -42,15 +47,26 @@ body {
     border-bottom: 2px solid transparent;
     transition: color .2s ease, border-color .2s ease;
 }
+#menu.navbar-dark .nav-link {
+    color: #ffffff;
+}
 
 #menu .nav-link:hover, #menu .nav-link:focus {
     color: var(--color-primary);
     border-bottom-color: var(--color-primary);
 }
+#menu.navbar-dark .nav-link:hover, #menu.navbar-dark .nav-link:focus {
+    color: #ffffff;
+    border-bottom-color: #ffffff;
+}
 
 #menu .nav-link.active {
     color: var(--color-primary);
     border-bottom-color: var(--color-primary);
+}
+#menu.navbar-dark .nav-link.active {
+    color: #ffffff;
+    border-bottom-color: #ffffff;
 }
 
 .navbar-toggler {
@@ -72,15 +88,26 @@ body {
 
 .card {
     margin-bottom: 20px;
-    transition: transform 0.3s;
+    transition: transform .25s ease, box-shadow .25s ease;
     border-radius: 8px;
     overflow: hidden;
+    position: relative;
     box-shadow: 0 6px 16px rgba(0,0,0,0.08);
 }
+.card .card-title { font-size: 1rem; font-weight: 600; color: var(--color-text); }
+.card .card-body p { font-size: .95rem; color: var(--color-text); }
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 16px 32px rgba(0,0,0,0.12);
+@media (prefers-reduced-motion: no-preference) {
+  .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.10);
+  }
+}
+
+.card-img-top {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
 }
 
 .btn-primary {
@@ -207,6 +234,21 @@ footer p {
     margin-bottom: 30px;
     text-align: center;
 }
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,.35));
+}
+.hero-slide {
+    position: relative;
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+}
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
 
 .newsletter-section {
     background-color: #f8f9fa;
@@ -254,6 +296,81 @@ footer p {
 .shadow-soft {
     box-shadow: 0 10px 24px rgba(0,0,0,0.12);
 }
+.bg-brand { background-color: var(--brand-green) !important; }
+.bg-brand-dark { background-color: var(--brand-green-dark) !important; }
+.text-brand { color: var(--brand-green) !important; }
+.transition-soft { transition: all .25s ease !important; }
+.focus-visible:focus { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  .transition-soft, .card, .btn, .navbar { transition: none !important; animation: none !important; }
+}
+/* Servicios */
+.service-card i { line-height: 1; }
+.service-card .text-muted { font-size: .95rem; }
+
+/* Pro Max utilities */
+/* Proyectos modal */
+.project-thumb { cursor: pointer; }
+.modal .modal-body img { display:block; }
+/* Footer premium */
+footer { background-color: var(--brand-green); }
+footer h5 { color:#fff; }
+footer .text-white-50 { color: rgba(255,255,255,.7) !important; }
+/* Chips de proyectos */
+.project-chip {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  border-radius: 999px;
+  padding: 6px 10px;
+  box-shadow: 0 6px 10px rgba(0,0,0,.12);
+}
+/* Banda de confianza */
+.confianza-item {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 12px;
+  padding: 8px 14px;
+  color: var(--color-text);
+  box-shadow: 0 4px 12px rgba(0,0,0,.06);
+}
+/* Catálogo chips e iconos técnicos */
+.catalog-section .product { position: relative; }
+.product-chip {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: .85rem;
+  box-shadow: 0 6px 10px rgba(0,0,0,.12);
+  background: var(--brand-green);
+  color: #fff;
+}
+.tech-icons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 6px;
+  color: var(--brand-green);
+}
+.tech-icons i { font-size: 1rem; }
+.badge-bestseller {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: var(--color-accent);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: .8rem;
+  font-weight: 600;
+  box-shadow: 0 6px 12px rgba(0,0,0,.18);
+}
+.bg-brand { background-color: var(--brand-green) !important; }
+.bg-brand-dark { background-color: var(--brand-green-dark) !important; }
+.text-brand { color: var(--brand-green) !important; }
+.transition-soft { transition: all .25s ease !important; }
   
 @keyframes cartShake {
   0% { transform: translateX(0); }
@@ -301,6 +418,100 @@ footer p {
   font-weight: 600;
 }
 
+/* Grid catálogo responsive */
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}
+.catalog-grid .product {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,.06);
+}
+.catalog-grid .product img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+.catalog-grid .product h3 {
+  font-size: 16px;
+  padding: 8px 12px 0;
+}
+.catalog-grid .product p {
+  padding: 0 12px 12px;
+  margin: 0;
+}
+
+/* Barra de acciones móvil */
+.mobile-actionbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1060;
+  background: #ffffff;
+  border-top: 1px solid #eee;
+  box-shadow: 0 -6px 18px rgba(0,0,0,.08);
+  padding: 10px;
+}
+.mobile-actionbar .btn {
+  width: 48%;
+}
+  .cta-phone {
+    background-color: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+    border-radius: 10px;
+    padding: 8px 12px;
+    box-shadow: 0 8px 16px rgba(25,135,84,.18);
+    font-weight: 600;
+    line-height: 1;
+  }
+  .cta-phone:hover {
+    background-color: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+  }
+  .cta-phone i {
+    font-size: 18px;
+  }
+  .cta-phone strong {
+    background: rgba(255,255,255,.18);
+    padding: 2px 8px;
+    border-radius: 6px;
+    letter-spacing: .5px;
+  }
+
+/* Ajustes móviles */
+@media (max-width: 576px) {
+  .banner-section {
+    padding: 48px 0;
+  }
+  .banner-section .display-4 {
+    font-size: 32px;
+  }
+  .section-title {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+  .card .card-title {
+    font-size: 16px;
+  }
+  .navbar .navbar-brand span {
+    font-size: 20px !important;
+  }
+  .search-suggestions {
+    max-height: 60vh;
+  }
+  .search-item {
+    padding: 12px;
+  }
+  .mobile-hidden {
+    display: none !important;
+  }
+}
   /* Estilo para el carrito lateral */
   .carrito-lateral {
     position: fixed;
@@ -344,6 +555,71 @@ footer p {
     cursor: pointer;
     padding: 0;
   }
+
+/* Rastreo timeline */
+.tracking-hero {
+  background: linear-gradient(135deg, rgba(25,135,84,.12), rgba(212,175,55,.08));
+  border: 1px solid rgba(25,135,84,.15);
+  border-radius: 12px;
+}
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+.status-pendiente { background: #fff3cd; color: #7a5c00; border: 1px solid #ffe69c; }
+.status-aprobado { background: #d1e7dd; color: #0f5132; border: 1px solid #a3cfbb; }
+.status-rechazado { background: #f8d7da; color: #842029; border: 1px solid #f5c2c7; }
+.timeline {
+  position: relative;
+  padding-left: 20px;
+}
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(0,0,0,0.08);
+}
+.timeline-item {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 8px;
+}
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 10px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(25,135,84,.15);
+}
+.skeleton-line {
+  height: 12px;
+  background: linear-gradient(90deg, #eee 25%, #f5f5f5 37%, #eee 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.2s ease-in-out infinite;
+  border-radius: 6px;
+}
+.skeleton-box {
+  height: 48px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #eee 25%, #f5f5f5 37%, #eee 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.2s ease-in-out infinite;
+}
+@keyframes shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
   
   .carrito-contenido {
     flex: 1;

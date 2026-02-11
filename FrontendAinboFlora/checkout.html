@@ -40,9 +40,14 @@
             </a>
           </li>
         </ul>
-        <div class="d-flex">
-          <input class="form-control me-2" type="text" placeholder="Escribe aquí para buscar" aria-label="Buscar">
-          <button class="btn btn-primary btn-primary-outline-success" type="button">Buscar</button>
+        <div class="d-flex position-relative align-items-center gap-2">
+          <input class="form-control me-2" type="text" placeholder="Buscar productos" aria-label="Buscar" autocomplete="off">
+          <button class="btn btn-primary" type="button">Buscar</button>
+          <a href="tel:+51910898346" class="btn cta-phone ms-3 d-none d-lg-inline-flex align-items-center">
+            <i class="bi bi-telephone-fill me-2"></i>
+            <span class="me-1">Central telefónica</span>
+            <strong>910-898-346</strong>
+          </a>
         </div>
       </div>
     </div>
@@ -118,6 +123,30 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+  <div id="payment-modal" class="position-fixed top-0 start-0 w-100 h-100 d-none" style="background: rgba(0,0,0,.5); z-index: 1080;">
+    <div class="bg-white rounded-3 shadow p-3 p-md-4 position-absolute start-50 top-50 translate-middle" style="max-width: 520px; width: 92%;">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h5 class="mb-0">Ventana de pago</h5>
+        <button type="button" class="btn btn-sm btn-outline-secondary" id="pm-close">Cerrar</button>
+      </div>
+      <div id="pm-content">
+        <div class="alert alert-info">Preparando pago...</div>
+      </div>
+      <div class="border-top pt-3 mt-2">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <span class="text-muted">Simulación de pago</span>
+          <div class="btn-group">
+            <button class="btn btn-sm btn-outline-success" id="pm-sim-approve">Aprobar</button>
+            <button class="btn btn-sm btn-outline-warning" id="pm-sim-pending">Pendiente</button>
+            <button class="btn btn-sm btn-outline-danger" id="pm-sim-reject">Rechazar</button>
+          </div>
+        </div>
+      </div>
+      <div class="text-end mt-3">
+        <button class="btn btn-success" id="pm-confirm">Listo, ir a confirmación</button>
       </div>
     </div>
   </div>

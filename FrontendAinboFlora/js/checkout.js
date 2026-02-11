@@ -79,9 +79,81 @@ async function crearPedido(e) {
     });
     const data = await resp.json();
     if (resp.ok) {
-      localStorage.removeItem('carrito');
-      const qp = new URLSearchParams({ pedidoId: String(data.pedidoId || ''), numeroOrden: String(data.numeroOrden || ''), metodoPago: String(data.metodoPago || ''), cip: String(data.cip || '') });
-      window.location.href = 'confirmacion.html?' + qp.toString();
+      const modal = document.getElementById('payment-modal');
+      const content = document.getElementById('pm-content');
+      const btnClose = document.getElementById('pm-close');
+      const btnConfirm = document.getElementById('pm-confirm');
+      const simApprove = document.getElementById('pm-sim-approve');
+      const simPending = document.getElementById('pm-sim-pending');
+      const simReject = document.getElementById('pm-sim-reject');
+      if (modal && content && btnClose && btnConfirm) {
+        let html = '';
+        const metodoSel = (data.metodoPago || metodo || '').toLowerCase();
+        if (metodoSel === 'pagoefectivo' && (data.cip || data.CIP)) {
+          const cip = data.cip || data.CIP;
+          html = `<div class="alert alert-success">CIP generado correctamente</div><p>Tu código CIP:</p><div class="display-6 fw-bold">${cip}</div><p class="text-muted">Paga en agentes o online. Al completar el pago, pulsa "Listo, ir a confirmación".</p>`;
+        } else if (metodoSel === 'yape' && (data.qr || data.QR || data.qrUrl)) {
+          const qr = data.qr || data.QR || data.qrUrl;
+          html = `<div class="alert alert-success">QR de Yape generado</div><img src="${qr}" alt="QR Yape" class="img-fluid rounded mb-2" /><p class="text-muted">Escanea el QR con Yape. Luego pulsa "Listo, ir a confirmación".</p>`;
+        } else if (data.redirectUrl) {
+          html = `<div class="alert alert-info">Redireccionaremos al procesador de pagos</div><a href="${data.redirectUrl}" class="btn btn-primary" target="_blank">Ir al pago</a><p class="text-muted mt-2">Tras el pago, vuelve y pulsa "Listo, ir a confirmación".</p>`;
+        } else {
+          html = `<div class="alert alert-success">Pedido creado</div><p>Continuaremos a la confirmación.</p>`;
+        }
+        content.innerHTML = html;
+        modal.classList.remove('d-none');
+        try { startPaymentPolling(data.pedidoId || data.numeroOrden || '', token); } catch {}
+        if (simApprove) simApprove.onclick = () => { simulatedStatus = 'aprobado'; };
+        if (simPending) simPending.onclick = () => { simulatedStatus = 'pendiente'; };
+        if (simReject) simReject.onclick = () => { simulatedStatus = 'rechazado'; };
+        async function verificarYConfirmar() {
+          try {
+            const id = String(data.pedidoId || data.numeroOrden || '');
+            if (id) {
+              const url = new URL(`${API_BASE}/pedidos/pagos/estado`);
+              url.searchParams.set('id', id);
+              const r = await fetch(url.toString(), { headers: { 'Authorization': `Bearer ${token || ''}` } });
+              const s = await r.json();
+              const estado = (s.estado || s.status || '').toLowerCase();
+              const okAprobado = (r.ok && (estado === 'aprobado' || estado === 'paid' || estado === 'pagado')) || simulatedStatus === 'aprobado';
+              const okRechazado = simulatedStatus === 'rechazado';
+              if (okAprobado) {
+                modal.classList.add('d-none');
+                localStorage.removeItem('carrito');
+                const qp = new URLSearchParams({
+                  pedidoId: String(data.pedidoId || ''),
+                  numeroOrden: String(data.numeroOrden || ''),
+                  metodoPago: String(data.metodoPago || metodo || ''),
+                  cip: String(data.cip || '')
+                });
+                window.location.href = 'confirmacion.html?' + qp.toString();
+                return;
+              }
+              if (okRechazado) {
+                alert('Pago rechazado en la simulación.');
+                return;
+              }
+              alert('El pago aún está pendiente. Intenta nuevamente en unos segundos.');
+              return;
+            }
+          } catch {}
+          modal.classList.add('d-none');
+          localStorage.removeItem('carrito');
+          const qp = new URLSearchParams({
+            pedidoId: String(data.pedidoId || ''),
+            numeroOrden: String(data.numeroOrden || ''),
+            metodoPago: String(data.metodoPago || metodo || ''),
+            cip: String(data.cip || '')
+          });
+          window.location.href = 'confirmacion.html?' + qp.toString();
+        }
+        btnConfirm.onclick = verificarYConfirmar;
+        btnClose.onclick = () => { modal.classList.add('d-none'); };
+      } else {
+        localStorage.removeItem('carrito');
+        const qp = new URLSearchParams({ pedidoId: String(data.pedidoId || ''), numeroOrden: String(data.numeroOrden || ''), metodoPago: String(data.metodoPago || ''), cip: String(data.cip || '') });
+        window.location.href = 'confirmacion.html?' + qp.toString();
+      }
     } else {
       alert(data.mensaje || 'Error al crear pedido');
     }
@@ -291,6 +363,25 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   radios.forEach(r => r.addEventListener('change', toggle));
   toggle();
+  try {
+    const resp = await fetch(`${API_BASE}/pedidos/pagos/metodos`);
+    const j = await resp.json();
+    if (resp.ok && Array.isArray(j.metodos)) {
+      const has = (m) => j.metodos.some(x => (x || '').toLowerCase() === m);
+      const setDisabled = (val, disable) => {
+        document.querySelectorAll(`input[name="metodo"][value="${val}"]`).forEach(el => {
+          el.disabled = disable;
+          if (disable && el.checked) {
+            const first = document.querySelector('input[name="metodo"]:not([disabled])');
+            if (first) { first.checked = true; toggle(); }
+          }
+        });
+      };
+      setDisabled('tarjeta', !has('tarjeta'));
+      setDisabled('yape', !has('yape'));
+      setDisabled('pagoefectivo', !has('pagoefectivo'));
+    }
+  } catch {}
 });
 
 async function renderCrossSell(items){
@@ -333,4 +424,30 @@ async function renderCrossSell(items){
       renderResumen();
     });
   }catch{}
+}
+
+let simulatedStatus = null;
+let pollTimer = null;
+let pollAttempts = 0;
+function startPaymentPolling(id, token) {
+  try { clearInterval(pollTimer); } catch {}
+  pollAttempts = 0;
+  pollTimer = setInterval(async () => {
+    pollAttempts += 1;
+    if (simulatedStatus) return;
+    try {
+      const url = new URL(`${API_BASE}/pedidos/pagos/estado`);
+      url.searchParams.set('id', String(id||''));
+      const r = await fetch(url.toString(), { headers: { 'Authorization': `Bearer ${token || ''}` } });
+      const s = await r.json();
+      const estado = (s.estado || s.status || '').toLowerCase();
+      if (r.ok && (estado === 'aprobado' || estado === 'paid' || estado === 'pagado')) {
+        simulatedStatus = 'aprobado';
+        clearInterval(pollTimer);
+      }
+    } catch {}
+    if (pollAttempts >= 4) {
+      clearInterval(pollTimer);
+    }
+  }, 3000);
 }
